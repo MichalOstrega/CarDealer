@@ -1,9 +1,11 @@
 package pl.sdacademy.cardealer.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+@Entity
 public class Customer extends BaseModelVersion {
 
     @Column(name = "surname")
