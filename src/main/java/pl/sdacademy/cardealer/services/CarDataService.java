@@ -7,4 +7,6 @@ import java.util.List;
 public interface CarDataService {
 
     List<Car> loadAllAvailableCars();
+
+    void addCar(Car carToSave);
 }

@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Add Car</title>
+</head>
+<body>
+
+<form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
+    <table border="2" rules="all">
+        <tr>
+            <td><b>Property</b></td>
+            <td><b>Value</b></td>
+        </tr>
+        <tr>
+            <td><b>VIN Number</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{vin}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Brand</b></td>
+            <td>
+                <b>
+                    <select th:field="*{brand}" id="brand">
+                        <option th:each="brand : ${dropList.brands}" th:value="${brand.id}"
+                                th:text="${brand.name}"></option>
+                    </select>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Model</b></td>
+            <td>
+                <b>
+                    <select th:field="*{model}" id="model">
+                        <option th:each="carModel : ${dropList.carModels}" th:value="${carModel.id}"
+                                th:text="${carModel.name}"></option>
+                    </select>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Production Year</b></td>
+            <td>
+                <b>
+                    <select th:field="*{productionYear}" id="productionYear">
+                        <option th:each="productionYear : ${dropList.productionYears}" th:value="${productionYear.id}"
+                                th:text="${productionYear.name}"></option>
+                    </select></b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>OC Number</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{ocNumber}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Register Number</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{registerNumber}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Fuel</b></td>
+            <td>
+                <b>
+                    <select th:field="*{fuel}" id="fuel">
+                        <option th:each="fuel : ${dropList.fuels}" th:value="${fuel.id}"
+                                th:text="${fuel.name}"></option>
+                    </select></b>
+            </td>
+        </tr>
+
+        <tr>
+            <td><b>Mileage</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{mileage}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Engine</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{engine}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Power</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{power}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Car Type</b></td>
+            <td>
+                <b>
+                    <select th:field="*{carType}" id="carType">
+                        <option th:each="carType : ${dropList.carTypes}" th:value="${carType.id}"
+                                th:text="${carType.name}"></option>
+                    </select></b>
+            </td>
+        </tr>
+
+        <tr>
+            <td><b>Transmission</b></td>
+            <td>
+                <b>
+                    <select th:field="*{transmission}" id="transmission">
+                        <option th:each="transmission : ${dropList.transmissions}" th:value="${transmission.id}"
+                                th:text="${transmission.name}"></option>
+                    </select></b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Description: </b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{description}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td><b>Price</b></td>
+            <td>
+                <b>
+                    <input type="text" th:field="*{price}"/>
+                </b>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center"><input type="submit" value="Add Vehicle"/></td>
+        </tr>
+    </table>
+
+
+</form>
+
+
+</body>
+</html>
