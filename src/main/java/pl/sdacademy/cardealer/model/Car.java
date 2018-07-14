@@ -1,7 +1,7 @@
 package pl.sdacademy.cardealer.model;
 
 
-import org.springframework.ui.Model;
+
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,7 +12,7 @@ import javax.persistence.ManyToOne;
 public class Car extends BaseModelVersion {
 
 
-    private String VIN;
+    private String vin;
 
     @ManyToOne
     @JoinColumn(name = "production_year_id")
@@ -24,19 +24,19 @@ public class Car extends BaseModelVersion {
 
     @ManyToOne
     @JoinColumn(name="model_id")
-    private Model model;
+    private CarModel model;
 
     @Column(name = "OC_number")
-    private String OcNumber;
+    private String ocNumber;
 
     @Column(name = "register_number")
-    private String RegisterNumber;
+    private String registerNumber;
 
     @ManyToOne
     @JoinColumn(name = "fuel_id")
     private Fuel fuel;
 
-    private int Mileage;
+    private int mileage;
 
     private String engine;
 
@@ -46,7 +46,7 @@ public class Car extends BaseModelVersion {
     @JoinColumn(name = "transmission_id")
     private Transmission transmission;
 
-    private String descritpion;
+    private String description;
 
     private int test_drives;
 
@@ -54,15 +54,35 @@ public class Car extends BaseModelVersion {
     @JoinColumn(name = "car_type_id")
     private CarType carType;
 
+    private int price;
+
+    private boolean sold;
+
     public Car() {
     }
 
-    public String getVIN() {
-        return VIN;
+    public int getPrice() {
+        return price;
     }
 
-    public void setVIN(String VIN) {
-        this.VIN = VIN;
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public boolean isSold() {
+        return sold;
+    }
+
+    public void setSold(boolean sold) {
+        this.sold = sold;
+    }
+
+    public String getVin() {
+        return vin;
+    }
+
+    public void setVin(String vin) {
+        this.vin = vin;
     }
 
     public ProductionYear getProductionYear() {
@@ -81,28 +101,28 @@ public class Car extends BaseModelVersion {
         this.brand = brand;
     }
 
-    public Model getModel() {
+    public CarModel getModel() {
         return model;
     }
 
-    public void setModel(Model model) {
+    public void setModel(CarModel model) {
         this.model = model;
     }
 
     public String getOcNumber() {
-        return OcNumber;
+        return ocNumber;
     }
 
     public void setOcNumber(String ocNumber) {
-        OcNumber = ocNumber;
+        this.ocNumber = ocNumber;
     }
 
     public String getRegisterNumber() {
-        return RegisterNumber;
+        return registerNumber;
     }
 
     public void setRegisterNumber(String registerNumber) {
-        RegisterNumber = registerNumber;
+        this.registerNumber = registerNumber;
     }
 
     public Fuel getFuel() {
@@ -114,11 +134,11 @@ public class Car extends BaseModelVersion {
     }
 
     public int getMileage() {
-        return Mileage;
+        return mileage;
     }
 
     public void setMileage(int mileage) {
-        Mileage = mileage;
+        this.mileage = mileage;
     }
 
     public String getEngine() {
@@ -145,12 +165,12 @@ public class Car extends BaseModelVersion {
         this.transmission = transmission;
     }
 
-    public String getDescritpion() {
-        return descritpion;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDescritpion(String descritpion) {
-        this.descritpion = descritpion;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public int getTest_drives() {

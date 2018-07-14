@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Cars for Sell</title>
+</head>
+<body>
+<h1> Cars For Sale </h1>
+
+<table border="2" rules="all">
+    <tr>
+        <th>Id</th>
+        <th>Manufacturer</th>
+        <th>Model</th>
+        <th>Production Year</th>
+        <th>Mileage</th>
+        <th>Fuel</th>
+        <!--<th>Price</th>-->
+        <!--<th>Sold</th>-->
+        <!--<th>Info</th>-->
+        <!--<th>Sell</th>-->
+
+    </tr>
+    <tr th:each="car, iterationInfo : ${cars}">
+        <td> <a th:href="@{/cars/{parametr}(parametr=${car.id})}" th:text="${car.id}"></a></td>
+        <td th:text="${car.brand}"/>
+        <td th:text="${car.model}"/>
+        <td th:text="${car.productionYear}"/>
+        <td th:text="${car.mileage}"/>
+        <td th:text="${car.fuel}"/>
+        <!--<td th:text="${car.price}"/>-->
+        <!--<td th:text="${car.sold}"/>-->
+        <!--<td th:text="${iterationInfo.count} + ' of total ' + ${iterationInfo.size}"/>-->
+        <!--<td><a th:href="@{cars/{param}/sell(param=${car.id})}">Sell</a></td>-->
+    </tr>
+
+
+
+
+
+</table>
+
+
+</body>
+</html>

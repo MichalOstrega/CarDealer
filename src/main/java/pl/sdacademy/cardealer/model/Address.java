@@ -1,7 +1,9 @@
 package pl.sdacademy.cardealer.model;
 
 import javax.persistence.Column;
+import javax.persistence.Entity;
 
+@Entity
 public class Address extends BaseModelVersion {
 
     @Column(name = "city")
