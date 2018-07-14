@@ -1,7 +1,7 @@
 package pl.sdacademy.cardealer.model;
 
-import javax.persistence.MappedSuperclass;
-import javax.persistence.Version;
+
+import javax.persistence.*;
 
 @MappedSuperclass
 public abstract class BaseModelVersion extends BaseModel {
@@ -16,4 +16,5 @@ public abstract class BaseModelVersion extends BaseModel {
     public void setVersion(Long version) {
         this.version = version;
     }
+
 }
