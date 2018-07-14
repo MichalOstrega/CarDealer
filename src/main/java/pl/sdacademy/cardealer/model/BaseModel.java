@@ -4,7 +4,7 @@ package pl.sdacademy.cardealer.model;
 import javax.persistence.*;
 
 @MappedSuperclass
-public abstract class  BaseModel {
+public abstract class BaseModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
