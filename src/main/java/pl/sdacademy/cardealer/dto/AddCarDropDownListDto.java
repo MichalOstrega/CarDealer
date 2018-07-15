@@ -9,7 +9,7 @@ import java.util.List;
 @Component
 public class AddCarDropDownListDto {
 
-    private static final AddCarDropDownListDto INSTANCE = new AddCarDropDownListDto();
+    private static AddCarDropDownListDto INSTANCE = new AddCarDropDownListDto();
     List<Brand> brands;
     List<CarType> carTypes;
     List<Fuel> fuels;

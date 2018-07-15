@@ -5,8 +5,38 @@
     <title>Add Car</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
 </head>
 <body>
+
+
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#" img="">Car Dealer</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+                <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-item nav-link" th:href="@{/cars}">Show Cars</a>
+                <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
+                <a class="nav-item nav-link disabled" href="#">Disabled</a>
+            </div>
+        </div>
+    </nav>
+
+
+
 
 
 <form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
@@ -30,7 +60,7 @@
                 <b>
                     <select th:field="*{brand}" id="brand" th:errorclass="fieldError">
                     <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"/>
-                        <option th:each="brand : ${dropList.brands}" th:value="${brand.id}"
+                        <option th:each="brand : ${dropList.brands}" th:value="${brand.id} "
                                 th:text="${brand.name}"></option>
                     </select>
                 </b>
@@ -61,7 +91,8 @@
             <td><b>OC Number</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{ocNumber}"/>
+                    <input type="text" th:field="*{ocNumber}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('ocNumber')}" th:errors="*{ocNumber}"/>
                 </b>
             </td>
         </tr>
@@ -69,7 +100,8 @@
             <td><b>Register Number</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{registerNumber}"/>
+                    <input type="text" th:field="*{registerNumber}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('registerNumber')}" th:errors="*{registerNumber}"/>
                 </b>
             </td>
         </tr>
@@ -88,7 +120,8 @@
             <td><b>Mileage</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{mileage}"/>
+                    <input type="text" th:field="*{mileage}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}"/>
                 </b>
             </td>
         </tr>
@@ -96,7 +129,8 @@
             <td><b>Engine</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{engine}"/>
+                    <input type="text" th:field="*{engine}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"/>
                 </b>
             </td>
         </tr>
@@ -104,7 +138,8 @@
             <td><b>Power</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{power}"/>
+                    <input type="text" th:field="*{power}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('power')}" th:errors="*{power}"/>
                 </b>
             </td>
         </tr>
@@ -133,7 +168,8 @@
             <td><b>Description: </b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{description}"/>
+                    <input type="text" th:field="*{description}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{decritpion}"/>
                 </b>
             </td>
         </tr>
@@ -141,20 +177,19 @@
             <td><b>Price</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{price}"/>
+                    <input type="text" th:field="*{price}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"/>
                 </b>
             </td>
         </tr>
         <tr>
-            <td colspan="2" align="center"><input type="submit" value="Add Vehicle"/></td>
+            <td colspan="2" align="center"><button type="submit" text="Add Car" class="btn btn-primary"/></td>
         </tr>
     </table>
 
 
 </form>
-
-<br/>
-<a th:href="@{/}">Strona Główna</a>
+</div>
 
 </body>
 </html>

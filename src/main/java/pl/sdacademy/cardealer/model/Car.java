@@ -10,11 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Car extends BaseModelVersion {
 
     @NotNull
+    @Size(min=1, max=50)
     private String vin;
 
     @NotNull
@@ -33,11 +35,13 @@ public class Car extends BaseModelVersion {
     private CarModel model;
 
     @NotNull
+    @Size(min=1, max=50)
     @Column(name = "OC_number")
     private String ocNumber;
 
 
     @NotNull
+    @Size(min=1, max=50)
     @Column(name = "register_number")
     private String registerNumber;
 
@@ -54,9 +58,11 @@ public class Car extends BaseModelVersion {
 
 
     @NotNull
+    @Size(min=1, max=50)
     private String engine;
 
     @NotNull
+    @Size(min=1, max=50)
     private String power;
 
     @NotNull
@@ -65,6 +71,7 @@ public class Car extends BaseModelVersion {
     private Transmission transmission;
 
     @NotNull
+    @Size(min=1, max=1000)
     private String description;
 
 
