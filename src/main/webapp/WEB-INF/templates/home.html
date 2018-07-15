@@ -2,9 +2,9 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Cars for Sell</title>
-
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <title>Car Dealer Home Page</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -16,6 +16,7 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#" img="">Car Dealer</a>
@@ -43,53 +44,14 @@
         </div>
     </nav>
 
-    <h1 class="container" align="center" th:text="${headerMsg}"> </h1>
 
-
-
-<table class="table table-sm">
-    <thead>
-    <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Manufacturer</th>
-        <th scope="col">Model</th>
-        <th scope="col">Production Year</th>
-        <th scope="col">Mileage</th>
-        <th scope="col">Fuel</th>
-        <th>Price</th>
-        <th>VIN</th>
-        <th>Register Number</th>
-        <th>Transmission</th>
-        <th>Sold</th>
-        <th>Details</th>
-
-
-    </tr>
-    </thead>
-    <tbody>
-    <tr th:each="car, iterationInfo : ${cars}">
-        <td th:text="${car.id}"/>
-        <td th:text="${car.brand}"/>
-        <td th:text="${car.model}"/>
-        <td th:text="${car.productionYear}"/>
-        <td th:text="${car.mileage}"/>
-        <td th:text="${car.fuel}"/>
-        <td th:text="${car.price}"/>
-        <td th:text="${car.vin}"/>
-        <td th:text="${car.registerNumber}"/>
-        <td th:text="${car.transmission}"/>
-        <td th:text="${car.sold}"/>
-        <td> <a th:href="@{/cars/{parametr}(parametr=${car.id})}" th:text="Details"></a></td>
-
-    </tr>
-    </tbody>
-
-
-
-</table>
-
+    <a th:href="@{/cars/sold}">Wyświetl listę pojazdów sprzedanych</a>
+    <br/>
+    <a th:href="@{/cars/all}">Wyświetl listę pojazdów wszystkich</a>
+    <br/>
 
 
 </div>
 </body>
+
 </html>

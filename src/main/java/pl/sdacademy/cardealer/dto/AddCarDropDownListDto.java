@@ -8,6 +8,8 @@ import java.util.List;
 
 @Component
 public class AddCarDropDownListDto {
+
+    private static AddCarDropDownListDto INSTANCE = new AddCarDropDownListDto();
     List<Brand> brands;
     List<CarType> carTypes;
     List<Fuel> fuels;
@@ -15,7 +17,12 @@ public class AddCarDropDownListDto {
     List<ProductionYear> productionYears;
     List<Transmission> transmissions;
 
-    public AddCarDropDownListDto() {
+
+    private AddCarDropDownListDto() {
+    }
+
+    public static AddCarDropDownListDto getInstance(){
+        return INSTANCE;
     }
 
     public List<Brand> getBrands() {
