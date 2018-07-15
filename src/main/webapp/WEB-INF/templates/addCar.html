@@ -4,7 +4,8 @@
     <meta charset="UTF-8"/>
     <title>Add Car</title>
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -28,7 +29,17 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" th:href="@{/cars}">Show Cars</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Show Cars
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@{/cars}">Show Available Cars</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@{/cars/sold}">Show Sold Cars </a>
+                        <a class="dropdown-item" href="@{/cars/all}">Show All Cars</a>
+                    </div>
+                </li>
                 <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
                 <a class="nav-item nav-link disabled" href="#">Disabled</a>
             </div>
@@ -36,159 +47,163 @@
     </nav>
 
 
+    <form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
+        <table class="table">
+            <div class="form-control">
+                <thead>
+                <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Value</th>
+                </tr>
+                </thead>
+                <tr>
+                    <td>VIN Number</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{vin}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Brand</td>
+                    <td>
+                        
+                            <select th:field="*{brand}" id="brand" th:errorclass="fieldError">
+                                <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"/>
+                                <option th:each="brand : ${dropList.brands}" th:value="${brand.id} "
+                                        th:text="${brand.name}"></option>
+                            </select>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Model</td>
+                    <td>
+                        
+                            <select th:field="*{model}" id="model">
+                                <option th:each="carModel : ${dropList.carModels}" th:value="${carModel.id}"
+                                        th:text="${carModel.name}" th:if="1 == ${carModel.brand.id}"></option>
+                            </select>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Production Year</td>
+                    <td>
+                        
+                            <select th:field="*{productionYear}" id="productionYear">
+                                <option th:each="productionYear : ${dropList.productionYears}"
+                                        th:value="${productionYear.id}"
+                                        th:text="${productionYear.name}"></option>
+                            </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>OC Number</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{ocNumber}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('ocNumber')}" th:errors="*{ocNumber}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Register Number</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{registerNumber}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('registerNumber')}" th:errors="*{registerNumber}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Fuel</td>
+                    <td>
+                        
+                            <select th:field="*{fuel}" id="fuel">
+                                <option th:each="fuel : ${dropList.fuels}" th:value="${fuel.id}"
+                                        th:text="${fuel.name}"></option>
+                            </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Mileage</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{mileage}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Engine</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{engine}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Power</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{power}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('power')}" th:errors="*{power}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Car Type</td>
+                    <td>
+                        
+                            <select th:field="*{carType}" id="carType">
+                                <option th:each="carType : ${dropList.carTypes}" th:value="${carType.id}"
+                                        th:text="${carType.name}"></option>
+                            </select>
+                    </td>
+                </tr>
+
+                <tr>
+                    <td>Transmission</td>
+                    <td>
+                        
+                            <select th:field="*{transmission}" id="transmission">
+                                <option th:each="transmission : ${dropList.transmissions}" th:value="${transmission.id}"
+                                        th:text="${transmission.name}"></option>
+                            </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Description: </td>
+                    <td>
+                        
+
+                            <textarea class="form-control" rows="5" type="text" th:field="*{description}"
+                                      th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('description')}" th:errors="*{decritpion}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td>Price</td>
+                    <td>
+                        
+                            <input type="text" th:field="*{price}" th:errorclass="fieldError"/>
+                            <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"/>
+                        
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="2" align="center"><input type="submit" value="Add Vehicle"/></td>
+                </tr>
+            </div>
+        </table>
 
 
-
-<form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
-    <table border="2" rules="all">
-        <tr>
-            <td><b>Property</b></td>
-            <td><b>Value</b></td>
-        </tr>
-        <tr>
-            <td><b>VIN Number</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{vin}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Brand</b></td>
-            <td>
-                <b>
-                    <select th:field="*{brand}" id="brand" th:errorclass="fieldError">
-                    <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"/>
-                        <option th:each="brand : ${dropList.brands}" th:value="${brand.id} "
-                                th:text="${brand.name}"></option>
-                    </select>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Model</b></td>
-            <td>
-                <b>
-                    <select th:field="*{model}" id="model">
-                        <option th:each="carModel : ${dropList.carModels}" th:value="${carModel.id}"
-                                th:text="${carModel.name}" th:if="1 == ${carModel.brand.id}"></option>
-                    </select>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Production Year</b></td>
-            <td>
-                <b>
-                    <select th:field="*{productionYear}" id="productionYear">
-                        <option th:each="productionYear : ${dropList.productionYears}" th:value="${productionYear.id}"
-                                th:text="${productionYear.name}"></option>
-                    </select></b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>OC Number</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{ocNumber}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('ocNumber')}" th:errors="*{ocNumber}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Register Number</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{registerNumber}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('registerNumber')}" th:errors="*{registerNumber}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Fuel</b></td>
-            <td>
-                <b>
-                    <select th:field="*{fuel}" id="fuel">
-                        <option th:each="fuel : ${dropList.fuels}" th:value="${fuel.id}"
-                                th:text="${fuel.name}"></option>
-                    </select></b>
-            </td>
-        </tr>
-
-        <tr>
-            <td><b>Mileage</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{mileage}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Engine</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{engine}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Power</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{power}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('power')}" th:errors="*{power}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Car Type</b></td>
-            <td>
-                <b>
-                    <select th:field="*{carType}" id="carType">
-                        <option th:each="carType : ${dropList.carTypes}" th:value="${carType.id}"
-                                th:text="${carType.name}"></option>
-                    </select></b>
-            </td>
-        </tr>
-
-        <tr>
-            <td><b>Transmission</b></td>
-            <td>
-                <b>
-                    <select th:field="*{transmission}" id="transmission">
-                        <option th:each="transmission : ${dropList.transmissions}" th:value="${transmission.id}"
-                                th:text="${transmission.name}"></option>
-                    </select></b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Description: </b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{description}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('description')}" th:errors="*{decritpion}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td><b>Price</b></td>
-            <td>
-                <b>
-                    <input type="text" th:field="*{price}" th:errorclass="fieldError"/>
-                    <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"/>
-                </b>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center"><button type="submit" text="Add Car" class="btn btn-primary"/></td>
-        </tr>
-    </table>
-
-
-</form>
+    </form>
 </div>
 
 </body>

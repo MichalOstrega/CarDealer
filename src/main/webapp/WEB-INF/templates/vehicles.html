@@ -16,7 +16,6 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-<h1 th:text="${headerMsg}"> </h1>
 <div class="container">
     <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
         <a class="navbar-brand" href="#" img="">Car Dealer</a>
@@ -27,13 +26,24 @@
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
             <div class="navbar-nav">
                 <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-                <a class="nav-item nav-link" th:href="@{/cars}">Show Cars</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="@{/cars}">Show Cars</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="@{/cars/sold}">Show Sold Cars </a>
+                        <a class="dropdown-item" href="@{/cars/all}">Show All Cars</a>
+                    </div>
+                </li>
                 <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
                 <a class="nav-item nav-link disabled" href="#">Disabled</a>
             </div>
         </div>
     </nav>
 
+    <h1 class="container" align="center" th:text="${headerMsg}"> </h1>
 
 
 
