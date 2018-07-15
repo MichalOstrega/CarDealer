@@ -3,8 +3,11 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Add Car</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
 </head>
 <body>
+
 
 <form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
     <table border="2" rules="all">
@@ -16,7 +19,8 @@
             <td><b>VIN Number</b></td>
             <td>
                 <b>
-                    <input type="text" th:field="*{vin}"/>
+                    <input type="text" th:field="*{vin}" th:errorclass="fieldError"/>
+                    <span th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"/>
                 </b>
             </td>
         </tr>
@@ -24,7 +28,8 @@
             <td><b>Brand</b></td>
             <td>
                 <b>
-                    <select th:field="*{brand}" id="brand">
+                    <select th:field="*{brand}" id="brand" th:errorclass="fieldError">
+                    <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"/>
                         <option th:each="brand : ${dropList.brands}" th:value="${brand.id}"
                                 th:text="${brand.name}"></option>
                     </select>
@@ -37,7 +42,7 @@
                 <b>
                     <select th:field="*{model}" id="model">
                         <option th:each="carModel : ${dropList.carModels}" th:value="${carModel.id}"
-                                th:text="${carModel.name}"></option>
+                                th:text="${carModel.name}" th:if="1 == ${carModel.brand.id}"></option>
                     </select>
                 </b>
             </td>
@@ -148,6 +153,8 @@
 
 </form>
 
+<br/>
+<a th:href="@{/}">Strona Główna</a>
 
 </body>
 </html>

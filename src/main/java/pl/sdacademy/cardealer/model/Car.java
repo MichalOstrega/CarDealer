@@ -7,46 +7,66 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.validation.constraints.Max;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Car extends BaseModelVersion {
 
-
+    @NotNull
     private String vin;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "production_year_id")
     private ProductionYear productionYear;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name="model_id")
     private CarModel model;
 
+    @NotNull
     @Column(name = "OC_number")
     private String ocNumber;
 
+
+    @NotNull
     @Column(name = "register_number")
     private String registerNumber;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "fuel_id")
     private Fuel fuel;
 
+
+    @NotNull
+    @Min(0)
+    @Max(1000000)
     private int mileage;
 
+
+    @NotNull
     private String engine;
 
+    @NotNull
     private String power;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "transmission_id")
     private Transmission transmission;
 
+    @NotNull
     private String description;
+
 
     private int test_drives;
 
@@ -54,7 +74,10 @@ public class Car extends BaseModelVersion {
     @JoinColumn(name = "car_type_id")
     private CarType carType;
 
+    @NotNull
+    @Min(5000)
     private int price;
+
 
     private boolean sold;
 

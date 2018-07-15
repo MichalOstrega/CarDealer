@@ -18,11 +18,31 @@ public class DefaultCarDataService implements CarDataService {
 
     @Override
     public List<Car> loadAllAvailableCars() {
+        return carRepository.findAllBySoldIsFalse();
+    }
+
+    @Override
+    public List<Car> loadAllSoldCars() {
+        return carRepository.findAllBySoldIsTrue();
+    }
+
+    @Override
+    public List<Car> loadAllCars() {
         return carRepository.findAll();
     }
 
     @Override
     public void addCar(Car carToSave) {
         carRepository.save(carToSave);
+    }
+
+    @Override
+    public Car loadCarById(Long carID) {
+        return carRepository.findOne(carID);
+    }
+
+    @Override
+    public Car loadCarByVIN(String vin) {
+        return carRepository.findByVin(vin);
     }
 }

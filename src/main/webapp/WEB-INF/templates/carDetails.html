@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="'Car details: ' + ${car.brand + ' ' + car.model}"> </title>
+</head>
+<body>
+
+<h1>Car details</h1>
+<table border="1" rules="all" th:object="${car}">
+    <tr><td><b>Property</b></td><td><b>Value</b></td></tr>
+    <tr><td>Id</td><td th:text="*{id}"></td></tr>
+    <tr><td>Manufacturer</td><td th:text="*{brand}"></td></tr>
+    <tr><td>Model</td><td th:text="*{model}"></td></tr>
+    <tr><td>Fuel</td><td th:text="*{fuel}"></td></tr>
+    <tr><td>ProductionYear</td><td th:text="*{productionYear}"></td></tr>
+    <tr><td>Mileage</td><td th:text="*{mileage}"></td></tr>
+    <tr><td>Price</td><td th:text="*{price}"></td></tr>
+    <td><a th:href="@{cars/{param}/sell(param=*{id})}">Sell</a></td>
+
+</table>
+</body>
+</html>

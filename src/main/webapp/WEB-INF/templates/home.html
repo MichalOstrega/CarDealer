@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Car Dealer Home Page</title>
+</head>
+<body>
+
+<h1>Car Dealer Home Page</h1>
+
+<a th:href="@{/cars}">Wyświetl listę pojazdów dostępnych</a>
+<br/>
+<a th:href="@{/cars/sold}">Wyświetl listę pojazdów sprzedanych</a>
+<br/>
+<a th:href="@{/cars/all}">Wyświetl listę pojazdów wszystkich</a>
+<br/>
+
+<a th:href="@{/cars/new}">Dodaj pojazd</a>
+
+
+</body>
+</html>
