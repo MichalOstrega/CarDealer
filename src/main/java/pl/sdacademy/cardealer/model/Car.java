@@ -52,7 +52,7 @@ public class Car extends BaseModelVersion {
 
 
     @NotNull
-    @Min(0)
+    @Min(1)
     @Max(1000000)
     private int mileage;
 

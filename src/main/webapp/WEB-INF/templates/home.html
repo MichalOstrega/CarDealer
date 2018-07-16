@@ -14,44 +14,98 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
             integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
             crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#" img="">Car Dealer</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="@{/cars}">Show Cars</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@{/cars/sold}">Show Sold Cars </a>
-                        <a class="dropdown-item" href="@{/cars/all}">Show All Cars</a>
-                    </div>
-                </li>
-                <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
-                <a class="nav-item nav-link disabled" href="#">Disabled</a>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container text-center">
+        <h1>With Car Dealer in the Clouds</h1>
+        <p>We have your dreaming Car</p>
+    </div>
+</div>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <a class="navbar-brand" href="#" img="">Car Dealer</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+
+            <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Show Cars
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
+                    <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
+                </div>
+            </li>
+            <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
+            <div class="nav navbar-nav navbar-right">
+                <a class="nav-item nav-link" href="#"> Your Account</a>
+                <a class="nav-item nav-link" href="#"> Cart</a>
             </div>
         </div>
-    </nav>
+    </div>
 
-
-    <a th:href="@{/cars/sold}">Wyświetl listę pojazdów sprzedanych</a>
-    <br/>
-    <a th:href="@{/cars/all}">Wyświetl listę pojazdów wszystkich</a>
-    <br/>
-
-
+</nav>
 </div>
+<br/>
+<br/>
+<br/>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="card">
+                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Nissan_Almera_front_20080224.jpg/250px-Nissan_Almera_front_20080224.jpg" alt="Card image cap"/>
+                <div class="card-body">
+                    <h5 class="card-title">Almera</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card" >
+                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/VW_Golf_IV_front_20071205.jpg/275px-VW_Golf_IV_front_20071205.jpg" alt="Card image cap"/>
+                <div class="card-body">
+                    <h5 class="card-title">Golf</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="card">
+                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Renault_Fluence_front_20100918.jpg/240px-Renault_Fluence_front_20100918.jpg" alt="Card image cap"/>
+                <div class="card-body">
+                    <h5 class="card-title">Fluence</h5>
+                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                        card's content.</p>
+                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<br/><br/>
+
+<footer class="container-fluid text-center">
+    <p>All rights reserved</p>
+</footer>
 </body>
 
 </html>

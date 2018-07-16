@@ -19,10 +19,10 @@ public class Customer extends BaseModelVersion {
     private Address address;
 
     @Column(name = "NIP")
-    private int NIP;
+    private int nip;
 
     @Column(name = "PESEL")
-    private int PESEL;
+    private int pesel;
 
     public String getSurname() {
         return surname;
@@ -48,19 +48,19 @@ public class Customer extends BaseModelVersion {
         this.address = address;
     }
 
-    public int getNIP() {
-        return NIP;
+    public int getNip() {
+        return nip;
     }
 
-    public void setNIP(int NIP) {
-        this.NIP = NIP;
+    public void setNip(int nip) {
+        this.nip = nip;
     }
 
-    public int getPESEL() {
-        return PESEL;
+    public int getPesel() {
+        return pesel;
     }
 
-    public void setPESEL(int PESEL) {
-        this.PESEL = PESEL;
+    public void setPesel(int pesel) {
+        this.pesel = pesel;
     }
 }
