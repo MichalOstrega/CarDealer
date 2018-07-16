@@ -2,7 +2,7 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
-    <title>Add Car</title>
+    <title>Add Customer</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
@@ -17,7 +17,6 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
-
 <div class="container">
     <div class="jumbotron jumbotron-fluid">
         <div class="container text-center">
@@ -38,7 +37,7 @@
 
                 <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button"
                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Show Cars
                     </a>
@@ -50,9 +49,30 @@
                     </div>
                 </li>
                 <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
-                <div class="nav navbar-nav navbar-right">
-                    <a class="nav-item nav-link" href="#"> Your Account</a>
-                    <a class="nav-item nav-link" href="#"> Cart</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link dropdown-toggle" role="button" id="loginMenu" data-toggle="dropdown"
+                   aria-haspopup="true" aria-expanded="false">
+                    Log in
+                </a>
+                <div class="dropdown-menu dropdown-menu-right " aria-labelledby="loginMenu">
+                    <form class="px-4 py-3">
+                        <div class="form-group">
+                            <label for="exampleDropdownFormEmail1">Login</label>
+                            <input type="email" class="form-control" id="exampleDropdownFormEmail1"
+                                   placeholder="email@example.com"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleDropdownFormPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleDropdownFormPassword1"
+                                   placeholder="Password"/>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </form>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">New around here? Sign up</a>
+                    <a class="dropdown-item" href="#">Forgot password?</a>
                 </div>
             </div>
         </div>
@@ -63,167 +83,112 @@
 <br/>
 <br/>
 <div class="container">
+    <form th:action="@{/customers}" th:method="post" th:object="${addedCustomer}">
 
+        <div class="form-control">
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="surname">Surname</span>
+                </div>
 
-    <form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
-        <table class="table">
-            <div class="form-control">
-                <thead>
-                <tr>
-                    <th scope="col">Property</th>
-                    <th scope="col">Value</th>
-                </tr>
-                </thead>
-                <tr>
-                    <td>VIN Number</td>
-                    <td>
-
-                        <input type="text" th:field="*{vin}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Brand</td>
-                    <td>
-
-                        <select th:field="*{brand}" id="brand" th:errorclass="fieldError">
-                            <span th:if="${#fields.hasErrors('brand')}" th:errors="*{brand}"/>
-                            <option th:each="brand : ${dropList.brands}" th:value="${brand.id} "
-                                    th:text="${brand.name}"></option>
-                        </select>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Model</td>
-                    <td>
-
-                        <select th:field="*{model}" id="model">
-                            <option th:each="carModel : ${dropList.carModels}" th:value="${carModel.id}"
-                                    th:text="${carModel.name}" th:if="1 == ${carModel.brand.id}"></option>
-                        </select>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Production Year</td>
-                    <td>
-
-                        <select th:field="*{productionYear}" id="productionYear">
-                            <option th:each="productionYear : ${dropList.productionYears}"
-                                    th:value="${productionYear.id}"
-                                    th:text="${productionYear.name}"></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>OC Number</td>
-                    <td>
-
-                        <input type="text" th:field="*{ocNumber}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('ocNumber')}" th:errors="*{ocNumber}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Register Number</td>
-                    <td>
-
-                        <input type="text" th:field="*{registerNumber}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('registerNumber')}" th:errors="*{registerNumber}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Fuel</td>
-                    <td>
-
-                        <select th:field="*{fuel}" id="fuel">
-                            <option th:each="fuel : ${dropList.fuels}" th:value="${fuel.id}"
-                                    th:text="${fuel.name}"></option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Mileage</td>
-                    <td>
-
-                        <input type="text" th:field="*{mileage}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('mileage')}" th:errors="*{mileage}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Engine</td>
-                    <td>
-
-                        <input type="text" th:field="*{engine}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('engine')}" th:errors="*{engine}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Power</td>
-                    <td>
-
-                        <input type="text" th:field="*{power}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('power')}" th:errors="*{power}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Car Type</td>
-                    <td>
-
-                        <select th:field="*{carType}" id="carType">
-                            <option th:each="carType : ${dropList.carTypes}" th:value="${carType.id}"
-                                    th:text="${carType.name}"></option>
-                        </select>
-                    </td>
-                </tr>
-
-                <tr>
-                    <td>Transmission</td>
-                    <td>
-
-                        <select th:field="*{transmission}" id="transmission">
-                            <option th:each="transmission : ${dropList.transmissions}" th:value="${transmission.id}"
-                                    th:text="${transmission.name}"></option>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td>Description:</td>
-                    <td>
-                        
-
-                            <textarea class="form-control" rows="5" type="text" th:field="*{description}"
-                                      th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('description')}" th:errors="*{decritpion}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td>Price</td>
-                    <td>
-
-                        <input type="text" th:field="*{price}" th:errorclass="fieldError"/>
-                        <span th:if="${#fields.hasErrors('price')}" th:errors="*{price}"/>
-
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2" align="center"><input type="submit" value="Add Vehicle"/></td>
-                </tr>
+                <input type="text" class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{surname}"
+                       th:errorclass="fieldError"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"/>
             </div>
-        </table>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="name">Name</span>
+                </div>
+
+                <input type="text" class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{Name}"
+                       th:errorclass="fieldError"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
+            </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="street">Street</span>
+                </div>
+
+                <input class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.street}"
+                       th:errorclass="fieldError"/>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="houseNr">House Nr</span>
+                </div>
+
+                <input class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.houseNumber}"
+                       th:errorclass="fieldError"/>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="flatNr">Flat Nr</span>
+                </div>
+
+                <input class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.flatNumber}"
+                       th:errorclass="fieldError"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.street')}" th:errors="*{address.street}"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.zipCode')}" th:errors="*{address.houseNumber}"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.zipCode')}" th:errors="*{address.flatNumber}"/>
+            </div>
+
+
+            <div class="input-group mb-3">
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="zipCode">Zip Code</span>
+            </div>
+
+            <input class="form-control is-invalid" aria-label="Small"
+                   aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.zipCode}"
+                   th:errorclass="fieldError"/>
+            <div class="input-group-prepend">
+                <span class="input-group-text" id="city">City</span>
+            </div>
+
+            <input class="form-control is-invalid" aria-label="Small"
+                   aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.city}"
+                   th:errorclass="fieldError"/>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('address.city')}" th:errors="*{address.city}"/>
+            <span class="invalid-feedback" th:if="${#fields.hasErrors('address.zipCode')}" th:errors="*{address.zipCode}"/>
+        </div>
+
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="nip">NIP</span>
+                </div>
+
+                <input class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{nip}"
+                       th:errorclass="fieldError"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('nip')}" th:errors="*{nip}"/>
+            </div>
+            <div class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="pesel">PESEL</span>
+                </div>
+
+                <input class="form-control is-invalid" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{pesel}"
+                       th:errorclass="fieldError"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"/>
+            </div>
+
+
+
+
+            <div class="input-group mb-3">
+                <button type="submit" class="btn btn-primary btn-lg btn-block">Add Customer</button>
+            </div>
+
+
+        </div>
 
 
     </form>
 </div>
-
 
 </body>
 </html>
