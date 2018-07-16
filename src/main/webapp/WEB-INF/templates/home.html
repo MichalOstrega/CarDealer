@@ -19,45 +19,63 @@
 </head>
 <body>
 <div class="container">
-<div class="jumbotron jumbotron-fluid">
-    <div class="container text-center">
-        <h1>With Car Dealer in the Clouds</h1>
-        <p>We have your dreaming Car</p>
-    </div>
-</div>
-
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-    <a class="navbar-brand" href="#" img="">Car Dealer</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class="navbar-nav">
-
-            <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-            <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
-                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Show Cars
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
-                    <div class="dropdown-divider"></div>
-                    <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
-                    <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
-                </div>
-            </li>
-            <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
-            <div class="nav navbar-nav navbar-right">
-                <a class="nav-item nav-link" href="#"> Your Account</a>
-                <a class="nav-item nav-link" href="#"> Cart</a>
-            </div>
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container text-center">
+            <h1>With Car Dealer in the Clouds</h1>
+            <p>We have your dreaming Car</p>
         </div>
     </div>
 
-</nav>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="#" img="">Car Dealer</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+            <div class="navbar-nav">
+
+                <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Show Cars
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
+                        <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
+                    </div>
+                </li>
+                <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
+            </div>
+            <div class="navbar-nav ml-auto">
+                <a class="nav-link dropdown-toggle" role="button" id="loginMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Log in
+                </a>
+                <div class="dropdown-menu dropdown-menu-right "  aria-labelledby="loginMenu">
+                    <form class="px-4 py-3">
+                        <div class="form-group">
+                            <label for="exampleDropdownFormEmail1">Login</label>
+                            <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleDropdownFormPassword1">Password</label>
+                            <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password"/>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Sign in</button>
+                    </form>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="#">New around here? Sign up</a>
+                    <a class="dropdown-item" href="#">Forgot password?</a>
+                </div>
+            </div>
+        </div>
+
+    </nav>
 </div>
 <br/>
 <br/>
@@ -68,7 +86,9 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="card">
-                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Nissan_Almera_front_20080224.jpg/250px-Nissan_Almera_front_20080224.jpg" alt="Card image cap"/>
+                <img class="card-img-top"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Nissan_Almera_front_20080224.jpg/250px-Nissan_Almera_front_20080224.jpg"
+                     alt="Card image cap"/>
                 <div class="card-body">
                     <h5 class="card-title">Almera</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
@@ -78,8 +98,10 @@
             </div>
         </div>
         <div class="col-sm-4">
-            <div class="card" >
-                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/VW_Golf_IV_front_20071205.jpg/275px-VW_Golf_IV_front_20071205.jpg" alt="Card image cap"/>
+            <div class="card">
+                <img class="card-img-top"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/VW_Golf_IV_front_20071205.jpg/275px-VW_Golf_IV_front_20071205.jpg"
+                     alt="Card image cap"/>
                 <div class="card-body">
                     <h5 class="card-title">Golf</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
@@ -90,7 +112,9 @@
         </div>
         <div class="col-sm-4">
             <div class="card">
-                <img class="card-img-top" src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Renault_Fluence_front_20100918.jpg/240px-Renault_Fluence_front_20100918.jpg" alt="Card image cap"/>
+                <img class="card-img-top"
+                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Renault_Fluence_front_20100918.jpg/240px-Renault_Fluence_front_20100918.jpg"
+                     alt="Card image cap"/>
                 <div class="card-body">
                     <h5 class="card-title">Fluence</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
