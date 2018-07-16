@@ -4,13 +4,18 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Customer extends BaseModelVersion {
 
+
     @Column(name = "surname")
     private String surname;
 
+    @NotNull
     @Column(name = "name")
     private String name;
 
@@ -18,11 +23,17 @@ public class Customer extends BaseModelVersion {
     @JoinColumn(name = "address_id")
     private Address address;
 
+    @Pattern(regexp = "^\\d{10}$", message = "Must be 10 digits")
     @Column(name = "NIP")
-    private int NIP;
+    private String nip;
 
+    @Pattern(regexp = "^\\d{11}$", message = "Must be 11 digits")
     @Column(name = "PESEL")
-    private int PESEL;
+    private String pesel;
+
+    public Customer() {
+        this.address = new Address();
+    }
 
     public String getSurname() {
         return surname;
@@ -48,19 +59,19 @@ public class Customer extends BaseModelVersion {
         this.address = address;
     }
 
-    public int getNIP() {
-        return NIP;
+    public String getNip() {
+        return nip;
     }
 
-    public void setNIP(int NIP) {
-        this.NIP = NIP;
+    public void setNip(String nip) {
+        this.nip = nip;
     }
 
-    public int getPESEL() {
-        return PESEL;
+    public String getPesel() {
+        return pesel;
     }
 
-    public void setPESEL(int PESEL) {
-        this.PESEL = PESEL;
+    public void setPesel(String pesel) {
+        this.pesel = pesel;
     }
 }

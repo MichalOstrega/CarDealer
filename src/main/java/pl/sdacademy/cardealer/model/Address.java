@@ -2,22 +2,34 @@ package pl.sdacademy.cardealer.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 public class Address extends BaseModelVersion {
 
+    @NotNull
+    @Size(min = 1,max = 50)
     @Column(name = "city")
     private String city;
 
+    @NotNull
+    @Size(min = 1,max = 50)
     @Column(name = "street")
     private String street;
 
+    @NotNull
+    @Size(min = 1,max = 50)
     @Column(name = "house_number")
     private String houseNumber;
 
+    @NotNull
     @Column(name = "flat_number")
     private int flatNumber;
 
+    @NotNull
+    @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
     @Column(name = "zip_code")
     private String zipCode;
 
