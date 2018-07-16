@@ -24,9 +24,9 @@ public class Address extends BaseModelVersion {
     @Column(name = "house_number")
     private String houseNumber;
 
-    @NotNull
+    @Size(min = 0,max = 10)
     @Column(name = "flat_number")
-    private int flatNumber;
+    private String flatNumber;
 
     @NotNull
     @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
@@ -57,11 +57,11 @@ public class Address extends BaseModelVersion {
         this.houseNumber = houseNumber;
     }
 
-    public int getFlatNumber() {
+    public String getFlatNumber() {
         return flatNumber;
     }
 
-    public void setFlatNumber(int flatNumber) {
+    public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
     }
 
