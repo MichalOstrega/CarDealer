@@ -28,6 +28,8 @@ public class CarDataController {
         this.defaultDictionaryService = defaultDictionaryService;
     }
 
+
+
     @GetMapping
     public String showAvailableCars(Model model) {
         List<Car> cars = carDataService.loadAllAvailableCars();
@@ -112,4 +114,6 @@ public class CarDataController {
         addCarDropDownListDto.setTransmissions(defaultDictionaryService.getTransmission());
         return addCarDropDownListDto;
     }
+
+
 }

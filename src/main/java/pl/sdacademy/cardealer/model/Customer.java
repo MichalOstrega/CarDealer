@@ -13,6 +13,7 @@ public class Customer extends BaseModelVersion {
     private String surname;
 
     @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
 

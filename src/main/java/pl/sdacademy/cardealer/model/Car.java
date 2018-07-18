@@ -16,7 +16,7 @@ import javax.validation.constraints.Size;
 public class Car extends BaseModelVersion {
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=17, max=17, message = "Input valid VIN - 17 characters")
     private String vin;
 
     @NotNull
@@ -35,13 +35,13 @@ public class Car extends BaseModelVersion {
     private CarModel model;
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input OC Number")
     @Column(name = "OC_number")
     private String ocNumber;
 
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input Register Number")
     @Column(name = "register_number")
     private String registerNumber;
 
@@ -58,11 +58,11 @@ public class Car extends BaseModelVersion {
 
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input Engine Type")
     private String engine;
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input Power")
     private String power;
 
     @NotNull
@@ -71,7 +71,7 @@ public class Car extends BaseModelVersion {
     private Transmission transmission;
 
     @NotNull
-    @Size(min=1, max=1000)
+    @Size(min=1, max=1000, message = "Input description")
     private String description;
 
 
@@ -82,7 +82,7 @@ public class Car extends BaseModelVersion {
     private CarType carType;
 
     @NotNull
-    @Min(5000)
+    @Min(value = 5000, message = "Price must be greater than 5000")
     private int price;
 
 

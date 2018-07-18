@@ -1,0 +1,43 @@
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+    margin-bottom: 50px;
+    border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+    margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+footer {
+    background-color: #f2f2f2;
+    padding: 25px;
+}
+
+.logo {
+    color:#000fff;
+    font-weight:800;
+    font-size:20pt;
+    padding:25px;
+    text-align:center;
+}
+
+.line {
+    padding-top:20px;
+    white-space:no-wrap;
+    overflow:hidden;
+    text-align:center;
+}
+
+.wide {
+    width:100%;
+    height:100%;
+    height:calc(100% - 1px);
+    background-image:url('https://www.fiat.com/content/dam/fiat/cross/models/500_family/family_page/990/canvas/500.jpg.transform/width-990/img.jpg');
+    background-size:cover;
+}
+
+.wide img {
+    width:100%;
+}

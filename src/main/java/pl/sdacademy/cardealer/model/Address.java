@@ -10,17 +10,17 @@ import javax.validation.constraints.Size;
 public class Address extends BaseModelVersion {
 
     @NotNull
-    @Size(min = 1,max = 50)
+    @Size(min = 1,max = 50, message = "Input City")
     @Column(name = "city")
     private String city;
 
     @NotNull
-    @Size(min = 1,max = 50)
+    @Size(min = 1,max = 50, message = "Input Street")
     @Column(name = "street")
     private String street;
 
     @NotNull
-    @Size(min = 1,max = 50)
+    @Size(min = 1,max = 50, message = "Input House Number")
     @Column(name = "house_number")
     private String houseNumber;
 

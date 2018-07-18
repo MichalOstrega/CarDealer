@@ -17,33 +17,10 @@
             crossorigin="anonymous"></script>
 </head>
 <body>
+<div th:replace="fragments/header :: header">
 
+</div>
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <a class="navbar-brand" href="#" img="">Car Dealer</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-            <div class="navbar-nav">
-                <a class="nav-item nav-link active" th:href="@{/}">Home <span class="sr-only">(current)</span></a>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="@{/cars}">Show Cars</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="@{/cars/sold}">Show Sold Cars </a>
-                        <a class="dropdown-item" href="@{/cars/all}">Show All Cars</a>
-                    </div>
-                </li>
-                <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
-                <a class="nav-item nav-link disabled" href="#">Disabled</a>
-            </div>
-        </div>
-    </nav>
 <h1>Car details</h1>
 <table border="1" rules="all" th:object="${car}">
     <tr><td><b>Property</b></td><td><b>Value</b></td></tr>
@@ -53,10 +30,14 @@
     <tr><td>Fuel</td><td th:text="*{fuel}"></td></tr>
     <tr><td>ProductionYear</td><td th:text="*{productionYear}"></td></tr>
     <tr><td>Mileage</td><td th:text="*{mileage}"></td></tr>
-    <tr><td>Price</td><td th:text="*{price}"></td></tr>
-    <td><a th:href="@{{param}/sell(param=*{id})}">Sell</a></td>
+    <tr><td>Price</td><td th:text="*{price}"></td></tr><tr>
+    <td><a th:href="@{{param}/sell(param=*{id})}">Sell</a></td></tr>
 
 </table>
 </div>
+
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
 </body>
 </html>
