@@ -14,6 +14,7 @@
             crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
 </head>
 <body>
 
@@ -48,17 +49,32 @@
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Show Cars
+                            Cars
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/cars/new}">Add Car</a>
                             <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
                             <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
                         </div>
                     </li>
-                    <a class="nav-item nav-link" th:href="@{/cars/new}">Add Car</a>
-                    <a class="nav-item nav-link" th:href="@{/customers/new}">Add Customer</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Customers
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/customers/companies}">Show Companies</a>
+                            <a class="dropdown-item" th:href="@{/customers/new?type=1}">Add Company</a>
+                            <div class="dropdown-divider">Persons</div>
+                            <a class="dropdown-item" th:href="@{/customers/persons}">Show Persons</a>
+                            <a class="dropdown-item" th:href="@{/customers/new?type=2}">Add Person</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/customers}">Show all</a>
+                        </div>
+                    </li>
+
                 </div>
                 <div class="navbar-nav ml-auto">
                     <a class="nav-link dropdown-toggle" role="button" id="loginMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">

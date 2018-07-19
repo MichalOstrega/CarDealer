@@ -24,7 +24,7 @@ public class Address extends BaseModelVersion {
     @Column(name = "house_number")
     private String houseNumber;
 
-    @Size(min = 0,max = 10)
+    @Size(max = 10)
     @Column(name = "flat_number")
     private String flatNumber;
 

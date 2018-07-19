@@ -34,7 +34,7 @@ footer {
     width:100%;
     height:100%;
     height:calc(100% - 1px);
-    background-image:url('https://www.fiat.com/content/dam/fiat/cross/models/500_family/family_page/990/canvas/500.jpg.transform/width-990/img.jpg');
+    background-image:url('/img/top.jpg');
     background-size:cover;
 }
 

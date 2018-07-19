@@ -2,16 +2,12 @@ package pl.sdacademy.cardealer.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import org.springframework.web.servlet.mvc.support.RedirectAttributesModelMap;
 import pl.sdacademy.cardealer.dto.AddCarDropDownListDto;
 import pl.sdacademy.cardealer.model.Car;
 import pl.sdacademy.cardealer.services.CarDataService;
-import pl.sdacademy.cardealer.services.DefaultDictionaryService;
+import pl.sdacademy.cardealer.services.DictionaryService;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -21,11 +17,11 @@ import java.util.List;
 public class CarDataController {
 
     private CarDataService carDataService;
-    private DefaultDictionaryService defaultDictionaryService;
+    private DictionaryService dictionaryService;
 
-    public CarDataController(CarDataService carDataService, DefaultDictionaryService defaultDictionaryService) {
+    public CarDataController(CarDataService carDataService, DictionaryService dictionaryService) {
         this.carDataService = carDataService;
-        this.defaultDictionaryService = defaultDictionaryService;
+        this.dictionaryService = dictionaryService;
     }
 
 
@@ -76,6 +72,9 @@ public class CarDataController {
     @GetMapping("/{id}")
     public String showCarDetails(Model model, @PathVariable("id") Long carID) {
         Car car = carDataService.loadCarById(carID);
+        if (car == null) {
+                return "redirect:/";
+        }
         model.addAttribute("car", car);
         return "carDetails";
     }
@@ -106,12 +105,12 @@ public class CarDataController {
 
     private AddCarDropDownListDto getDropList() {
         AddCarDropDownListDto addCarDropDownListDto=AddCarDropDownListDto.getInstance();
-        addCarDropDownListDto.setBrands(defaultDictionaryService.getBrands());
-        addCarDropDownListDto.setCarModels(defaultDictionaryService.getCarModels());
-        addCarDropDownListDto.setCarTypes(defaultDictionaryService.getCarTypes());
-        addCarDropDownListDto.setFuels(defaultDictionaryService.getFuels());
-        addCarDropDownListDto.setProductionYears(defaultDictionaryService.getProductionYear());
-        addCarDropDownListDto.setTransmissions(defaultDictionaryService.getTransmission());
+        addCarDropDownListDto.setBrands(dictionaryService.getBrands());
+        addCarDropDownListDto.setCarModels(dictionaryService.getCarModels());
+        addCarDropDownListDto.setCarTypes(dictionaryService.getCarTypes());
+        addCarDropDownListDto.setFuels(dictionaryService.getFuels());
+        addCarDropDownListDto.setProductionYears(dictionaryService.getProductionYear());
+        addCarDropDownListDto.setTransmissions(dictionaryService.getTransmission());
         return addCarDropDownListDto;
     }
 

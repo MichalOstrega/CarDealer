@@ -23,32 +23,20 @@
 
 </div>
 
-<script>
-    $(document).ready(function(){
-        $("#brand").change(function() {
-            var brandCar = $(this).val();
-            console.log(brandCar)
-            $.get( "/dict/models/all?brand=" + brandCar, function( data ) {
-                $("#model").empty();
-                data.forEach(function(item, i) {
-                    var option = "<option value = " + item.id + ">" + item.name +  "</option>";
-                    $("#model").append(option);
-                });
-            });
-        });
-    });
-</script>
+
 <div class="container">
-    <form th:action="@{/cars}" th:method="post" th:object="${addedCar}">
+    <h1>Customer</h1>
+
+    <form th:action="@{/transaction/transfer}" th:method="post" th:object="${transferDto}">
 
         <div class="form-control">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
-                    <span class="input-group-text" id="vin">VIN</span>
+                    <span class="input-group-text" id="vin">Input NIP or PESEL</span>
                 </div>
 
                 <input type="text" class="form-control is-invalid" aria-label="Small"
-                       aria-describedby="inputGroup-sizing-sm" th:field="*{vin}"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{customer.}"
                        th:errorclass="fieldError"/>
                 <span class="invalid-feedback" th:if="${#fields.hasErrors('vin')}" th:errors="*{vin}"/>
             </div>

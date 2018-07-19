@@ -21,51 +21,40 @@
 <div th:replace="fragments/header :: header">
 
 </div>
-<script>
-    $(document).ready(function(){
-        $("#myInput").on("keyup", function() {
-            var value = $(this).val().toLowerCase();
-            $("#carsTable tr").filter(function() {
-                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-            });
-        });
-    });
-</script>
+
 <div class="container">
-    <input class="form-control" id="myInput" type="text" placeholder="Search.."/>
 
 
-<table class="table table-striped table-sm">
+<table class="table table-sm">
     <thead>
     <tr>
         <th scope="col">Id</th>
-        <th scope="col">Manufacturer</th>
-        <th scope="col">Model</th>
-        <th scope="col">Production Year</th>
-        <th scope="col">Mileage</th>
-        <th scope="col">Fuel</th>
-        <th>Price</th>
-        <th>VIN</th>
-        <th>Register Number</th>
-        <th>Transmission</th>
-        <th>Details</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">Street</th>
+        <th scope="col">House Number</th>
+        <th scope="col">Flat Number</th>
+        <th scope="col">Zip Code</th>
+        <th scope="col">City</th>
+        <th th:unless="${headerMsg == 'Persons'}" scope="col">NIP</th>
+        <th th:unless="${headerMsg == 'Companies'}" scope="col">PESEL</th>
+
 
 
     </tr>
     </thead>
-    <tbody id="carsTable">
-    <tr th:each="car, iterationInfo : ${cars}">
-        <td th:text="${car.id}"/>
-        <td th:text="${car.brand}"/>
-        <td th:text="${car.model}"/>
-        <td th:text="${car.productionYear}"/>
-        <td th:text="${car.mileage} + 'km'"/>
-        <td th:text="${car.fuel}"/>
-        <td th:text="${car.price}  +'PLN'"/>
-        <td th:text="${car.vin}"/>
-        <td th:text="${car.registerNumber}"/>
-        <td th:text="${car.transmission}"/>
-        <td><a th:href="@{/cars/{parametr}(parametr=${car.id})}" th:text="Details"></a></td>
+    <tbody id="customersTable">
+    <tr>
+        <td th:text="${customer.id}"/>
+        <td th:text="${customer.name}"/>
+        <td th:text="${customer.surname}"/>
+        <td th:text="${customer.address.street}"/>
+        <td th:text="${customer.address.houseNumber}"/>
+        <td th:text="${customer.address.flatNumber}"/>
+        <td th:text="${customer.address.zipCode}"/>
+        <td th:text="${customer.address.city}"/>
+        <td th:unless="${headerMsg == 'Persons'}" th:text="${customer.nip}"/>
+        <td th:unless="${headerMsg == 'Companies'}" th:text="${customer.pesel}"/>
 
     </tr>
     </tbody>

@@ -6,6 +6,7 @@
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
           integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
             crossorigin="anonymous"></script>
@@ -21,18 +22,22 @@
 
 </div>
 <div class="container">
-    <form th:action="@{/customers}" th:method="post" th:object="${addedCustomer}">
+    <form  th:action="@{/customers}" th:method="post" th:object="${addedCustomer}">
 
-        <div class="form-control">
-            <div class="input-group mb-3">
+        <div  class="form-control">
+            <div th:if="${type == 'person'}" class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="surname">Surname</span>
                 </div>
 
-                <input type="text" class="form-control is-invalid" aria-label="Small"
+                <input type="text" class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" th:field="*{surname}"
-                       th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"/>
+                       th:errorclass="fieldError" required="required"/>
+                <div class="input-group-append">
+                    <span class="input-group-text text-danger" th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}"/>
+                </div>
+
+
             </div>
 
             <div class="input-group mb-3">
@@ -40,10 +45,12 @@
                     <span class="input-group-text" id="name">Name</span>
                 </div>
 
-                <input type="text" class="form-control is-invalid" aria-label="Small"
+                <input type="text" class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" th:field="*{Name}"
-                       th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
+                       th:errorclass="fieldError" required="required"/>
+                <div class="input-group-append">
+                    <span class="input-group-text text-danger" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"/>
+                </div>
             </div>
 
             <div class="input-group mb-3">
@@ -51,29 +58,31 @@
                     <span class="input-group-text" id="street">Street</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.street}"
-                       th:errorclass="fieldError"/>
+                       th:errorclass="fieldError" required="required"/>
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="houseNr">House Nr</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.houseNumber}"
-                       th:errorclass="fieldError"/>
+                       th:errorclass="fieldError" required="required"/>
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="flatNr">Flat Nr</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.flatNumber}"
                        th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.street')}"
+                <div class="input-group-append">
+                <div class="input-group-text text-danger" th:if="${#fields.hasErrors('address.street')}"
                       th:errors="*{address.street}"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.zipCode')}"
+                <span class="input-group-text text-danger" th:if="${#fields.hasErrors('address.houseNumber')}"
                       th:errors="*{address.houseNumber}"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.zipCode')}"
+                <div class="input-group-text text-danger" th:if="${#fields.hasErrors('address.flatNumber')}"
                       th:errors="*{address.flatNumber}"/>
+                </div>
             </div>
 
 
@@ -82,41 +91,47 @@
                     <span class="input-group-text" id="zipCode">Zip Code</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.zipCode}"
-                       th:errorclass="fieldError"/>
+                       th:errorclass="fieldError" required="required"/>
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="city">City</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{address.city}"
-                       th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.city')}"
+                       th:errorclass="fieldError" required="required"/>
+                <div class="input-group-append">
+                <span class="input-group-text text-danger" th:if="${#fields.hasErrors('address.city')}"
                       th:errors="*{address.city}"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('address.zipCode')}"
+                <span class="input-group-text text-danger" th:if="${#fields.hasErrors('address.zipCode')}"
                       th:errors="*{address.zipCode}"/>
+                </div>
             </div>
 
-            <div class="input-group mb-3">
+            <div th:if="${type == 'company'}" class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="nip">NIP</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{nip}"
-                       th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('nip')}" th:errors="*{nip}"/>
+                       th:errorclass="fieldError" required="required"/>
+                <div class="input-group-append">
+                <span class="input-group-text text-danger" th:if="${#fields.hasErrors('nip')}" th:errors="*{nip}"/>
+                </div>
             </div>
-            <div class="input-group mb-3">
+            <div th:if="${type == 'person'}" class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="pesel">PESEL</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input class="form-control" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{pesel}"
-                       th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"/>
+                       th:errorclass="fieldError" required="required"/>
+                <div class="input-group-append">
+                <span class="input-group-text text-danger" th:if="${#fields.hasErrors('pesel')}" th:errors="*{pesel}"/>
+                </div>
             </div>
 
 
