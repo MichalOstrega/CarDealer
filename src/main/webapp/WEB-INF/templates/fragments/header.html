@@ -46,6 +46,7 @@
                 <div class="navbar-nav">
 
                     <a class="nav-item nav-link active" th:href="@{/}">Home</a>
+                    <a class="nav-item nav-link active" th:href="@{/transaction/transfer}">Transaction</a>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -66,10 +67,10 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" th:href="@{/customers/companies}">Show Companies</a>
-                            <a class="dropdown-item" th:href="@{/customers/new?type=1}">Add Company</a>
+                            <a class="dropdown-item" th:href="@{/customers/new?type=company}">Add Company</a>
                             <div class="dropdown-divider">Persons</div>
                             <a class="dropdown-item" th:href="@{/customers/persons}">Show Persons</a>
-                            <a class="dropdown-item" th:href="@{/customers/new?type=2}">Add Person</a>
+                            <a class="dropdown-item" th:href="@{/customers/new?type=person}">Add Person</a>
                             <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{/customers}">Show all</a>
                         </div>

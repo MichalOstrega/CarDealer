@@ -5,8 +5,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.sdacademy.cardealer.dto.AddCarDropDownListDto;
+import pl.sdacademy.cardealer.dto.CarDto;
+import pl.sdacademy.cardealer.dto.TransactionDto;
 import pl.sdacademy.cardealer.model.Car;
 import pl.sdacademy.cardealer.services.CarDataService;
+import pl.sdacademy.cardealer.services.CustomerService;
 import pl.sdacademy.cardealer.services.DictionaryService;
 
 import javax.validation.Valid;
@@ -18,6 +21,7 @@ public class CarDataController {
 
     private CarDataService carDataService;
     private DictionaryService dictionaryService;
+    private CustomerService customerService;
 
     public CarDataController(CarDataService carDataService, DictionaryService dictionaryService) {
         this.carDataService = carDataService;
@@ -60,12 +64,15 @@ public class CarDataController {
     }
 
     @GetMapping("/new")
-    public String addCarForm(Model model) {
-        AddCarDropDownListDto addCarDropDownListDto = getDropList();
-        model.addAttribute("dropList", addCarDropDownListDto);
-        Car attributeValue = new Car();
+    public String addCarForm(Model model,
+                             @RequestParam(value = "transaction", required = false) boolean reqTransaction,
+                             @RequestParam(value = "customer", required = false) Long customerId) {
+        CarDto carDto = new CarDto();
+        carDto.setCustomerId(customerId);
+        carDto.setDropList(getDropList());
+        carDto.setCar( new Car());
 
-        model.addAttribute("addedCar", attributeValue);
+        model.addAttribute("carDto", carDto);
         return "addCar";
     }
 
@@ -81,24 +88,36 @@ public class CarDataController {
 
     @PostMapping
     public String saveVehicle(
-            @Valid @ModelAttribute("addedCar") Car carToSave,
+            @Valid @ModelAttribute("carDto") CarDto carDto,
             BindingResult bindingResult,
             Model model) {
 
-        AddCarDropDownListDto dropList = getDropList();
+        carDto.setDropList(getDropList());
 
+        Car carToSave = carDto.getCar();
+        bindingResult.setNestedPath("car");
         if (bindingResult.hasErrors()) {
-            model.addAttribute("dropList", dropList);
-            model.addAttribute("addedCar", carToSave);
+            model.addAttribute(carDto);
+            bindingResult.setNestedPath("");
             return "addCar";
         }
         if (carDataService.loadCarByVIN(carToSave.getVin()) != null) {
             bindingResult.rejectValue("vin", "vin", "Car cannot be sold Twice");
-            model.addAttribute("dropList", dropList);
-            model.addAttribute("addedCar", carToSave);
+            model.addAttribute(carDto);
+            bindingResult.setNestedPath("");
             return "addCar";
         }
-        carDataService.addCar(carToSave);
+        Car savedCar = carDataService.addCar(carToSave);
+
+        if(carDto.isTransactionRequest() == true){
+            TransactionDto transactionDto = new TransactionDto();
+            transactionDto.setCar(new Car());
+            transactionDto.setCustomer(customerService.findById(carDto.getCustomerId()));
+            transactionDto.setCustomerExist(true);
+            transactionDto.setCarExist(true);
+            model.addAttribute("transactionDto", transactionDto);
+            return "addTransaction";
+        }
 
         return "redirect:/cars";
     }

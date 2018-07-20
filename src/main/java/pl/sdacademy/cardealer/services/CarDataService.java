@@ -12,7 +12,7 @@ public interface CarDataService {
 
     List<Car> loadAllCars();
 
-    void addCar(Car carToSave);
+    Car addCar(Car carToSave);
 
     Car loadCarById(Long carID);
 

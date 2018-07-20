@@ -1,6 +1,7 @@
 package pl.sdacademy.cardealer.model;
 
 import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -17,9 +18,10 @@ public class Customer extends BaseModelVersion {
     @Column(name = "name")
     private String name;
 
+    @Valid
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private Address address;
+    private Address address= new Address();
 
     @Pattern(regexp = "^\\d{10}$", message = "Must be 10 digits")
     @Column(name = "NIP")

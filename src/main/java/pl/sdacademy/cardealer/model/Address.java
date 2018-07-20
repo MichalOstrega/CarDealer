@@ -29,7 +29,7 @@ public class Address extends BaseModelVersion {
     private String flatNumber;
 
     @NotNull
-    @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
+    @Pattern(regexp = "[0-9]{2}-[0-9]{3}",message = "Must be like 00-000")
     @Column(name = "zip_code")
     private String zipCode;
 

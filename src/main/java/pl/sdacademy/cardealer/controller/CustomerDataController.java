@@ -5,6 +5,8 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import pl.sdacademy.cardealer.dto.AddCarDropDownListDto;
+import pl.sdacademy.cardealer.dto.CustomerDto;
+import pl.sdacademy.cardealer.dto.TransactionDto;
 import pl.sdacademy.cardealer.model.Car;
 import pl.sdacademy.cardealer.model.Customer;
 import pl.sdacademy.cardealer.services.CustomerService;
@@ -30,22 +32,18 @@ public class CustomerDataController {
     }
 
     @GetMapping("/new")
-    public String addCustomer(Model model, @RequestParam("type") int type) {
-        Customer customer = new Customer();
-        switch (type) {
-            case 1: {
-                model.addAttribute("type", "company");
-                break;
-            }
-            case 2: {
-                model.addAttribute("type", "person");
-                break;
-            }
-            default: {
-                return "redirect:/";
-            }
+    public String addCustomer(Model model, @RequestParam("type") String type, @RequestParam(value = "transaction", required = false) boolean reqTransaction) {
+
+        CustomerDto customerDto = new CustomerDto();
+        customerDto.setTransactionRequest(reqTransaction);
+        customerDto.setCustomer(new Customer());
+        model.addAttribute("customerDto", customerDto);
+        if ((type.equals("company") || type.equals("person"))) {
+            customerDto.setType(type);
         }
-        model.addAttribute("addedCustomer", customer);
+        else {
+            return ":/";
+        }
         return "addCustomer";
     }
 
@@ -62,37 +60,57 @@ public class CustomerDataController {
 
     @PostMapping
     public String saveCustomer(
-            @Valid @ModelAttribute("addedCustomer") Customer customerToSave,
+            @Valid @ModelAttribute("customerDto") CustomerDto customerDto,
             BindingResult bindingResult,
             Model model) {
 
 
+        Customer customerToSave = customerDto.getCustomer();
+
+        bindingResult.setNestedPath("customer");
         if (bindingResult.hasErrors()) {
-            saveCustomerAddAtribute(customerToSave, model);
+            model.addAttribute("customerDto", customerDto);
+            bindingResult.setNestedPath("");
             return "addCustomer";
         }
         if (customerToSave.getNip() != null && customerService.findByNIP(customerToSave.getNip()) != null) {
             bindingResult.rejectValue("nip", "nip", "Customer exists");
-            saveCustomerAddAtribute(customerToSave, model);
+            model.addAttribute("customerDto", customerDto);
+            bindingResult.setNestedPath("");
             return "addCustomer";
         }
         if (customerToSave.getNip() != null && !validatorServices.validateNIP(customerToSave.getNip())) {
             bindingResult.rejectValue("nip", "nip", "Incorrect NIP");
-            saveCustomerAddAtribute(customerToSave, model);
+            model.addAttribute("customerDto", customerDto);
+            bindingResult.setNestedPath("");
             return "addCustomer";
         }
         if (customerToSave.getPesel() != null && !validatorServices.validatePesel(customerToSave.getPesel())) {
             bindingResult.rejectValue("pesel", "pesel", "Incorrect PESEL");
-            saveCustomerAddAtribute(customerToSave, model);
+            model.addAttribute("customerDto", customerDto);
+            bindingResult.setNestedPath("");
             return "addCustomer";
         }
         if (customerToSave.getPesel() != null && customerService.findByPESEL(customerToSave.getPesel()) != null) {
             bindingResult.rejectValue("pesel", "pesel", "Customer exists");
-            saveCustomerAddAtribute(customerToSave, model);
+            model.addAttribute("customerDto", customerDto);
+            bindingResult.setNestedPath("");
             return "addCustomer";
         }
 
-        customerService.addCustomer(customerToSave);
+        Customer customerSaved = customerService.addCustomer(customerToSave);
+
+
+        if(customerDto.isTransactionRequest() == true){
+            TransactionDto transactionDto = new TransactionDto();
+            transactionDto.setCar(new Car());
+            transactionDto.setCustomer(customerSaved);
+            transactionDto.setCustomerExist(true);
+            transactionDto.setCustomerRadio(customerDto.getType()=="company" ? 1l : 2l);
+            transactionDto.setValidNumber(customerDto.getType()=="company" ? customerSaved.getNip() : customerSaved.getPesel());
+            model.addAttribute("transactionDto", transactionDto);
+            return "addTransaction";
+        }
 
         return "redirect:/";
     }
@@ -121,13 +139,7 @@ public class CustomerDataController {
         return "customers";
     }
 
-    private void saveCustomerAddAtribute(@Valid @ModelAttribute("addedCustomer") Customer customerToSave, Model model) {
-        if (customerToSave.getNip() == null && customerToSave.getPesel() != null) {
-            model.addAttribute("type", "person");
-        } else if (customerToSave.getNip() != null && customerToSave.getPesel() == null) {
-            model.addAttribute("type", "company");
-        }
-
-        model.addAttribute("addedCustomer", customerToSave);
+    private void saveCustomerAddAtribute(@Valid @ModelAttribute("customerDto") CustomerDto customerDto, Model model) {
+        model.addAttribute("customerDto", customerDto);
     }
 }

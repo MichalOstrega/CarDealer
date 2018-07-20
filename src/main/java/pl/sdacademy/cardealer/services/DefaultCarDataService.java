@@ -32,8 +32,9 @@ public class DefaultCarDataService implements CarDataService {
     }
 
     @Override
-    public void addCar(Car carToSave) {
-        carRepository.save(carToSave);
+    public Car addCar(Car carToSave) {
+        return carRepository.save(carToSave);
+
     }
 
     @Override

@@ -3,8 +3,9 @@
 
 <head>
     <meta charset="UTF-8"/>
-    <title th:text="'Car details: ' + ${car.brand + ' ' + car.model}"> </title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css" integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <title th:text="'Car details: ' + ${car.brand + ' ' + car.model}"></title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
     <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
             integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -19,21 +20,43 @@
 <body>
 <div th:replace="fragments/header :: header">
 
+
 </div>
 <div class="container">
-<h1>Car details</h1>
-<table border="1" rules="all" th:object="${car}">
-    <tr><td><b>Property</b></td><td><b>Value</b></td></tr>
-    <tr><td>Id</td><td th:text="*{id}"></td></tr>
-    <tr><td>Manufacturer</td><td th:text="*{brand}"></td></tr>
-    <tr><td>Model</td><td th:text="*{model}"></td></tr>
-    <tr><td>Fuel</td><td th:text="*{fuel}"></td></tr>
-    <tr><td>ProductionYear</td><td th:text="*{productionYear}"></td></tr>
-    <tr><td>Mileage</td><td th:text="*{mileage}"></td></tr>
-    <tr><td>Price</td><td th:text="*{price}"></td></tr><tr>
-    <td><a th:href="@{{param}/sell(param=*{id})}">Sell</a></td></tr>
 
-</table>
+    <h2>Car details</h2>
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Brand</th>
+            <th scope="col">Model</th>
+            <th scope="col">Fuel</th>
+            <th scope="col">Production Year</th>
+            <th scope="col">Mileage</th>
+            <th scope="col">Vin</th>
+            <th scope="col">Price</th>
+            <th scope="col">Sell</th>
+
+        </tr>
+        </thead>
+        <tbody id="customersTable" th:object="${car}">
+        <tr>
+            <td th:text="*{id}"/>
+            <td th:text="*{brand}"/>
+            <td th:text="*{model}"/>
+            <td th:text="*{fuel}"/>
+            <td th:text="*{productionYear}"/>
+            <td th:text="*{mileage  + ' km'}"/>
+            <td th:text="*{vin}"/>
+            <td th:text="*{price + ' PLN'} "/>
+            <td> <a th:href="@{/transaction(vin=${car.vin})}">Sell</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+
 </div>
 
 <footer th:replace="fragments/footer :: footer">
