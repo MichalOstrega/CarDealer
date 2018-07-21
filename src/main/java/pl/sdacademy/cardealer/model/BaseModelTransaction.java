@@ -22,17 +22,15 @@ public abstract class BaseModelTransaction extends BaseModelVersion {
     private Customer customer;
 
     @Column(name = "price")
-    private int price;
+    private Long price;
 
-    public int getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
-
-
 
     public BaseModelTransaction() {
     }

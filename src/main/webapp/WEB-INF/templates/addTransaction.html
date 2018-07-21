@@ -33,19 +33,19 @@
             <div class="form-control">
                 <div class="input-group mb-3">
                     <input type="text" class="form-control" aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" th:field="*{customerExist}"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.customerExist}"
                            hidden="hidden"/>
                     <input type="text" class="form-control" aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" th:field="*{transactionType}"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.transactionType}"
                            hidden="hidden"/>
                     <input type="text" class="form-control" aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" th:field="*{carExist}"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.carExist}"
                            hidden="hidden"/>
                     <input type="text" class="form-control" aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" th:field="*{car}"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.car}"
                            hidden="hidden"/>
                     <input type="text" class="form-control" aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" th:field="*{price}"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.price}"
                            hidden="hidden"/>
                 </div>
                 <h3> For Exists Customer</h3>
@@ -82,10 +82,11 @@
                 <div class="input-group mb-3">
 
                     <a role="button" class="btn btn-secondary btn-block btn-sm  m-1 "
-                       th:href="@{/customers/new(type=person,transaction=true)}">Create
+                       th:href="@{/customers/new(type=person,transaction=${transactionDto.transactionType}
+                       )}">Create
                         Person Customer</a>
                     <a role="button" class="btn btn-secondary btn-block btn-sm m-1 "
-                       th:href="@{/customers/new(type=company, transaction=true)}">Create
+                       th:href="@{/customers/new(type=company, transaction=${transactionDto.transactionType})}">Create
                         Company Customer</a>
                 </div>
 
@@ -135,7 +136,9 @@
         </table>
 
     </div>
+    <hr class="divider"/>
     <h2> Car </h2>
+    <div th:if="${transactionDto.customerExist==true}">
 
 
     <form th:action="@{/transactions/car}" th:method="post" th:object="${transactionDto}">
@@ -150,6 +153,9 @@
                            hidden="hidden"/>
                     <input type="text" class="form-control" aria-label="Small"
                            aria-describedby="inputGroup-sizing-sm" th:field="*{customer}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{transactionType}"
                            hidden="hidden"/>
                 </div>
 
@@ -186,13 +192,14 @@
                 </div>
                 <div class="input-group mb-3" th:unless="${#strings.equals(transactionDto.transactionType,'sale')}">
                     <a role="button" class="btn btn-block btn-secondary btn-sm m-1 "
-                       th:href="@{/cars/new(transaction=true,customerid=${transactionDto.customer.id})}">Create
+                       th:href="@{/cars/new(transaction=${transactionDto.transactionType},customerid=${transactionDto.customer != null ? transactionDto.customer.id : 0})}">Create
                         Car</a>
 
                 </div>
             </div>
         </div>
     </form>
+    </div>
     <div class="container" th:if="${transactionDto.carExist}">
         <table class="table table-sm">
             <thead>

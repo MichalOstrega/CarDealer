@@ -1,5 +1,6 @@
 package pl.sdacademy.cardealer.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,9 +24,11 @@ public class CarDataController {
     private DictionaryService dictionaryService;
     private CustomerService customerService;
 
-    public CarDataController(CarDataService carDataService, DictionaryService dictionaryService) {
+    @Autowired
+    public CarDataController(CarDataService carDataService, DictionaryService dictionaryService, CustomerService customerService) {
         this.carDataService = carDataService;
         this.dictionaryService = dictionaryService;
+        this.customerService = customerService;
     }
 
 
@@ -57,13 +60,15 @@ public class CarDataController {
 
     @GetMapping("/new")
     public String addCarForm(Model model,
-                             @RequestParam(value = "transaction", required = false) boolean reqTransaction,
-                             @RequestParam(value = "customer", required = false) Long customerId) {
+                             @RequestParam(value = "transaction", required = false) String reqTransaction,
+                             @RequestParam(value = "customerid", required = false) Long customerId) {
         CarDto carDto = new CarDto();
         carDto.setTransactionRequest(reqTransaction);
-        carDto.setCustomerId(customerId);
         carDto.setDropList(getDropList());
         carDto.setCar( new Car());
+        if (customerId != null) {
+            carDto.getCar().setCustomer(customerService.findById(customerId));
+        }
 
         model.addAttribute("carDto", carDto);
         return "addCar";
@@ -102,14 +107,17 @@ public class CarDataController {
             return "addCar";
         }
 
-        if(carDto.isTransactionRequest() == true){
+        if(carDto.getTransactionRequest() != null && !carDto.getTransactionRequest().equals("")){
+            carDataService.addCar(carToSave);
             TransactionDto transactionDto = new TransactionDto();
+            transactionDto.setTransactionType(carDto.getTransactionRequest());
             transactionDto.setCar(carToSave);
-            if (carDto.getCustomerId() != null) {
-                transactionDto.setCustomer(customerService.findById(carDto.getCustomerId()));
+            if (carDto.getCar().getCustomer() != null) {
+                transactionDto.setCustomer(carDto.getCar().getCustomer());
                 transactionDto.setCustomerExist(true);
             }
             transactionDto.setCarExist(true);
+            transactionDto.setPrice(carDto.getCar().getPrice());
             model.addAttribute("transactionDto", transactionDto);
             return "addTransaction";
         }

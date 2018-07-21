@@ -16,10 +16,10 @@ public class TransactionDto {
     private boolean customerExist;
     private boolean carExist;
     private String validNumber;
-    private Integer price;
+    private Long price;
     /*
     * 1 - transfer
-    * 2 - purchase (default)
+    * 2 - purchase
     * 3 - sale
     *
     * */
@@ -33,11 +33,11 @@ public class TransactionDto {
         this.transactionType = transactionType;
     }
 
-    public Integer getPrice() {
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(Integer price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

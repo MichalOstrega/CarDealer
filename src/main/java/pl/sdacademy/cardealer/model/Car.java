@@ -83,19 +83,33 @@ public class Car extends BaseModelVersion {
 
     @NotNull
     @Min(value = 5000, message = "Price must be greater than 5000")
-    private int price;
+    private Long price;
 
 
     private boolean sold;
 
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Customer customer;
+
+
+
     public Car() {
     }
 
-    public int getPrice() {
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+    public Long getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Long price) {
         this.price = price;
     }
 

@@ -11,9 +11,22 @@ public class CustomerDto {
     private String type;
     @Valid
     private Customer customer;
-    private boolean transactionRequest;
+    private String transactionRequest;
+    private Long carId;
 
     public CustomerDto() {
+
+    }
+
+
+
+
+    public Long getCarId() {
+        return carId;
+    }
+
+    public void setCarId(Long carId) {
+        this.carId = carId;
     }
 
     public String getType() {
@@ -32,11 +45,12 @@ public class CustomerDto {
         this.customer = customer;
     }
 
-    public boolean isTransactionRequest() {
+
+    public String getTransactionRequest() {
         return transactionRequest;
     }
 
-    public void setTransactionRequest(boolean transactionRequest) {
+    public void setTransactionRequest(String transactionRequest) {
         this.transactionRequest = transactionRequest;
     }
 }

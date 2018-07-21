@@ -5,15 +5,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import pl.sdacademy.cardealer.dto.AddCarDropDownListDto;
 import pl.sdacademy.cardealer.dto.CustomerDto;
 import pl.sdacademy.cardealer.dto.TransactionDto;
 import pl.sdacademy.cardealer.model.Car;
 import pl.sdacademy.cardealer.model.Customer;
-import pl.sdacademy.cardealer.services.CustomerService;
-import pl.sdacademy.cardealer.services.DefaultCustomerService;
-import pl.sdacademy.cardealer.services.DictionaryService;
-import pl.sdacademy.cardealer.services.ValidatorServices;
+import pl.sdacademy.cardealer.services.*;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -23,14 +19,21 @@ import java.util.List;
 public class CustomerDataController {
 
     CustomerService customerService;
-    ValidatorServices validatorServices;
+    DefaultValidatorServices validatorServices;
     DictionaryService dictionaryService;
+    CarDataService carDataService;
 
     @Autowired
-    public CustomerDataController(CustomerService customerService, ValidatorServices validatorServices, DictionaryService dictionaryService) {
+    public CustomerDataController(
+            CustomerService customerService,
+            DefaultValidatorServices validatorServices,
+            DictionaryService dictionaryService,
+            CarDataService carDataService) {
         this.customerService = customerService;
         this.validatorServices = validatorServices;
         this.dictionaryService = dictionaryService;
+        this.carDataService = carDataService;
+
     }
 
     @GetMapping("/persons")
@@ -50,9 +53,13 @@ public class CustomerDataController {
     }
 
     @GetMapping("/new")
-    public String addCustomer(Model model, @RequestParam("type") String type, @RequestParam(value = "transaction", required = false) boolean reqTransaction) {
+    public String addCustomer(Model model,
+                              @RequestParam("type") String type,
+                              @RequestParam(value = "carid", required = false) Long carId,
+                              @RequestParam(value = "transaction", required = false) String reqTransaction) {
 
         CustomerDto customerDto = new CustomerDto();
+        customerDto.setCarId(carId);
         customerDto.setTransactionRequest(reqTransaction);
         customerDto.setCustomer(new Customer());
         model.addAttribute("customerDto", customerDto);
@@ -118,9 +125,17 @@ public class CustomerDataController {
         Customer customerSaved = customerService.addCustomer(customerToSave);
 
 
-        if (customerDto.isTransactionRequest() == true) {
+        if (customerDto.getTransactionRequest() != null && !customerDto.getTransactionRequest().equals("")) {
             TransactionDto transactionDto = new TransactionDto();
-            transactionDto.setCar(new Car());
+            transactionDto.setTransactionType(customerDto.getTransactionRequest());
+            Long carId = customerDto.getCarId();
+
+            if (carId != null && carDataService.loadCarById(carId) != null) {
+                transactionDto.setCar(carDataService.loadCarById(carId));
+                transactionDto.setCarExist(true);
+            } else {
+                transactionDto.setCar(new Car());
+            }
             transactionDto.setCustomer(customerSaved);
             transactionDto.setCustomerExist(true);
             transactionDto.setValidNumber(customerDto.getType() == "company" ? customerSaved.getNip() : customerSaved.getPesel());
@@ -128,7 +143,7 @@ public class CustomerDataController {
             return "addTransaction";
         }
 
-        return "redirect:/";
+        return "redirect:/customers";
     }
 
     @GetMapping

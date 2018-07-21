@@ -87,6 +87,7 @@ public class TransactionDataController {
         if (byVIN == null) {
             bindingResult.setNestedPath("car");
             bindingResult.rejectValue("vin", "vin", "Car doesn't exists. Check inputed number or first create car");
+            bindingResult.setNestedPath("");
             return "addTransaction";
         } else if (byVIN.isSold()) {
             bindingResult.setNestedPath("car");
@@ -141,20 +142,35 @@ public class TransactionDataController {
             String transactionType = transactionDto.getTransactionType();
             switch (transactionType) {
                 case "transfer": {
-                    Transfer transfer = (Transfer) getTransaction(new Transfer(), transactionDto, car, customer);
-                    transactionService.saveTransfer(transfer);
-                    carDataService.addCar(car);
+                    Transfer transaction = (Transfer) getTransaction(new Transfer(), transactionDto, car, customer);
+
+                    Contract contract = new Contract();
+                    contract.setTransfer(transaction);
+                    contract.setContent(transactionType);
+
+                    transactionService.saveTransfer(transaction);
+
                     break;
                 }
                 case "purchase" : {
-                    Purchase purchase = (Purchase) getTransaction(new Purchase(), transactionDto, car, customer);
-                    transactionService.savePurchase(purchase);
+                    Purchase transaction = (Purchase) getTransaction(new Purchase(), transactionDto, car, customer);
+
+                    car.setCustomer(customerService.findById(5l));
+                    car.setPrice((long) (car.getPrice()*1.2));
+
+                    Contract contract = new Contract();
+                    contract.setPurchase(transaction);
+                    contract.setContent(transactionType);
+
+
+                    transactionService.savePurchase(transaction);
                     carDataService.addCar(car);
                     break;
                 }
                 case "sale": {
                     Sale sale = (Sale) getTransaction(new Sale(), transactionDto, car, customer);
                     car.setSold(true);
+                    car.setCustomer(customer);
                     carDataService.updateCar(car);
                     transactionService.saveSale(sale);
                     break;

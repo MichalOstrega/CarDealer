@@ -11,10 +11,19 @@ public class CarDto {
     private AddCarDropDownListDto dropList;
     @Valid
     private Car car;
-    private boolean transactionRequest;
-    private Long customerId =0L;
+    private String transactionRequest;
+
+    private Long customerId;
 
     public CarDto() {
+    }
+
+    public String getTransactionRequest() {
+        return transactionRequest;
+    }
+
+    public void setTransactionRequest(String transactionRequest) {
+        this.transactionRequest = transactionRequest;
     }
 
     public Long getCustomerId() {
@@ -41,11 +50,5 @@ public class CarDto {
         this.car = car;
     }
 
-    public boolean isTransactionRequest() {
-        return transactionRequest;
-    }
 
-    public void setTransactionRequest(boolean transactionRequest) {
-        this.transactionRequest = transactionRequest;
-    }
 }
