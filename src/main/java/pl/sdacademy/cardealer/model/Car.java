@@ -88,6 +88,11 @@ public class Car extends BaseModelVersion {
 
     private boolean sold;
 
+
+    private boolean visible;
+
+
+
     @ManyToOne
     @JoinColumn(name = "owner_id")
     private Customer customer;
@@ -111,6 +116,14 @@ public class Car extends BaseModelVersion {
 
     public void setPrice(Long price) {
         this.price = price;
+    }
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public boolean isSold() {

@@ -47,6 +47,7 @@
             <th scope="col">Car</th>
             <th scope="col">VIN</th>
             <th scope="col">Price</th>
+            <th scope="col">Date</th>
 
 
         </tr>
@@ -54,15 +55,16 @@
         <tbody id="transactionsTable">
         <tr th:each="transaction, iterationInfo : ${transactions}">
             <td th:text="${transaction.id}"/>
-            <td><a th:href="@{/customer/{parametr}(parametr=${transaction.customer.id})}"
+            <td><a th:href="@{/customers/{parametr}(parametr=${transaction.customer.id})}"
                    th:text="${transaction.customer.name}"></a></td>
             <td th:text="${transaction.customer.pesel}"/>
             <td th:text="${transaction.customer.nip}"/>
 
-            <td><a th:href="@{/car/{parametr}(parametr=${transaction.car.id})}"
+            <td><a th:href="@{/cars/{parametr}(parametr=${transaction.car.id})}"
                    th:text="${transaction.car.brand}"></a></td>
             <td th:text=" ${transaction.car.vin}"/>
             <td th:text="${transaction.price}  +'PLN'"/>
+            <td th:text="${transaction.date}"/>
 
         </tr>
         </tbody>

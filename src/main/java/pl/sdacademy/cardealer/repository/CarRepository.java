@@ -8,7 +8,7 @@ import java.util.List;
 public interface CarRepository extends JpaRepository<Car,Long> {
 
     List<Car> findAllBySoldIsTrue();
-    List<Car> findAllBySoldIsFalse();
+    List<Car> findAllBySoldIsFalseAndVisibleIsTrue();
     Car findByVin(String Vin);
 
 }

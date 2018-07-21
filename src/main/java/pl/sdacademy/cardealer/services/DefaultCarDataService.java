@@ -18,7 +18,7 @@ public class DefaultCarDataService implements CarDataService {
 
     @Override
     public List<Car> loadAllAvailableCars() {
-        return carRepository.findAllBySoldIsFalse();
+        return carRepository.findAllBySoldIsFalseAndVisibleIsTrue();
     }
 
     @Override

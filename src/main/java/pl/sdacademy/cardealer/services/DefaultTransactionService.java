@@ -1,9 +1,12 @@
 package pl.sdacademy.cardealer.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import pl.sdacademy.cardealer.model.Account;
 import pl.sdacademy.cardealer.model.Purchase;
 import pl.sdacademy.cardealer.model.Sale;
 import pl.sdacademy.cardealer.model.Transfer;
+import pl.sdacademy.cardealer.repository.AccountRepository;
 import pl.sdacademy.cardealer.repository.PurchaseRepository;
 import pl.sdacademy.cardealer.repository.SaleRepository;
 import pl.sdacademy.cardealer.repository.TransferRepository;
@@ -11,22 +14,28 @@ import pl.sdacademy.cardealer.repository.TransferRepository;
 import java.util.List;
 
 @Service
-public class DefaultTransactionService implements  TransactionService{
+public class DefaultTransactionService implements TransactionService {
     private TransferRepository transferRepository;
     private SaleRepository saleRepository;
     private PurchaseRepository purchaseRepository;
+    private AccountRepository accountRepository;
 
-    public DefaultTransactionService(TransferRepository transferRepository, SaleRepository saleRepository, PurchaseRepository purchaseRepository) {
+    @Autowired
+    public DefaultTransactionService(TransferRepository transferRepository,
+                                     SaleRepository saleRepository,
+                                     PurchaseRepository purchaseRepository,
+                                     AccountRepository accountRepository) {
         this.transferRepository = transferRepository;
         this.saleRepository = saleRepository;
         this.purchaseRepository = purchaseRepository;
+        this.accountRepository = accountRepository;
     }
 
     public Purchase savePurchase(Purchase purchase) {
         return purchaseRepository.save(purchase);
     }
 
-    public Transfer saveTransfer(Transfer transfer){
+    public Transfer saveTransfer(Transfer transfer) {
         return transferRepository.save(transfer);
     }
 
@@ -74,4 +83,13 @@ public class DefaultTransactionService implements  TransactionService{
     }
 
 
+    @Override
+    public Account saveAccount(Account account) {
+        return accountRepository.save(account);
+    }
+
+    @Override
+    public List<Account> getAccounts() {
+        return accountRepository.findAll();
+    }
 }

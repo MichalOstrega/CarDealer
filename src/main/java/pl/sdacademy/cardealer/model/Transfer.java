@@ -6,5 +6,8 @@ import javax.persistence.Entity;
 public class Transfer extends BaseModelTransaction {
 
 
-
+    @Override
+    public String toString() {
+        return "Transfer";
+    }
 }

@@ -10,5 +10,8 @@ public class Purchase extends BaseModelTransaction{
 
     }
 
-
+    @Override
+    public String toString() {
+        return "Purchase";
+    }
 }

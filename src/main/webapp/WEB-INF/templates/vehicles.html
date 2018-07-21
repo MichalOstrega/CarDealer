@@ -45,9 +45,8 @@
         <th scope="col">Mileage</th>
         <th scope="col">Fuel</th>
         <th scope="col">Price</th>
-        <th scope="col">VIN</th>
-        <th scope="col">Register Number</th>
         <th scope="col">Transmission</th>
+        <th scope="col">Owner</th>
         <th scope="col" th:if="${#strings.equals(headerMsg,'All Cars')}">Sold</th>
         <th scope="col">Details</th>
 
@@ -64,9 +63,8 @@
         <td th:text="${car.mileage} + 'km'"/>
         <td th:text="${car.fuel}"/>
         <td th:text="${car.price}  +'PLN'"/>
-        <td th:text="${car.vin}"/>
-        <td th:text="${car.registerNumber}"/>
         <td th:text="${car.transmission}"/>
+        <td th:text="${car.customer.surname == null ? car.customer.name : car.customer.surname + ' ' + car.customer.name}"/>
         <td th:if="${#strings.equals(headerMsg,'All Cars')}" th:text="${car.sold}"/>
         <td><a th:href="@{/cars/{parametr}(parametr=${car.id})}" th:text="Details"></a></td>
 

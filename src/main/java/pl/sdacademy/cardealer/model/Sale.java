@@ -10,4 +10,9 @@ public class Sale extends BaseModelTransaction{
     public Sale() {
 
     }
+
+    @Override
+    public String toString() {
+        return "Sale";
+    }
 }

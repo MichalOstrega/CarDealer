@@ -1,5 +1,6 @@
 package pl.sdacademy.cardealer.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.sdacademy.cardealer.dto.TransactionDto;
 import pl.sdacademy.cardealer.model.*;
 import pl.sdacademy.cardealer.services.CarDataService;
+import pl.sdacademy.cardealer.services.ContractService;
 import pl.sdacademy.cardealer.services.CustomerService;
 import pl.sdacademy.cardealer.services.TransactionService;
 
@@ -21,11 +23,14 @@ public class TransactionDataController {
     private CustomerService customerService;
     private CarDataService carDataService;
     private TransactionService transactionService;
+    private ContractService contractService;
 
-    public TransactionDataController(CustomerService customerService, CarDataService carDataService, TransactionService transactionService) {
+    @Autowired
+    public TransactionDataController(CustomerService customerService, CarDataService carDataService, TransactionService transactionService, ContractService contractService) {
         this.transactionService = transactionService;
         this.customerService = customerService;
         this.carDataService = carDataService;
+        this.contractService = contractService;
     }
 
     @GetMapping("/transfers")
@@ -148,7 +153,13 @@ public class TransactionDataController {
                     contract.setTransfer(transaction);
                     contract.setContent(transactionType);
 
+                    Account account = new Account();
+                    account.setContract(contract);
+                    account.setPayment(0l);
+
                     transactionService.saveTransfer(transaction);
+                    contractService.saveContract(contract);
+                    transactionService.saveAccount(account);
 
                     break;
                 }
@@ -156,23 +167,43 @@ public class TransactionDataController {
                     Purchase transaction = (Purchase) getTransaction(new Purchase(), transactionDto, car, customer);
 
                     car.setCustomer(customerService.findById(5l));
-                    car.setPrice((long) (car.getPrice()*1.2));
+                    Long price = car.getPrice();
+                    car.setPrice((long) (price *1.2));
 
                     Contract contract = new Contract();
                     contract.setPurchase(transaction);
                     contract.setContent(transactionType);
 
+                    Account account = new Account();
+                    account.setContract(contract);
+                    account.setPayment(price);
 
-                    transactionService.savePurchase(transaction);
                     carDataService.addCar(car);
+                    transactionService.savePurchase(transaction);
+                    contractService.saveContract(contract);
+                    transactionService.saveAccount(account);
                     break;
                 }
                 case "sale": {
-                    Sale sale = (Sale) getTransaction(new Sale(), transactionDto, car, customer);
+                    Sale transaction = (Sale) getTransaction(new Sale(), transactionDto, car, customer);
+
                     car.setSold(true);
+                    car.setVisible(false);
                     car.setCustomer(customer);
+
+
+                    Contract contract = new Contract();
+                    contract.setSale(transaction);
+                    contract.setContent(transactionType);
+
+                    Account account = new Account();
+                    account.setContract(contract);
+                    account.setIncome(transactionDto.getPrice());
+
                     carDataService.updateCar(car);
-                    transactionService.saveSale(sale);
+                    transactionService.saveSale(transaction);
+                    contractService.saveContract(contract);
+                    transactionService.saveAccount(account);
                     break;
                 }
                 default:
