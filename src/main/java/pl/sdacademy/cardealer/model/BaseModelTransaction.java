@@ -8,7 +8,7 @@ import javax.persistence.MappedSuperclass;
 import java.util.Date;
 
 @MappedSuperclass
-public class BaseModelTransaction extends BaseModelVersion {
+public abstract class BaseModelTransaction extends BaseModelVersion {
 
     @Column(name = "date")
     private Date date;
@@ -20,6 +20,18 @@ public class BaseModelTransaction extends BaseModelVersion {
     @ManyToOne
     @JoinColumn(name = "customer_id")
     private Customer customer;
+
+    @Column(name = "price")
+    private int price;
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
 
 
     public BaseModelTransaction() {

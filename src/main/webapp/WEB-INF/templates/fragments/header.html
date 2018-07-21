@@ -37,7 +37,7 @@
 
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-            <a class="navbar-brand" href="#" img="">Car Dealer</a>
+            <a class="navbar-brand" th:href="@{/}" img="">Car Dealer</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
                     aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -46,7 +46,22 @@
                 <div class="navbar-nav">
 
                     <a class="nav-item nav-link active" th:href="@{/}">Home</a>
-                    <a class="nav-item nav-link active" th:href="@{/transaction/transfer}">Transaction</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Transaction
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/transactions/new/transfer}">Transfer Car</a>
+                            <a class="dropdown-item" th:href="@{/transactions/new/purchase}">Purchase Car</a>
+                            <a class="dropdown-item" th:href="@{/transactions/new/sale}">Sell Car</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/transactions/transfers}">Transfers</a>
+                            <a class="dropdown-item" th:href="@{/transactions/purchases}">Purchases </a>
+                            <a class="dropdown-item" th:href="@{/transactions/sales}">Sales</a>
+                        </div>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -54,8 +69,8 @@
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                             <a class="dropdown-item" th:href="@{/cars/new}">Add Car</a>
-                            <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
                             <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
                             <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
                             <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
                         </div>
@@ -66,13 +81,12 @@
                             Customers
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/customers/companies}">Show Companies</a>
                             <a class="dropdown-item" th:href="@{/customers/new?type=company}">Add Company</a>
+                            <a class="dropdown-item" th:href="@{/customers/new?type=person}">Add Person</a>
                             <div class="dropdown-divider">Persons</div>
                             <a class="dropdown-item" th:href="@{/customers/persons}">Show Persons</a>
-                            <a class="dropdown-item" th:href="@{/customers/new?type=person}">Add Person</a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" th:href="@{/customers}">Show all</a>
+                            <a class="dropdown-item" th:href="@{/customers/companies}">Show Companies</a>
+                            <a class="dropdown-item" th:href="@{/customers}">Show All Customers</a>
                         </div>
                     </li>
 

@@ -74,8 +74,8 @@ public class Car extends BaseModelVersion {
     @Size(min=1, max=1000, message = "Input description")
     private String description;
 
-
-    private int test_drives;
+    @Column(name = "test_drives")
+    private int testDrives;
 
     @ManyToOne
     @JoinColumn(name = "car_type_id")
@@ -203,12 +203,12 @@ public class Car extends BaseModelVersion {
         this.description = description;
     }
 
-    public int getTest_drives() {
-        return test_drives;
+    public int getTestDrives() {
+        return testDrives;
     }
 
-    public void setTest_drives(int test_drives) {
-        this.test_drives = test_drives;
+    public void setTestDrives(int testDrives) {
+        this.testDrives = testDrives;
     }
 
     public CarType getCarType() {

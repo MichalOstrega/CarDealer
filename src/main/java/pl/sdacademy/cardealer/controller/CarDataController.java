@@ -30,18 +30,18 @@ public class CarDataController {
 
 
 
-    @GetMapping
-    public String showAvailableCars(Model model) {
-        List<Car> cars = carDataService.loadAllAvailableCars();
-        model.addAttribute("headerMsg","Car For Sale");
-        model.addAttribute("cars", cars);
-        return "vehicles";
-    }
-
     @GetMapping("/all")
     public String showAllCars(Model model) {
         List<Car> cars = carDataService.loadAllCars();
         model.addAttribute("headerMsg","All Cars");
+        model.addAttribute("cars", cars);
+        return "vehicles";
+    }
+
+    @GetMapping
+    public String showAvailableCars(Model model) {
+        List<Car> cars = carDataService.loadAllAvailableCars();
+        model.addAttribute("headerMsg","Car For Sale");
         model.addAttribute("cars", cars);
         return "vehicles";
     }
@@ -54,20 +54,13 @@ public class CarDataController {
         return "vehicles";
     }
 
-    @GetMapping("/{id}/sell")
-    public String sellVehicle(@PathVariable("id") Long vehId, Model model){
-
-        Car car = carDataService.loadCarById(vehId);
-        car.setSold(true);
-        carDataService.addCar(car);
-        return "redirect:/cars";
-    }
 
     @GetMapping("/new")
     public String addCarForm(Model model,
                              @RequestParam(value = "transaction", required = false) boolean reqTransaction,
                              @RequestParam(value = "customer", required = false) Long customerId) {
         CarDto carDto = new CarDto();
+        carDto.setTransactionRequest(reqTransaction);
         carDto.setCustomerId(customerId);
         carDto.setDropList(getDropList());
         carDto.setCar( new Car());
@@ -95,25 +88,27 @@ public class CarDataController {
         carDto.setDropList(getDropList());
 
         Car carToSave = carDto.getCar();
-        bindingResult.setNestedPath("car");
         if (bindingResult.hasErrors()) {
+            bindingResult.setNestedPath("car");
             model.addAttribute(carDto);
             bindingResult.setNestedPath("");
             return "addCar";
         }
         if (carDataService.loadCarByVIN(carToSave.getVin()) != null) {
+            bindingResult.setNestedPath("car");
             bindingResult.rejectValue("vin", "vin", "Car cannot be sold Twice");
             model.addAttribute(carDto);
             bindingResult.setNestedPath("");
             return "addCar";
         }
-        Car savedCar = carDataService.addCar(carToSave);
 
         if(carDto.isTransactionRequest() == true){
             TransactionDto transactionDto = new TransactionDto();
-            transactionDto.setCar(new Car());
-            transactionDto.setCustomer(customerService.findById(carDto.getCustomerId()));
-            transactionDto.setCustomerExist(true);
+            transactionDto.setCar(carToSave);
+            if (carDto.getCustomerId() != null) {
+                transactionDto.setCustomer(customerService.findById(carDto.getCustomerId()));
+                transactionDto.setCustomerExist(true);
+            }
             transactionDto.setCarExist(true);
             model.addAttribute("transactionDto", transactionDto);
             return "addTransaction";

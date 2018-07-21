@@ -32,11 +32,17 @@
             <th scope="col">Brand</th>
             <th scope="col">Model</th>
             <th scope="col">Fuel</th>
+            <th scope="col">Engine</th>
+            <th scope="col">CarType</th>
+            <th scope="col">Transmission</th>
             <th scope="col">Production Year</th>
             <th scope="col">Mileage</th>
             <th scope="col">Vin</th>
+            <th scope="col">Register Number</th>
+            <th scope="col">OC Number</th>
             <th scope="col">Price</th>
-            <th scope="col">Sell</th>
+            <th scope="col">Test Drives</th>
+            <th th:if="${car.sold == false}" scope="col">Sell</th>
 
         </tr>
         </thead>
@@ -46,15 +52,33 @@
             <td th:text="*{brand}"/>
             <td th:text="*{model}"/>
             <td th:text="*{fuel}"/>
+            <td th:text="*{engine + ' ' + power}"/>
+            <td th:text="*{carType}"/>
+            <td th:text="*{transmission}"/>
             <td th:text="*{productionYear}"/>
             <td th:text="*{mileage  + ' km'}"/>
             <td th:text="*{vin}"/>
+            <td th:text="*{registerNumber}"/>
+            <td th:text="*{ocNumber}"/>
             <td th:text="*{price + ' PLN'} "/>
-            <td> <a th:href="@{/transaction(vin=${car.vin})}">Sell</a></td>
+            <td th:text="*{testDrives} "/>
+            <td th:if="${car.sold == false}"><a th:href="@{/transactions/new/sale   (vin=${car.vin})}">Sell</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Description</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td th:text="${car.description}"></td>
         </tr>
         </tbody>
     </table>
-
 
 
 </div>

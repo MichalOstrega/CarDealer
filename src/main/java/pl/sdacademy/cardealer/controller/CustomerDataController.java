@@ -1,5 +1,6 @@
 package pl.sdacademy.cardealer.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,10 +26,27 @@ public class CustomerDataController {
     ValidatorServices validatorServices;
     DictionaryService dictionaryService;
 
+    @Autowired
     public CustomerDataController(CustomerService customerService, ValidatorServices validatorServices, DictionaryService dictionaryService) {
         this.customerService = customerService;
         this.validatorServices = validatorServices;
         this.dictionaryService = dictionaryService;
+    }
+
+    @GetMapping("/persons")
+    public String showPersons(Model model) {
+        List<Customer> customers = customerService.loadAllPersonCustomers();
+        model.addAttribute("headerMsg", "Persons");
+        model.addAttribute("customers", customers);
+        return "customers";
+    }
+
+    @GetMapping("/companies")
+    public String showCompanies(Model model) {
+        List<Customer> customers = customerService.loadAllCompanyCustomers();
+        model.addAttribute("headerMsg", "Companies");
+        model.addAttribute("customers", customers);
+        return "customers";
     }
 
     @GetMapping("/new")
@@ -40,8 +58,7 @@ public class CustomerDataController {
         model.addAttribute("customerDto", customerDto);
         if ((type.equals("company") || type.equals("person"))) {
             customerDto.setType(type);
-        }
-        else {
+        } else {
             return ":/";
         }
         return "addCustomer";
@@ -101,34 +118,17 @@ public class CustomerDataController {
         Customer customerSaved = customerService.addCustomer(customerToSave);
 
 
-        if(customerDto.isTransactionRequest() == true){
+        if (customerDto.isTransactionRequest() == true) {
             TransactionDto transactionDto = new TransactionDto();
             transactionDto.setCar(new Car());
             transactionDto.setCustomer(customerSaved);
             transactionDto.setCustomerExist(true);
-            transactionDto.setCustomerRadio(customerDto.getType()=="company" ? 1l : 2l);
-            transactionDto.setValidNumber(customerDto.getType()=="company" ? customerSaved.getNip() : customerSaved.getPesel());
+            transactionDto.setValidNumber(customerDto.getType() == "company" ? customerSaved.getNip() : customerSaved.getPesel());
             model.addAttribute("transactionDto", transactionDto);
             return "addTransaction";
         }
 
         return "redirect:/";
-    }
-
-    @GetMapping("/persons")
-    public String showPersons(Model model) {
-        List<Customer> customers = customerService.loadAllPersonCustomers();
-        model.addAttribute("headerMsg", "Persons");
-        model.addAttribute("customers", customers);
-        return "customers";
-    }
-
-    @GetMapping("/companies")
-    public String showCompanies(Model model) {
-        List<Customer> customers = customerService.loadAllCompanyCustomers();
-        model.addAttribute("headerMsg", "Companies");
-        model.addAttribute("customers", customers);
-        return "customers";
     }
 
     @GetMapping
@@ -139,7 +139,5 @@ public class CustomerDataController {
         return "customers";
     }
 
-    private void saveCustomerAddAtribute(@Valid @ModelAttribute("customerDto") CustomerDto customerDto, Model model) {
-        model.addAttribute("customerDto", customerDto);
-    }
+
 }

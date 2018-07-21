@@ -24,14 +24,14 @@
 </div>
 
 <script>
-    $(document).ready(function(){
-        $("#brand").change(function() {
+    $(document).ready(function () {
+        $("#brand").change(function () {
             var brandCar = $(this).val();
             console.log(brandCar)
-            $.get( "/dict/models/all?brand=" + brandCar, function( data ) {
+            $.get("/dict/models/all?brand=" + brandCar, function (data) {
                 $("#model").empty();
-                data.forEach(function(item, i) {
-                    var option = "<option value = " + item.id + ">" + item.name +  "</option>";
+                data.forEach(function (item, i) {
+                    var option = "<option value = " + item.id + ">" + item.name + "</option>";
                     $("#model").append(option);
                 });
             });
@@ -55,7 +55,8 @@
                     <span class="input-group-text" id="vin">VIN</span>
                 </div>
 
-                <input type="text" class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.vin')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
+                       aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" th:field="*{car.vin}"
                        th:errorclass="fieldError"/>
                 <span class="invalid-feedback" th:if="${#fields.hasErrors('car.vin')}" th:errors="*{car.vin}"/>
@@ -124,7 +125,8 @@
                     <span class="input-group-text" id="mileage">Mileage</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.mileage')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
+                       aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.mileage}"
                        th:errorclass="fieldError"/>
                 <div class="input-group-append">
@@ -150,10 +152,12 @@
                     <span class="input-group-text" id="OcNumber">OC Number</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.ocNumber')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
+                       aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.ocNumber}"
                        th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.ocNumber')}" th:errors="*{car.ocNumber}"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.ocNumber')}"
+                      th:errors="*{car.ocNumber}"/>
             </div>
 
 
@@ -162,10 +166,11 @@
                     <span class="input-group-text" id="registerNumber">Register Number</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.registerNumber')} ? 'form-control text-right is-invalid' : 'form-control text-right'" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.registerNumber}"
                        th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.registerNumber')}" th:errors="*{car.registerNumber}"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.registerNumber')}"
+                      th:errors="*{car.registerNumber}"/>
             </div>
 
 
@@ -174,10 +179,10 @@
                     <span class="input-group-text" id="engine">Engine</span>
                 </div>
 
-                <input class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.engine')} ? 'form-control text-right is-invalid' : 'form-control text-right'" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.engine}"
                        th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('engine')}" th:errors="*{car.engine}"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.engine')}" th:errors="*{car.engine}"/>
             </div>
 
 
@@ -185,7 +190,7 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="power">Power</span>
                 </div>
-                <input class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.power')} ? 'form-control text-right is-invalid' : 'form-control text-right'" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.power}"
                        th:errorclass="fieldError"/>
                 <span class="invalid-feedback" th:if="${#fields.hasErrors('car.power')}" th:errors="*{car.power}"/>
@@ -196,24 +201,25 @@
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="price">Price</span>
                 </div>
-                <input class="form-control is-invalid" aria-label="Small"
+                <input th:class="${#fields.hasErrors('car.price')} ? 'form-control text-right is-invalid' : 'form-control text-right'" aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.price}"
                        th:errorclass="fieldError"/>
                 <div class="input-group-append">
-                    <span class="input-group-text">zł</span>
+                    <span class="input-group-text">PLN</span>
                 </div>
                 <span class="invalid-feedback" th:if="${#fields.hasErrors('car.price')}" th:errors="*{car.price}"/>
             </div>
-
 
 
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text">Description</span>
                 </div>
-                <textarea aria-label="With textarea" class="form-control is-invalid" type="text" th:field="*{car.description}"
+                <textarea aria-label="With textarea" th:class="${#fields.hasErrors('car.description')} ? 'form-control text-right is-invalid' : 'form-control text-right'" type="text"
+                          th:field="*{car.description}"
                           th:errorclass="fieldError"/>
-                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.description')}" th:errors="*{car.description}"/>
+                <span class="invalid-feedback" th:if="${#fields.hasErrors('car.description')}"
+                      th:errors="*{car.description}"/>
             </div>
 
 

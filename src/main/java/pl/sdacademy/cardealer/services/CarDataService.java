@@ -12,6 +12,8 @@ public interface CarDataService {
 
     List<Car> loadAllCars();
 
+    Car updateCar(Car car);
+
     Car addCar(Car carToSave);
 
     Car loadCarById(Long carID);

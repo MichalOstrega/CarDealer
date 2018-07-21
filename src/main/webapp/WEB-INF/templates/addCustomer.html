@@ -39,7 +39,7 @@
                 </div>
 
                 <input type="text"
-                       th:class="${#fields.hasErrors('customer.surname')} ? 'form-control is-invalid' : 'form-control'"
+                       th:class="${#fields.hasErrors('customer.surname')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" th:field="*{customer.surname}"
                        th:errorclass="fieldError" required="required"/>
@@ -55,7 +55,7 @@
                 </div>
 
                 <input type="text"
-                       th:class="${#fields.hasErrors('customer.name')} ? 'form-control is-invalid' : 'form-control'"
+                       th:class="${#fields.hasErrors('customer.name')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" th:field="*{customer.name}"
                        th:errorclass="fieldError" required="required"/>
@@ -68,7 +68,7 @@
                     <span class="input-group-text" id="street">Street</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.address.street')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.address.street')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.address.street}"
                        th:errorclass="fieldError" required="required"/>
@@ -76,7 +76,7 @@
                     <span class="input-group-text" id="houseNr">House Nr</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.address.houseNumber')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.address.houseNumber')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.address.houseNumber}"
                        th:errorclass="fieldError" required="required"/>
@@ -84,7 +84,7 @@
                     <span class="input-group-text" id="flatNr">Flat Nr</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.address.flatNumber')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.address.flatNumber')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.address.flatNumber}"
                        th:errorclass="fieldError"/>
@@ -104,7 +104,7 @@
                     <span class="input-group-text" id="zipCode">Zip Code</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.address.zipCode')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.address.zipCode')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.address.zipCode}"
                        th:errorclass="fieldError" required="required"/>
@@ -112,7 +112,7 @@
                     <span class="input-group-text" id="city">City</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.address.city')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.address.city')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.address.city}"
                        th:errorclass="fieldError" required="required"/>
@@ -127,7 +127,7 @@
                     <span class="input-group-text" id="nip">NIP</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.nip')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.nip')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.nip}"
                        th:errorclass="fieldError" required="required"/>
@@ -139,7 +139,7 @@
                     <span class="input-group-text" id="pesel">PESEL</span>
                 </div>
 
-                <input th:class="${#fields.hasErrors('customer.pesel')} ? 'form-control is-invalid' : 'form-control'"
+                <input th:class="${#fields.hasErrors('customer.pesel')} ? 'form-control text-right is-invalid' : 'form-control text-right'"
                        aria-label="Small"
                        aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{customer.pesel}"
                        th:errorclass="fieldError" required="required"/>

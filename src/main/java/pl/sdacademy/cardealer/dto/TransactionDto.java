@@ -4,17 +4,42 @@ import org.springframework.stereotype.Component;
 import pl.sdacademy.cardealer.model.Car;
 import pl.sdacademy.cardealer.model.Customer;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Component
 public class TransactionDto {
+    @Valid
     private Car car;
+    @Valid
     private Customer customer;
     private boolean customerExist;
     private boolean carExist;
     private String validNumber;
-    private Long customerRadio;
+    private Integer price;
+    /*
+    * 1 - transfer
+    * 2 - purchase (default)
+    * 3 - sale
+    *
+    * */
+    private String transactionType;
 
+    public String getTransactionType() {
+        return transactionType;
+    }
+
+    public void setTransactionType(String transactionType) {
+        this.transactionType = transactionType;
+    }
+
+    public Integer getPrice() {
+        return price;
+    }
+
+    public void setPrice(Integer price) {
+        this.price = price;
+    }
 
     public boolean isCustomerExist() {
         return customerExist;
@@ -32,13 +57,6 @@ public class TransactionDto {
         this.carExist = carExist;
     }
 
-    public Long getCustomerRadio() {
-        return customerRadio;
-    }
-
-    public void setCustomerRadio(Long customerRadio) {
-        this.customerRadio = customerRadio;
-    }
 
     public String getValidNumber() {
         return validNumber;
