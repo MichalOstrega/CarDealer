@@ -34,15 +34,10 @@
             <th scope="col">Model</th>
             <th scope="col">Fuel</th>
             <th scope="col">Engine</th>
-            <th scope="col">CarType</th>
-            <th scope="col">Transmission</th>
             <th scope="col">Production Year</th>
             <th scope="col">Mileage</th>
-            <th scope="col">Vin</th>
-            <th scope="col">Register Number</th>
-            <th scope="col">OC Number</th>
             <th scope="col">Price</th>
-            <th scope="col">Test Drives</th>
+            <th scope="col">Owner</th>
             <th th:if="${car.sold == false}" scope="col">Sell</th>
 
         </tr>
@@ -54,16 +49,37 @@
             <td th:text="*{model}"/>
             <td th:text="*{fuel}"/>
             <td th:text="*{engine + ' ' + power}"/>
-            <td th:text="*{carType}"/>
-            <td th:text="*{transmission}"/>
             <td th:text="*{productionYear}"/>
             <td th:text="*{mileage  + ' km'}"/>
+            <td th:text="*{price + ' PLN'} "/>
+            <td><a th:href="@{/customers/{id}(id=${car.customer.id})}" th:text="*{customer.name}"/></td>
+            <td th:if="${car.sold == false}"><a th:href="@{/transactions/new/sale   (vin=${car.vin})}">Sell</a></td>
+        </tr>
+
+        </tbody>
+    </table>
+    <table class="table table-sm" id="carTable2">
+        <thead>
+        <tr>
+
+            <th scope="col">CarType</th>
+            <th scope="col">Transmission</th>
+            <th scope="col">Vin</th>
+            <th scope="col">Register Number</th>
+            <th scope="col">OC Number</th>
+            <th scope="col">Test Drives</th>
+
+        </tr>
+        </thead>
+        <tbody th:object="${car}">
+        <tr>
+
+            <td th:text="*{carType}"/>
+            <td th:text="*{transmission}"/>
             <td th:text="*{vin}"/>
             <td th:text="*{registerNumber}"/>
             <td th:text="*{ocNumber}"/>
-            <td th:text="*{price + ' PLN'} "/>
             <td th:text="*{testDrives} "/>
-            <td th:if="${car.sold == false}"><a th:href="@{/transactions/new/sale   (vin=${car.vin})}">Sell</a></td>
         </tr>
 
         </tbody>

@@ -23,7 +23,18 @@ public class Contract extends BaseModelVersion {
     @Column
     private String content;
 
+    @Column
+    private String transaction;
+
     public Contract() {
+    }
+
+    public String getTransaction() {
+        return transaction;
+    }
+
+    public void setTransaction(String transaction) {
+        this.transaction = transaction;
     }
 
     public Transfer getTransfer() {

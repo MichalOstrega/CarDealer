@@ -3,6 +3,7 @@ package pl.sdacademy.cardealer.model;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.util.Date;
 
 @Entity
 public class Account extends BaseModelVersion {
@@ -16,7 +17,17 @@ public class Account extends BaseModelVersion {
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
+    private Date date;
+
     public Account() {
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public Long getIncome() {

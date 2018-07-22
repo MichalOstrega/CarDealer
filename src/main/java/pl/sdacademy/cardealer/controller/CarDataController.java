@@ -92,7 +92,9 @@ public class CarDataController {
 
         carDto.setDropList(getDropList());
 
+
         Car carToSave = carDto.getCar();
+        carToSave.setVisible(true);
         if (bindingResult.hasErrors()) {
             bindingResult.setNestedPath("car");
             model.addAttribute(carDto);

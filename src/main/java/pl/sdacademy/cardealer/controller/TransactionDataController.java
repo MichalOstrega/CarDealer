@@ -152,6 +152,7 @@ public class TransactionDataController {
                     Contract contract = new Contract();
                     contract.setTransfer(transaction);
                     contract.setContent(transactionType);
+                    contract.setTransaction(transactionType);
 
                     Account account = new Account();
                     account.setContract(contract);
@@ -173,6 +174,7 @@ public class TransactionDataController {
                     Contract contract = new Contract();
                     contract.setPurchase(transaction);
                     contract.setContent(transactionType);
+                    contract.setTransaction(transactionType);
 
                     Account account = new Account();
                     account.setContract(contract);
@@ -195,6 +197,7 @@ public class TransactionDataController {
                     Contract contract = new Contract();
                     contract.setSale(transaction);
                     contract.setContent(transactionType);
+                    contract.setTransaction(transactionType);
 
                     Account account = new Account();
                     account.setContract(contract);

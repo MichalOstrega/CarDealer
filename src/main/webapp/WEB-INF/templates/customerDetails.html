@@ -28,8 +28,8 @@
 <table class="table table-sm">
     <thead>
     <tr>
-        <th scope="col">Id</th>
-        <th scope="col">Name</th>
+        <th scope="col">Property </th>
+        <th scope="col">Value</th>
         <th scope="col">Surname</th>
         <th scope="col">Street</th>
         <th scope="col">House Number</th>
@@ -38,17 +38,27 @@
         <th scope="col">City</th>
         <th th:unless="${headerMsg == 'Persons'}" scope="col">NIP</th>
         <th th:unless="${headerMsg == 'Companies'}" scope="col">PESEL</th>
-
-
-
     </tr>
     </thead>
     <tbody id="customersTable">
     <tr>
+        <th scope="row">ID</th>
         <td th:text="${customer.id}"/>
+    </tr>
+    <tr>
+        <th scope="row">Name</th>
         <td th:text="${customer.name}"/>
+    </tr>
+    <tr>
+        <th scope="row">Surname</th>
         <td th:text="${customer.surname}"/>
+    </tr>
+    <tr>
+        <th scope="row">Street</th>
         <td th:text="${customer.address.street}"/>
+    </tr>
+    <tr>
+        <th scope="row">House Number</th>
         <td th:text="${customer.address.houseNumber}"/>
         <td th:text="${customer.address.flatNumber}"/>
         <td th:text="${customer.address.zipCode}"/>
@@ -63,6 +73,7 @@
 </table>
 
 </div>
+
 <footer th:replace="fragments/footer :: footer">
 
 </footer>

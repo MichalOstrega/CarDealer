@@ -89,6 +89,19 @@
                             <a class="dropdown-item" th:href="@{/customers}">Show All Customers</a>
                         </div>
                     </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="Reports" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Reports
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="Reports">
+                            <a class="dropdown-item" th:href="@{/accounts/transfers}">Transfers Raport</a>
+                            <a class="dropdown-item" th:href="@{/accounts/purchases}">Purchases Raport</a>
+                            <a class="dropdown-item" th:href="@{/accounts/sales}">Sales Raport</a>
+                            <a class="dropdown-item" th:href="@{/accounts/all}">Summary Raport</a>
+
+                        </div>
+                    </li>
 
                 </div>
                 <div class="navbar-nav ml-auto">
