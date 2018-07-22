@@ -24,11 +24,11 @@ public class Customer extends BaseModelVersion {
     private Address address= new Address();
 
     @Pattern(regexp = "^\\d{10}$", message = "Must be 10 digits")
-    @Column(name = "NIP")
+    @Column(name = "NIP", unique = true)
     private String nip;
 
     @Pattern(regexp = "^\\d{11}$", message = "Must be 11 digits")
-    @Column(name = "PESEL")
+    @Column(name = "PESEL", unique = true)
     private String pesel;
 
     public Customer() {

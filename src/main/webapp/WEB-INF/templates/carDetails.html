@@ -24,78 +24,105 @@
 </div>
 <div class="container">
 
-    <h2 th:text="'Car details:'"></h2>
-    <label for="carTable" th:text="'Owner: ' + ${car.customer.surname == null ? car.customer.name : car.customer.surname + ' ' + car.customer.name}"></label>
-    <table class="table table-sm" id="carTable">
-        <thead>
-        <tr>
-            <th scope="col">Id</th>
-            <th scope="col">Brand</th>
-            <th scope="col">Model</th>
-            <th scope="col">Fuel</th>
-            <th scope="col">Engine</th>
-            <th scope="col">Production Year</th>
-            <th scope="col">Mileage</th>
-            <th scope="col">Price</th>
-            <th scope="col">Owner</th>
-            <th th:if="${car.sold == false}" scope="col">Sell</th>
+    <h2 th:text="${car.brand + ' ' +  car.model} " class="text-primary text-center"></h2>
+    <br/>
+    <hr class="divider"/>
+    <br/>
+    <div class="col-md-12">
+        <table class="table table-sm" id="carTable">
 
-        </tr>
-        </thead>
-        <tbody th:object="${car}">
-        <tr>
-            <td th:text="*{id}"/>
-            <td th:text="*{brand}"/>
-            <td th:text="*{model}"/>
-            <td th:text="*{fuel}"/>
-            <td th:text="*{engine + ' ' + power}"/>
-            <td th:text="*{productionYear}"/>
-            <td th:text="*{mileage  + ' km'}"/>
-            <td th:text="*{price + ' PLN'} "/>
-            <td><a th:href="@{/customers/{id}(id=${car.customer.id})}" th:text="*{customer.name}"/></td>
-            <td th:if="${car.sold == false}"><a th:href="@{/transactions/new/sale   (vin=${car.vin})}">Sell</a></td>
-        </tr>
+            <thead class="thead-dark">
+            <tr>
+                <th scope="col">Property</th>
+                <th scope="col">Value</th>
+            </tr>
 
-        </tbody>
-    </table>
-    <table class="table table-sm" id="carTable2">
-        <thead>
-        <tr>
+            </thead>
+            <tbody th:object="${car}">
+            <tr hidden="hidden">
+                <td th:text="*{id}"/>
+            </tr>
+            <tr>
+                <th scope="row">Owner</th>
+                <td><a th:href="@{/customers/{id}(id=${car.customer.id})}" th:text="*{customer.name}"/></td>
+            </tr>
+            <tr>
+                <th scope="row">Brand</th>
+                <td th:text="*{brand}"/>
+            </tr>
+            <tr>
+                <th scope="row">Model</th>
+                <td th:text="*{model}"/>
+            </tr>
+            <tr>
+                <th scope="row">Fuel</th>
+                <td th:text="*{fuel}"/>
+            </tr>
+            <tr>
+                <th scope="row">Engine</th>
+                <td th:text="*{engine + ' ' + power}"/>
+            </tr>
+            <tr>
+                <th scope="row">Production Year</th>
+                <td th:text="*{productionYear}"/>
+            </tr>
+            <tr>
+                <th scope="row">Mileage</th>
+                <td th:text="*{mileage  + ' km'}"/>
+            </tr>
+            <tr>
+                <th scope="row">Price</th>
+                <td th:text="*{price + ' PLN'} "/>
+            </tr>
 
-            <th scope="col">CarType</th>
-            <th scope="col">Transmission</th>
-            <th scope="col">Vin</th>
-            <th scope="col">Register Number</th>
-            <th scope="col">OC Number</th>
-            <th scope="col">Test Drives</th>
 
-        </tr>
-        </thead>
-        <tbody th:object="${car}">
-        <tr>
+            <tr>
+                <th scope="row">Car Type</th>
+                <td th:text="*{carType}"/>
+            </tr>
+            <tr>
+                <th scope="row">Transmission</th>
+                <td th:text="*{transmission}"/>
+            </tr>
+            <tr>
+                <th scope="row">VIN</th>
+                <td th:text="*{vin}"/>
+            </tr>
+            <tr>
+                <th scope="row">Register Number</th>
+                <td th:text="*{registerNumber}"/>
+            </tr>
+            <tr>
+                <th scope="row">Oc Number</th>
+                <td th:text="*{ocNumber}"/>
+            </tr>
+            <tr>
+                <th scope="row">Test Drives</th>
+                <td th:text="*{testDrives} "/>
+            </tr>
 
-            <td th:text="*{carType}"/>
-            <td th:text="*{transmission}"/>
-            <td th:text="*{vin}"/>
-            <td th:text="*{registerNumber}"/>
-            <td th:text="*{ocNumber}"/>
-            <td th:text="*{testDrives} "/>
-        </tr>
+            <tr>
+                <th scope="row">Description</th>
+                <td th:text="${car.description}"></td>
+            </tr>
 
-        </tbody>
-    </table>
-    <table class="table table-sm">
-        <thead>
-        <tr>
-            <th scope="col">Description</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td th:text="${car.description}"></td>
-        </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <hr class="divider"/>
+        <a th:unless="${car.sold}" th:href="@{/transactions/new/sale   (vin=${car.vin})}" type="button"
+                class="btn btn-primary btn-lg btn-block">Sell Car
+        </a>
+        <hr class="divider"/>
+        <a th:href="@{/cars/update/{id}   (id=${car.id})}" type="button"
+                class="btn btn-primary btn-lg btn-block">Modify Car
+        </a>
+        <hr class="divider"/>
+        <a th:href="@{/cars/delete/{id}   (id=${car.id})}" type="button"
+                class="btn btn-primary btn-lg btn-block">Delete Car
+        </a>
+
+
+    </div>
 
 
 </div>

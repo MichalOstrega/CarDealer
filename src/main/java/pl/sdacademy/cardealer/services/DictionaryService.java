@@ -17,7 +17,7 @@ public interface DictionaryService {
     Brand addBrand(Brand brand);
 
 
-    Set<CarModel> getCarModels(Long brandId);
+    List<CarModel> getCarModels(Long brandId);
     List<CarModel> addModel(List<CarModel> collect);
     CarModel addModel(CarModel carModel);
 }

@@ -84,8 +84,8 @@ public class DictionaryController {
 
     @GetMapping("/models/all")
     @ResponseBody
-    public Set<CarModel> getModels(@RequestParam("brand") Long brandCarId) {
-        Set<CarModel> carModels= dictionaryService.getCarModels(brandCarId);
+    public List<CarModel> getModels(@RequestParam("brand") Long brandCarId) {
+        List<CarModel> carModels= dictionaryService.getCarModels(brandCarId);
         return carModels;
     }
 

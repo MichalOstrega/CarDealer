@@ -49,7 +49,7 @@ public class DefaultDictionaryService implements DictionaryService {
 
     @Override
     public List<ProductionYear> getProductionYear() {
-        return productionYearRepository.findAll(new Sort(Sort.Direction.ASC,"name"));
+        return productionYearRepository.findAll(new Sort(Sort.Direction.DESC,"name"));
     }
 
     @Override
@@ -73,7 +73,7 @@ public class DefaultDictionaryService implements DictionaryService {
     }
 
     @Override
-    public Set<CarModel> getCarModels(Long brandId) {
+    public List<CarModel> getCarModels(Long brandId) {
         return carModelRepository.findByBrand_IdOrderByName(brandId);
     }
 

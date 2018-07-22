@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Delete Car</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+
+
+<div class="container" align="center">
+
+    <div class="col-md-8">
+        <h2 th:text="${carDto.car.brand + ' ' + carDto.car.model}" class="text-primary"></h2>
+        <br/>
+        <hr class="divider"/>
+        <br/>
+        <form th:action="@{/cars/{id}(id=${carDto.car.id})}" th:method="delete" th:object="${carDto}">
+
+            <div class="form-control text-center">
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="id">ID</span>
+                    </div>
+                    <input readonly="readonly" type="text" class="form-control text-center" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.id}"
+                           />
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="vin">VIN</span>
+                    </div>
+
+                    <input readonly="readonly" class="form-control text-center"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.vin}"
+                           th:value="*{car.vin}"/>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="brand">Brand</label>
+                    </div>
+                    <input readonly="readonly" class="form-control text-center"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.brand}" id="brand">
+
+                    </input>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="model">Model</label>
+                    </div>
+                    <input readonly="readonly" class="form-control text-center text-right"
+                           th:field="*{car.model}" id="model">
+
+                    </input>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="productionYear">Production Year</label>
+                    </div>
+                    <input readonly="readonly" class="form-control text-center text-right" th:field="*{car.productionYear}"
+                           id="productionYear">
+                    </input>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="fuel">Fuel</label>
+                    </div>
+                    <input readonly="readonly" class="form-control text-center text-right" th:field="*{car.fuel}" id="fuel">
+
+                    </input>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="mileage">Mileage</span>
+                    </div>
+
+                    <input readonly="readonly" class="form-control text-center"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.mileage}"/>
+                    <div class="input-group-append">
+                        <span class="input-group-text">km</span>
+                    </div>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="registerNumber">Register Number</span>
+                    </div>
+
+                    <input readonly="readonly" class="form-control text-center"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.registerNumber}"/>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                    </div>
+                    <textarea  readonly="readonly" aria-label="With textarea"
+                              class="form-control"
+                              type="text"
+                              th:field="*{car.description}"/>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <button onclick="return confirm('Are you sure you would like to DELETE THIS CAR?');" type="submit"
+                            class="btn btn-primary btn-lg btn-block">Delete Car
+                    </button>
+                </div>
+
+
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
+</body>
+</html>

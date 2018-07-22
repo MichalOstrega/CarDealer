@@ -15,8 +15,10 @@ import javax.validation.constraints.Size;
 @Entity
 public class Car extends BaseModelVersion {
 
+
     @NotNull
     @Size(min=17, max=17, message = "Input valid VIN - 17 characters")
+    @Column(unique = true)
     private String vin;
 
     @NotNull

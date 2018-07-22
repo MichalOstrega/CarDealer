@@ -21,6 +21,8 @@ public class DefaultCarDataService implements CarDataService {
         return carRepository.findAllBySoldIsFalseAndVisibleIsTrue();
     }
 
+
+
     @Override
     public List<Car> loadAllSoldCars() {
         return carRepository.findAllBySoldIsTrue();
@@ -52,5 +54,10 @@ public class DefaultCarDataService implements CarDataService {
     @Override
     public Car loadCarByVIN(String vin) {
         return carRepository.findByVin(vin);
+    }
+
+    @Override
+    public void deleteCar(Long carId){
+        carRepository.delete(carId);
     }
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import pl.sdacademy.cardealer.dto.AddCarDropDownListDto;
 import pl.sdacademy.cardealer.dto.CarDto;
 import pl.sdacademy.cardealer.dto.TransactionDto;
@@ -32,11 +33,10 @@ public class CarDataController {
     }
 
 
-
     @GetMapping("/all")
     public String showAllCars(Model model) {
         List<Car> cars = carDataService.loadAllCars();
-        model.addAttribute("headerMsg","All Cars");
+        model.addAttribute("headerMsg", "All Cars");
         model.addAttribute("cars", cars);
         return "vehicles";
     }
@@ -44,7 +44,7 @@ public class CarDataController {
     @GetMapping
     public String showAvailableCars(Model model) {
         List<Car> cars = carDataService.loadAllAvailableCars();
-        model.addAttribute("headerMsg","Car For Sale");
+        model.addAttribute("headerMsg", "Car For Sale");
         model.addAttribute("cars", cars);
         return "vehicles";
     }
@@ -52,7 +52,7 @@ public class CarDataController {
     @GetMapping("/sold")
     public String showAllSoldCars(Model model) {
         List<Car> cars = carDataService.loadAllSoldCars();
-        model.addAttribute("headerMsg","Sold Cars");
+        model.addAttribute("headerMsg", "Sold Cars");
         model.addAttribute("cars", cars);
         return "vehicles";
     }
@@ -65,7 +65,7 @@ public class CarDataController {
         CarDto carDto = new CarDto();
         carDto.setTransactionRequest(reqTransaction);
         carDto.setDropList(getDropList());
-        carDto.setCar( new Car());
+        carDto.setCar(new Car());
         if (customerId != null) {
             carDto.getCar().setCustomer(customerService.findById(customerId));
         }
@@ -78,10 +78,44 @@ public class CarDataController {
     public String showCarDetails(Model model, @PathVariable("id") Long carID) {
         Car car = carDataService.loadCarById(carID);
         if (car == null) {
-                return "redirect:/";
+            return "redirect:/";
         }
         model.addAttribute("car", car);
         return "carDetails";
+    }
+
+    @GetMapping("/update/{id}")
+    public String updateCar(Model model, @PathVariable("id") Long carID) {
+        CarDto carDto = new CarDto();
+        setCarDtoFieldsForUpdateAndDelete(carID, carDto);
+        model.addAttribute("carDto", carDto);
+        if (carDto.getCar() == null) {
+            return "redirect:/";
+        } else {
+            return "updateCar";
+        }
+    }
+
+    @GetMapping("/delete/{id}")
+    public String deleteCar(Model model, @PathVariable("id") Long carID) {
+        CarDto carDto = new CarDto();
+        setCarDtoFieldsForUpdateAndDelete(carID, carDto);
+        model.addAttribute("carDto", carDto);
+        if (carDto.getCar() == null) {
+            return "redirect:/";
+        } else {
+            return "deleteCar";
+        }
+
+    }
+
+    @DeleteMapping("/{id}")
+    public String deleteVehicle(@PathVariable("id") Long carId,
+                                Model model,
+                                RedirectAttributes ra) {
+        carDataService.deleteCar(carId);
+
+        return "redirect:/cars";
     }
 
     @PostMapping
@@ -96,9 +130,7 @@ public class CarDataController {
         Car carToSave = carDto.getCar();
         carToSave.setVisible(true);
         if (bindingResult.hasErrors()) {
-            bindingResult.setNestedPath("car");
             model.addAttribute(carDto);
-            bindingResult.setNestedPath("");
             return "addCar";
         }
         if (carDataService.loadCarByVIN(carToSave.getVin()) != null) {
@@ -109,7 +141,7 @@ public class CarDataController {
             return "addCar";
         }
 
-        if(carDto.getTransactionRequest() != null && !carDto.getTransactionRequest().equals("")){
+        if (carDto.getTransactionRequest() != null && !carDto.getTransactionRequest().equals("")) {
             carDataService.addCar(carToSave);
             TransactionDto transactionDto = new TransactionDto();
             transactionDto.setTransactionType(carDto.getTransactionRequest());
@@ -127,8 +159,28 @@ public class CarDataController {
         return "redirect:/cars";
     }
 
+    @PutMapping("/{id}")
+    public String updateVehicle(
+            @Valid @ModelAttribute("carDto") CarDto carDto,
+            BindingResult bindingResult,
+            Model model) {
+
+        carDto.setDropList(getDropList());
+
+
+        Car carToUpdate = carDto.getCar();
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute(carDto);
+            return "updateCar";
+        }
+        Car car = carDataService.updateCar(carToUpdate);
+
+        return "redirect:/cars/" + carToUpdate.getId();
+    }
+
     private AddCarDropDownListDto getDropList() {
-        AddCarDropDownListDto addCarDropDownListDto=AddCarDropDownListDto.getInstance();
+        AddCarDropDownListDto addCarDropDownListDto = AddCarDropDownListDto.getInstance();
         addCarDropDownListDto.setBrands(dictionaryService.getBrands());
         addCarDropDownListDto.setCarModels(dictionaryService.getCarModels());
         addCarDropDownListDto.setCarTypes(dictionaryService.getCarTypes());
@@ -139,4 +191,9 @@ public class CarDataController {
     }
 
 
+    private void setCarDtoFieldsForUpdateAndDelete(@PathVariable("id") Long carID, CarDto carDto) {
+        carDto.setCar(carDataService.loadCarById(carID));
+        carDto.setDropList(getDropList());
+        carDto.getDropList().setCarModels(dictionaryService.getCarModels(carDto.getCar().getBrand().getId()));
+    }
 }

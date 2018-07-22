@@ -12,6 +12,8 @@ public interface CarDataService {
 
     List<Car> loadAllCars();
 
+
+
     Car updateCar(Car car);
 
     Car addCar(Car carToSave);
@@ -19,4 +21,6 @@ public interface CarDataService {
     Car loadCarById(Long carID);
 
     Car loadCarByVIN(String vin);
+
+    void deleteCar(Long carId);
 }
