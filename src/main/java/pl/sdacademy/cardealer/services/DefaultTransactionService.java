@@ -2,14 +2,8 @@ package pl.sdacademy.cardealer.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.sdacademy.cardealer.model.Account;
-import pl.sdacademy.cardealer.model.Purchase;
-import pl.sdacademy.cardealer.model.Sale;
-import pl.sdacademy.cardealer.model.Transfer;
-import pl.sdacademy.cardealer.repository.AccountRepository;
-import pl.sdacademy.cardealer.repository.PurchaseRepository;
-import pl.sdacademy.cardealer.repository.SaleRepository;
-import pl.sdacademy.cardealer.repository.TransferRepository;
+import pl.sdacademy.cardealer.model.*;
+import pl.sdacademy.cardealer.repository.*;
 
 import java.util.List;
 
@@ -19,23 +13,25 @@ public class DefaultTransactionService implements TransactionService {
     private SaleRepository saleRepository;
     private PurchaseRepository purchaseRepository;
     private AccountRepository accountRepository;
+    private PriceHistoryRepository priceHistoryRepository;
 
     @Autowired
     public DefaultTransactionService(TransferRepository transferRepository,
                                      SaleRepository saleRepository,
                                      PurchaseRepository purchaseRepository,
-                                     AccountRepository accountRepository) {
+                                     AccountRepository accountRepository, PriceHistoryRepository priceHistoryRepository) {
         this.transferRepository = transferRepository;
         this.saleRepository = saleRepository;
         this.purchaseRepository = purchaseRepository;
         this.accountRepository = accountRepository;
+        this.priceHistoryRepository = priceHistoryRepository;
     }
 
     public Purchase savePurchase(Purchase purchase) {
         return purchaseRepository.save(purchase);
     }
 
-    public Transfer saveTransfer(Transfer transfer) {
+    public Transaction saveTransfer(Transaction transfer) {
         return transferRepository.save(transfer);
     }
 
@@ -44,7 +40,7 @@ public class DefaultTransactionService implements TransactionService {
     }
 
     @Override
-    public List<Transfer> getTransfers() {
+    public List<Transaction> getTransfers() {
         return transferRepository.findAll();
     }
 
@@ -91,5 +87,10 @@ public class DefaultTransactionService implements TransactionService {
     @Override
     public List<Account> getAccounts() {
         return accountRepository.findAll();
+    }
+
+    @Override
+    public PriceHistory savePriceHistory(PriceHistory priceHistory) {
+        return priceHistoryRepository.save(priceHistory);
     }
 }

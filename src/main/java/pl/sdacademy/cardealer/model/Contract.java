@@ -10,7 +10,7 @@ public class Contract extends BaseModelVersion {
 
     @OneToOne
     @JoinColumn(name = "transfer_id")
-    private Transfer transfer;
+    private Transaction transfer;
 
     @OneToOne
     @JoinColumn(name = "sale_id")
@@ -37,11 +37,11 @@ public class Contract extends BaseModelVersion {
         this.transaction = transaction;
     }
 
-    public Transfer getTransfer() {
+    public Transaction getTransfer() {
         return transfer;
     }
 
-    public void setTransfer(Transfer transfer) {
+    public void setTransfer(Transaction transfer) {
         this.transfer = transfer;
     }
 

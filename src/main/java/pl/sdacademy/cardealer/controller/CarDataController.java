@@ -10,6 +10,7 @@ import pl.sdacademy.cardealer.dto.AddCarDropDownListDto;
 import pl.sdacademy.cardealer.dto.CarDto;
 import pl.sdacademy.cardealer.dto.TransactionDto;
 import pl.sdacademy.cardealer.model.Car;
+import pl.sdacademy.cardealer.model.PriceHistory;
 import pl.sdacademy.cardealer.services.CarDataService;
 import pl.sdacademy.cardealer.services.CustomerService;
 import pl.sdacademy.cardealer.services.DictionaryService;
@@ -65,7 +66,9 @@ public class CarDataController {
         CarDto carDto = new CarDto();
         carDto.setTransactionRequest(reqTransaction);
         carDto.setDropList(getDropList());
-        carDto.setCar(new Car());
+        Car car = new Car();
+        car.setPriceHistory(new PriceHistory());
+        carDto.setCar(car);
         if (customerId != null) {
             carDto.getCar().setCustomer(customerService.findById(customerId));
         }
@@ -125,10 +128,11 @@ public class CarDataController {
             Model model) {
 
         carDto.setDropList(getDropList());
-
-
         Car carToSave = carDto.getCar();
+        carToSave.setPriceHistory(new PriceHistory());
+        carToSave.getPriceHistory().setForSalePrice(carToSave.getPrice());
         carToSave.setVisible(true);
+
         if (bindingResult.hasErrors()) {
             model.addAttribute(carDto);
             return "addCar";
@@ -169,12 +173,13 @@ public class CarDataController {
 
 
         Car carToUpdate = carDto.getCar();
+        carDto.getCar().getPriceHistory().setForSalePrice(carToUpdate.getPrice());
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(carDto);
             return "updateCar";
         }
-        Car car = carDataService.updateCar(carToUpdate);
+        carDataService.updateCar(carToUpdate);
 
         return "redirect:/cars/" + carToUpdate.getId();
     }

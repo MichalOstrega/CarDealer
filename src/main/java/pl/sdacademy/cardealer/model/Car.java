@@ -3,10 +3,8 @@ package pl.sdacademy.cardealer.model;
 
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -87,6 +85,11 @@ public class Car extends BaseModelVersion {
     @Min(value = 5000, message = "Price must be greater than 5000")
     private Long price;
 
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "price_history_id")
+    private PriceHistory priceHistory;
+
 
     private boolean sold;
 
@@ -102,6 +105,14 @@ public class Car extends BaseModelVersion {
 
 
     public Car() {
+    }
+
+    public PriceHistory getPriceHistory() {
+        return priceHistory;
+    }
+
+    public void setPriceHistory(PriceHistory priceHistory) {
+        this.priceHistory = priceHistory;
     }
 
     public Customer getCustomer() {

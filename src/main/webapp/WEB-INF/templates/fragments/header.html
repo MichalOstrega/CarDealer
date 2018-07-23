@@ -68,8 +68,6 @@
                             Cars
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/cars/new}">Add Car</a>
-                            <div class="dropdown-divider"></div>
                             <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
                             <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
                             <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
@@ -81,8 +79,8 @@
                             Customers
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" th:href="@{/customers/new?type=company}">Add Company</a>
-                            <a class="dropdown-item" th:href="@{/customers/new?type=person}">Add Person</a>
+                            <a class="dropdown-item" th:href="@{/customers/new(type=company)}">Add Company</a>
+                            <a class="dropdown-item" th:href="@{/customers/new(type=person)}">Add Person</a>
                             <div class="dropdown-divider">Persons</div>
                             <a class="dropdown-item" th:href="@{/customers/persons}">Show Persons</a>
                             <a class="dropdown-item" th:href="@{/customers/companies}">Show Companies</a>

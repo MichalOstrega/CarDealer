@@ -223,6 +223,7 @@
                     <input th:class="${#fields.hasErrors('car.price')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
                            aria-label="Small"
                            aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.price}"
+                           th:value="*{car.priceHistory.priceForSale}"
                            th:errorclass="fieldError"/>
                     <div class="input-group-append">
                         <span class="input-group-text">PLN</span>

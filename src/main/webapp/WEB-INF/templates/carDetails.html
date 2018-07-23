@@ -70,10 +70,6 @@
                 <th scope="row">Mileage</th>
                 <td th:text="*{mileage  + ' km'}"/>
             </tr>
-            <tr>
-                <th scope="row">Price</th>
-                <td th:text="*{price + ' PLN'} "/>
-            </tr>
 
 
             <tr>
@@ -104,6 +100,18 @@
             <tr>
                 <th scope="row">Description</th>
                 <td th:text="${car.description}"></td>
+            </tr>
+            <tr>
+                <th scope="row">For Sale Price</th>
+                <td th:text="*{priceHistory.forSalePrice + ' PLN'} "/>
+            </tr>
+            <tr>
+                <th scope="row">Acquire Price</th>
+                <td th:text="${car.priceHistory.acquireCarPrice}"></td>
+            </tr>
+            <tr>
+                <th scope="row">Sell Price</th>
+                <td th:text="${car.priceHistory.sellCarPrice}"></td>
             </tr>
 
             </tbody>

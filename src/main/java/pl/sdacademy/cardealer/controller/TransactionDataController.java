@@ -36,7 +36,7 @@ public class TransactionDataController {
     @GetMapping("/transfers")
     public String showAllTransfers(Model model) {
         String name = "Transfers";
-        List<Transfer> transfers = transactionService.getTransfers();
+        List<Transaction> transfers = transactionService.getTransfers();
         model.addAttribute("headerMsg", name);
         model.addAttribute("transactions", transfers);
         return "transactions";
@@ -140,24 +140,35 @@ public class TransactionDataController {
                                  Model model) {
 
         Car car = transactionDto.getCar();
-
         Customer customer = transactionDto.getCustomer();
+
+        if (car.getPriceHistory() == null) {
+            car.setPriceHistory(new PriceHistory());
+        }
         if (car != null && customer != null) {
 
             String transactionType = transactionDto.getTransactionType();
             switch (transactionType) {
                 case "transfer": {
-                    Transfer transaction = (Transfer) getTransaction(new Transfer(), transactionDto, car, customer);
+                    Transaction transaction = (Transaction) getTransaction(new Transaction(), transactionDto, car, customer);
+
+
 
                     Contract contract = new Contract();
                     contract.setTransfer(transaction);
                     contract.setContent(transactionType);
                     contract.setTransaction(transactionType);
 
+                    PriceHistory priceHistory = car.getPriceHistory();
+                    priceHistory.setForSalePrice(car.getPrice());
+                    priceHistory.setAcquireCarContract(contract);
+
+
                     Account account = new Account();
                     account.setContract(contract);
-                    account.setPayment(0l);
 
+                    carDataService.addCar(car);
+                    transactionService.savePriceHistory(priceHistory);
                     transactionService.saveTransfer(transaction);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
@@ -168,19 +179,26 @@ public class TransactionDataController {
                     Purchase transaction = (Purchase) getTransaction(new Purchase(), transactionDto, car, customer);
 
                     car.setCustomer(customerService.findById(5l));
-                    Long price = car.getPrice();
-                    car.setPrice((long) (price *1.2));
 
                     Contract contract = new Contract();
                     contract.setPurchase(transaction);
                     contract.setContent(transactionType);
                     contract.setTransaction(transactionType);
 
+                    PriceHistory priceHistory = car.getPriceHistory();
+                    priceHistory.setAcquireCarPrice(car.getPrice());
+                    priceHistory.setForSalePrice(Double.valueOf(car.getPrice()*1.2).longValue());
+                    car.setPrice(priceHistory.getForSalePrice());
+                    priceHistory.setAcquireCarContract(contract);
+
+
+
                     Account account = new Account();
                     account.setContract(contract);
-                    account.setPayment(price);
+                    account.setPayment(car.getPrice());
 
                     carDataService.addCar(car);
+                    transactionService.savePriceHistory(priceHistory);
                     transactionService.savePurchase(transaction);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
@@ -199,12 +217,17 @@ public class TransactionDataController {
                     contract.setContent(transactionType);
                     contract.setTransaction(transactionType);
 
+                    PriceHistory priceHistory = car.getPriceHistory();
+                    priceHistory.setSellCarPrice(car.getPrice());
+                    priceHistory.setSellCarContract(contract);
+
                     Account account = new Account();
                     account.setContract(contract);
                     account.setIncome(transactionDto.getPrice());
 
                     carDataService.updateCar(car);
                     transactionService.saveSale(transaction);
+                    transactionService.savePriceHistory(priceHistory);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
                     break;

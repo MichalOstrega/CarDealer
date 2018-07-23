@@ -61,7 +61,7 @@
         <td th:text="${car.productionYear}"/>
         <td th:text="${car.mileage} + 'km'"/>
         <td th:text="${car.fuel}"/>
-        <td th:text="${car.price}  +'PLN'"/>
+        <td th:text="${car.priceHistory.priceForSale}  +'PLN'"/>
         <td th:if="${#strings.equals(headerMsg,'All Cars')}" th:text="${car.customer.surname == null ? car.customer.name : car.customer.surname + ' ' + car.customer.name}"/>
         <td th:if="${#strings.equals(headerMsg,'All Cars')}" th:text="${(car.sold ? 'Sold' : 'For Sale') + ((!car.visible and !car.sold) ? '/Not Visible' : '')}"/>
         <td><a th:href="@{/cars/{parametr}(parametr=${car.id})}" th:text="Details"></a></td>
