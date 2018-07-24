@@ -11,24 +11,27 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class PriceHistory extends BaseModelVersion {
 
+
     @ManyToOne
     @JoinColumn(name = "get_car_contract_id")
     public Contract acquireCarContract;
 
+
     @Column(name = "get_car_price")
-    public Long acquireCarPrice=0l;
+    public Long acquireCarPrice;
 
     @ManyToOne
     @JoinColumn(name = "sell_car_contract_id")
     public Contract sellCarContract;
 
     @Column(name = "sell_car_price")
-    public Long sellCarPrice =0l;
+    public Long sellCarPrice;
+
 
     @NotNull
     @Min(value = 5000, message = "Price must be greater than 5000")
-    @Column(name = "for_sale_price")
-    public Long forSalePrice;
+    @Column(name = "price")
+    public Long price;
 
     public PriceHistory() {
     }
@@ -65,11 +68,11 @@ public class PriceHistory extends BaseModelVersion {
         this.sellCarPrice = sellCarPrice;
     }
 
-    public Long getForSalePrice() {
-        return forSalePrice;
+    public Long getPrice() {
+        return price;
     }
 
-    public void setForSalePrice(Long forSalePrice) {
-        this.forSalePrice = forSalePrice;
+    public void setPrice(Long price) {
+        this.price = price;
     }
 }

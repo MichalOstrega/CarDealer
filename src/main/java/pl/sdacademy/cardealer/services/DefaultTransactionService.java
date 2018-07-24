@@ -9,74 +9,54 @@ import java.util.List;
 
 @Service
 public class DefaultTransactionService implements TransactionService {
-    private TransferRepository transferRepository;
-    private SaleRepository saleRepository;
-    private PurchaseRepository purchaseRepository;
+    private TransactionRepository transactionRepository;
     private AccountRepository accountRepository;
     private PriceHistoryRepository priceHistoryRepository;
 
     @Autowired
-    public DefaultTransactionService(TransferRepository transferRepository,
-                                     SaleRepository saleRepository,
-                                     PurchaseRepository purchaseRepository,
+    public DefaultTransactionService(TransactionRepository transactionRepository,
                                      AccountRepository accountRepository, PriceHistoryRepository priceHistoryRepository) {
-        this.transferRepository = transferRepository;
-        this.saleRepository = saleRepository;
-        this.purchaseRepository = purchaseRepository;
+        this.transactionRepository = transactionRepository;
         this.accountRepository = accountRepository;
         this.priceHistoryRepository = priceHistoryRepository;
     }
 
-    public Purchase savePurchase(Purchase purchase) {
-        return purchaseRepository.save(purchase);
+
+    public Transaction saveTransaction(Transaction transaction) {
+        return transactionRepository.save(transaction);
     }
 
-    public Transaction saveTransfer(Transaction transfer) {
-        return transferRepository.save(transfer);
-    }
-
-    public Sale saveSale(Sale sale) {
-        return saleRepository.save(sale);
-    }
 
     @Override
-    public List<Transaction> getTransfers() {
-        return transferRepository.findAll();
+    public List<Transaction> getTransactions() {
+        return transactionRepository.findAll();
     }
 
-    @Override
-    public List<Purchase> getPurchases() {
-        return purchaseRepository.findAll();
+
+    public TransactionRepository getTransactionRepository() {
+        return transactionRepository;
     }
 
-    @Override
-    public List<Sale> getSales() {
-        return saleRepository.findAll();
+    public void setTransactionRepository(TransactionRepository transactionRepository) {
+        this.transactionRepository = transactionRepository;
     }
 
-    public TransferRepository getTransferRepository() {
-        return transferRepository;
+    public AccountRepository getAccountRepository() {
+        return accountRepository;
     }
 
-    public void setTransferRepository(TransferRepository transferRepository) {
-        this.transferRepository = transferRepository;
+    public void setAccountRepository(AccountRepository accountRepository) {
+        this.accountRepository = accountRepository;
     }
 
-    public SaleRepository getSaleRepository() {
-        return saleRepository;
+    public PriceHistoryRepository getPriceHistoryRepository() {
+        return priceHistoryRepository;
     }
 
-    public void setSaleRepository(SaleRepository saleRepository) {
-        this.saleRepository = saleRepository;
+    public void setPriceHistoryRepository(PriceHistoryRepository priceHistoryRepository) {
+        this.priceHistoryRepository = priceHistoryRepository;
     }
 
-    public PurchaseRepository getPurchaseRepository() {
-        return purchaseRepository;
-    }
-
-    public void setPurchaseRepository(PurchaseRepository purchaseRepository) {
-        this.purchaseRepository = purchaseRepository;
-    }
 
 
     @Override
@@ -93,4 +73,11 @@ public class DefaultTransactionService implements TransactionService {
     public PriceHistory savePriceHistory(PriceHistory priceHistory) {
         return priceHistoryRepository.save(priceHistory);
     }
+
+    @Override
+    public List<Transaction> getTransactionsByType(String transactionType) {
+        return transactionRepository.findAllByTransactionTypeIs(transactionType);
+    }
+
+
 }

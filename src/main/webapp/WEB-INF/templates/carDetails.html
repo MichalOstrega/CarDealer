@@ -103,12 +103,22 @@
             </tr>
             <tr>
                 <th scope="row">For Sale Price</th>
-                <td th:text="*{priceHistory.forSalePrice + ' PLN'} "/>
+                <td th:text="*{priceHistory.price + ' PLN'} "/>
             </tr>
+            <!--<tr>-->
+                <!--<th scope="row">Acquire Contract</th>-->
+                <!--<td><a th:text="${car.priceHistory.acquireCarContract.transaction.transactionType}"-->
+                       <!--th:href="${car.priceHistory.acquireCarContract.id}"></a></td>-->
+            <!--</tr>-->
             <tr>
                 <th scope="row">Acquire Price</th>
                 <td th:text="${car.priceHistory.acquireCarPrice}"></td>
             </tr>
+            <!--<tr th:if="${car.priceHistory.sellCarPrice != 0}">-->
+                <!--<th scope="row">Sell Contract</th>-->
+                <!--<td><a th:text="${car.priceHistory.sellCarContract.transaction.transactionType}"-->
+                       <!--th:href="${car.priceHistory.sellCarContract.id}"></a></td>-->
+            <!--</tr>-->
             <tr>
                 <th scope="row">Sell Price</th>
                 <td th:text="${car.priceHistory.sellCarPrice}"></td>
@@ -118,15 +128,15 @@
         </table>
         <hr class="divider"/>
         <a th:unless="${car.sold}" th:href="@{/transactions/new/sale   (vin=${car.vin})}" type="button"
-                class="btn btn-primary btn-lg btn-block">Sell Car
+           class="btn btn-primary btn-lg btn-block">Sell Car
         </a>
         <hr class="divider"/>
         <a th:href="@{/cars/update/{id}   (id=${car.id})}" type="button"
-                class="btn btn-primary btn-lg btn-block">Modify Car
+           class="btn btn-primary btn-lg btn-block">Modify Car
         </a>
         <hr class="divider"/>
         <a th:href="@{/cars/delete/{id}   (id=${car.id})}" type="button"
-                class="btn btn-primary btn-lg btn-block">Delete Car
+           class="btn btn-primary btn-lg btn-block">Delete Car
         </a>
 
 

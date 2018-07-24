@@ -53,6 +53,8 @@ public class AccountController {
         return "accounts";
     }
 
+
+
     @GetMapping("/purchases")
     public String getPurchases(Model model){
         List<Account> accounts = accountService.getPurchases();

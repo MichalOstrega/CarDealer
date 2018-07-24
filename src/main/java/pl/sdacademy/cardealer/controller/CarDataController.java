@@ -61,7 +61,7 @@ public class CarDataController {
 
     @GetMapping("/new")
     public String addCarForm(Model model,
-                             @RequestParam(value = "transaction", required = false) String reqTransaction,
+                             @RequestParam(value = "transactionType", required = false) String reqTransaction,
                              @RequestParam(value = "customerid", required = false) Long customerId) {
         CarDto carDto = new CarDto();
         carDto.setTransactionRequest(reqTransaction);
@@ -129,8 +129,6 @@ public class CarDataController {
 
         carDto.setDropList(getDropList());
         Car carToSave = carDto.getCar();
-        carToSave.setPriceHistory(new PriceHistory());
-        carToSave.getPriceHistory().setForSalePrice(carToSave.getPrice());
         carToSave.setVisible(true);
 
         if (bindingResult.hasErrors()) {
@@ -155,7 +153,7 @@ public class CarDataController {
                 transactionDto.setCustomerExist(true);
             }
             transactionDto.setCarExist(true);
-            transactionDto.setPrice(carDto.getCar().getPrice());
+            transactionDto.setPrice(carToSave.getPriceHistory().getPrice());
             model.addAttribute("transactionDto", transactionDto);
             return "addTransaction";
         }
@@ -173,7 +171,6 @@ public class CarDataController {
 
 
         Car carToUpdate = carDto.getCar();
-        carDto.getCar().getPriceHistory().setForSalePrice(carToUpdate.getPrice());
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(carDto);

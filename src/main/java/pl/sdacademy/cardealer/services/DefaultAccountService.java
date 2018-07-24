@@ -35,16 +35,20 @@ public class DefaultAccountService implements AccountService {
 
     @Override
     public List<Account> getTransfers() {
-        return getAllAccounts().stream().filter(account -> account.getContract().getTransfer() != null).collect(Collectors.toList());
+        return getAllAccounts().stream().filter(account -> getTransactionType(account).equals("transfer")).collect(Collectors.toList());
     }
 
     @Override
     public List<Account> getSales() {
-        return getAllAccounts().stream().filter(account -> account.getContract().getSale() != null).collect(Collectors.toList());
+        return getAllAccounts().stream().filter(account -> getTransactionType(account).equals("sale")).collect(Collectors.toList());
     }
 
     @Override
     public List<Account> getPurchases() {
-        return getAllAccounts().stream().filter(account -> account.getContract().getPurchase() != null).collect(Collectors.toList());
+        return getAllAccounts().stream().filter(account -> getTransactionType(account).equals("purchase")).collect(Collectors.toList());
+    }
+
+    private String getTransactionType(Account account) {
+        return account.getContract().getTransaction().getTransactionType();
     }
 }

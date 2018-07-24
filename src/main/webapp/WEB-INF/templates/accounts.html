@@ -74,38 +74,18 @@
         <tbody id="accountsTable">
         <tr align="center" th:each="account, iterationInfo : ${accountDto.accounts}">
             <td th:text="${account.id}"/>
-            <td th:text="${#strings.toUpperCase(account.contract.transaction)}"/>
+            <td th:text="${#strings.toUpperCase(account.contract.transaction.transactionType)}"/>
 
-            <div th:if="${#strings.equals(account.contract.transaction,'transfer')}">
+
                 <td>
-                    <a th:href="@{/customers/{id}(id=${account.contract.transfer.customer.id})}"
-                       th:text="${account.contract.transfer.customer.name}"/>
+                    <a th:href="@{/customers/{id}(id=${account.contract.transaction.customer.id})}"
+                       th:text="${account.contract.transaction.customer.name}"/>
                 </td>
                 <td>
-                    <a th:href="@{/cars/{id}(id=${account.contract.transfer.car.id})}"
-                       th:text="${account.contract.transfer.car.brand + ' ' + account.contract.transfer.car.model}"/>
+                    <a th:href="@{/cars/{id}(id=${account.contract.transaction.car.id})}"
+                       th:text="${account.contract.transaction.car.brand + ' ' + account.contract.transaction.car.model}"/>
                 </td>
-            </div>
-            <div th:if="${#strings.equals(account.contract.transaction,'sale')}">
-                <td>
-                    <a th:href="@{/customers/{id}(id=${account.contract.sale.customer.id})}"
-                       th:text="${account.contract.sale.customer.name}"/>
-                </td>
-                <td>
-                    <a th:href="@{/cars/{id}(id=${account.contract.sale.car.id})}"
-                       th:text="${account.contract.sale.car.brand + ' ' + account.contract.sale.car.model}"/>
-                </td>
-            </div>
-            <div th:if="${#strings.equals(account.contract.transaction,'purchase')}">
-                <td>
-                    <a th:href="@{/customers/{id}(id=${account.contract.purchase.customer.id})}"
-                       th:text="${account.contract.purchase.customer.name}"/>
-                </td>
-                <td>
-                    <a th:href="@{/cars/{id}(id=${account.contract.purchase.car.id})}"
-                       th:text="${account.contract.purchase.car.brand + ' ' + account.contract.purchase.car.model}"/>
-                </td>
-            </div>
+
             <td th:text="${account.income}"/>
             <td th:text="${account.payment}"/>
             <td th:text="${#dates.format(account.date, 'dd-MM-yyyy')}"/>

@@ -13,7 +13,9 @@ import pl.sdacademy.cardealer.services.ContractService;
 import pl.sdacademy.cardealer.services.CustomerService;
 import pl.sdacademy.cardealer.services.TransactionService;
 
+import javax.validation.Path;
 import javax.validation.Valid;
+import java.util.Arrays;
 import java.util.List;
 
 @Controller
@@ -24,6 +26,7 @@ public class TransactionDataController {
     private CarDataService carDataService;
     private TransactionService transactionService;
     private ContractService contractService;
+    private List<String> availableTransactionTypes = Arrays.asList(new String[]{"transfer", "sale", "purchase"});
 
     @Autowired
     public TransactionDataController(CustomerService customerService, CarDataService carDataService, TransactionService transactionService, ContractService contractService) {
@@ -33,37 +36,30 @@ public class TransactionDataController {
         this.contractService = contractService;
     }
 
-    @GetMapping("/transfers")
-    public String showAllTransfers(Model model) {
-        String name = "Transfers";
-        List<Transaction> transfers = transactionService.getTransfers();
-        model.addAttribute("headerMsg", name);
+    @GetMapping("/{transactionType}")
+    public String showAllTransfers(Model model,
+                                   @PathVariable("transactionType") String name) {
+
+
+        if (!availableTransactionTypes.contains(name)) {
+            return "redirect:/";
+        }
+
+        List<Transaction> transfers = transactionService.getTransactionsByType(name);
+        model.addAttribute("headerMsg", name.toUpperCase());
         model.addAttribute("transactions", transfers);
         return "transactions";
     }
 
-    @GetMapping("/sales")
-    public String showAllSales(Model model) {
-        String name = "Sales";
-        List<Sale> transfers = transactionService.getSales();
-        model.addAttribute("headerMsg", name);
-        model.addAttribute("transactions", transfers);
-        return "transactions";
-    }
-
-    @GetMapping("/purchases")
-    public String showAllPurchases(Model model) {
-        String name = "Purchases";
-        List<Purchase> transfers = transactionService.getPurchases();
-        model.addAttribute("headerMsg", name);
-        model.addAttribute("transactions", transfers);
-        return "transactions";
-    }
 
     @GetMapping("/new/{transaction}")
     public String carTransaction(Model model,
                                  @RequestParam(value = "vin", required = false) String vin,
                                  @PathVariable("transaction") String transactionType) {
+        if (!availableTransactionTypes.contains(transactionType)) {
+            return "redirect:/";
+        }
+
         TransactionDto transactionDto = new TransactionDto();
         transactionDto.setTransactionType(transactionType);
         Car car;
@@ -73,7 +69,8 @@ public class TransactionDataController {
                 return "redirect:/";
             }
             transactionDto.setCarExist(true);
-            transactionDto.setPrice(car.getPrice());
+            transactionDto.setPrice(car.getPriceHistory().getPrice());
+
         } else {
             car = new Car();
         }
@@ -88,13 +85,13 @@ public class TransactionDataController {
     public String checkCar(@Valid @ModelAttribute("transactionDto") TransactionDto transactionDto,
                            BindingResult bindingResult,
                            Model model) {
-        Car byVIN = carDataService.loadCarByVIN(transactionDto.getCar().getVin());
-        if (byVIN == null) {
+        Car carByVIN = carDataService.loadCarByVIN(transactionDto.getCar().getVin());
+        if (carByVIN == null) {
             bindingResult.setNestedPath("car");
             bindingResult.rejectValue("vin", "vin", "Car doesn't exists. Check inputed number or first create car");
             bindingResult.setNestedPath("");
             return "addTransaction";
-        } else if (byVIN.isSold()) {
+        } else if (carByVIN.isSold()) {
             bindingResult.setNestedPath("car");
             bindingResult.rejectValue("vin", "vin", "Car cannot be sold twice");
             model.addAttribute("transactionDto", transactionDto);
@@ -102,8 +99,8 @@ public class TransactionDataController {
             return "addTransaction";
         } else {
             transactionDto.setCarExist(true);
-            transactionDto.setCar(byVIN);
-            transactionDto.setPrice(byVIN.getPrice());
+            transactionDto.setCar(carByVIN);
+            transactionDto.setPrice(carByVIN.getPriceHistory().getPrice());
             model.addAttribute("transactionDto", transactionDto);
         }
         return "addTransaction";
@@ -142,70 +139,63 @@ public class TransactionDataController {
         Car car = transactionDto.getCar();
         Customer customer = transactionDto.getCustomer();
 
-        if (car.getPriceHistory() == null) {
-            car.setPriceHistory(new PriceHistory());
-        }
         if (car != null && customer != null) {
 
             String transactionType = transactionDto.getTransactionType();
             switch (transactionType) {
                 case "transfer": {
-                    Transaction transaction = (Transaction) getTransaction(new Transaction(), transactionDto, car, customer);
-
-
+                    Transaction transaction = getTransaction(new Transaction(), transactionDto, car, customer);
 
                     Contract contract = new Contract();
-                    contract.setTransfer(transaction);
+                    contract.setTransaction(transaction);
                     contract.setContent(transactionType);
-                    contract.setTransaction(transactionType);
 
                     PriceHistory priceHistory = car.getPriceHistory();
-                    priceHistory.setForSalePrice(car.getPrice());
+                    priceHistory.setPrice(Double.valueOf(car.getPriceHistory().getPrice() * 1.2).longValue());
+                    priceHistory.setAcquireCarPrice(transactionDto.getPrice());
                     priceHistory.setAcquireCarContract(contract);
 
 
                     Account account = new Account();
+                    account.setPayment(0l);
                     account.setContract(contract);
 
                     carDataService.addCar(car);
                     transactionService.savePriceHistory(priceHistory);
-                    transactionService.saveTransfer(transaction);
+                    transactionService.saveTransaction(transaction);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
 
                     break;
                 }
-                case "purchase" : {
-                    Purchase transaction = (Purchase) getTransaction(new Purchase(), transactionDto, car, customer);
+                case "purchase": {
+                    Transaction transaction = getTransaction(new Transaction(), transactionDto, car, customer);
 
                     car.setCustomer(customerService.findById(5l));
 
                     Contract contract = new Contract();
-                    contract.setPurchase(transaction);
+                    contract.setTransaction(transaction);
                     contract.setContent(transactionType);
-                    contract.setTransaction(transactionType);
 
                     PriceHistory priceHistory = car.getPriceHistory();
-                    priceHistory.setAcquireCarPrice(car.getPrice());
-                    priceHistory.setForSalePrice(Double.valueOf(car.getPrice()*1.2).longValue());
-                    car.setPrice(priceHistory.getForSalePrice());
+                    priceHistory.setAcquireCarPrice(transactionDto.getPrice());
+                    priceHistory.setPrice(Double.valueOf(priceHistory.getAcquireCarPrice() * 1.2).longValue());
                     priceHistory.setAcquireCarContract(contract);
-
 
 
                     Account account = new Account();
                     account.setContract(contract);
-                    account.setPayment(car.getPrice());
+                    account.setPayment(priceHistory.getAcquireCarPrice());
 
                     carDataService.addCar(car);
                     transactionService.savePriceHistory(priceHistory);
-                    transactionService.savePurchase(transaction);
+                    transactionService.saveTransaction(transaction);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
                     break;
                 }
                 case "sale": {
-                    Sale transaction = (Sale) getTransaction(new Sale(), transactionDto, car, customer);
+                    Transaction transaction = getTransaction(new Transaction(), transactionDto, car, customer);
 
                     car.setSold(true);
                     car.setVisible(false);
@@ -213,12 +203,11 @@ public class TransactionDataController {
 
 
                     Contract contract = new Contract();
-                    contract.setSale(transaction);
+                    contract.setTransaction(transaction);
                     contract.setContent(transactionType);
-                    contract.setTransaction(transactionType);
 
                     PriceHistory priceHistory = car.getPriceHistory();
-                    priceHistory.setSellCarPrice(car.getPrice());
+                    priceHistory.setSellCarPrice(transactionDto.getPrice());
                     priceHistory.setSellCarContract(contract);
 
                     Account account = new Account();
@@ -226,7 +215,7 @@ public class TransactionDataController {
                     account.setIncome(transactionDto.getPrice());
 
                     carDataService.updateCar(car);
-                    transactionService.saveSale(transaction);
+                    transactionService.saveTransaction(transaction);
                     transactionService.savePriceHistory(priceHistory);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
@@ -237,17 +226,18 @@ public class TransactionDataController {
             }
         }
 
-        return "redirect:/transactions/"+ transactionDto.getTransactionType()+"s";
+        return "redirect:/transactions/" + transactionDto.getTransactionType();
     }
 
 
-    private BaseModelTransaction getTransaction(
-            BaseModelTransaction transaction,
+    private Transaction getTransaction(
+            Transaction transaction,
             @Valid @ModelAttribute("transactionDto") TransactionDto transactionDto,
             Car car, Customer customer) {
         transaction.setCustomer(customer);
         transaction.setCar(car);
         transaction.setPrice(transactionDto.getPrice());
+        transaction.setTransactionType(transactionDto.getTransactionType());
         return transaction;
     }
 }

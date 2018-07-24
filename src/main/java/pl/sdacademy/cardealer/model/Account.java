@@ -9,15 +9,15 @@ import java.util.Date;
 public class Account extends BaseModelVersion {
 
 
-    private Long income;
+    private Long income = 0l;
 
-    private Long payment;
+    private Long payment =0l;
 
     @ManyToOne
     @JoinColumn(name = "contract_id")
     private Contract contract;
 
-    private Date date;
+    private Date date = new Date();
 
     public Account() {
     }
@@ -52,5 +52,11 @@ public class Account extends BaseModelVersion {
 
     public void setContract(Contract contract) {
         this.contract = contract;
+    }
+
+    public static class Nothging {
+        public static String go() {
+            return "skla";
+        }
     }
 }

@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface AccountRepository extends JpaRepository<Account, Long> {
 
-    List<Account> findAllByContract_PurchaseIsNotNull();
-    List<Account> findAllByContract_SaleIsNotNull();
-    List<Account> findAllByContract_TransferIsNotNull();
+    List<Account> findAllByContract_Transaction_TransactionTypeIs(String transactionType);
 }
 

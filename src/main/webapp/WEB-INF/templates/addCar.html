@@ -209,14 +209,14 @@
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="price">Price</span>
                     </div>
-                    <input th:class="${#fields.hasErrors('car.price')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                    <input th:class="${#fields.hasErrors('car.priceHistory.price')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
                            aria-label="Small"
-                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.price}"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.priceHistory.price}"
                            th:errorclass="fieldError"/>
                     <div class="input-group-append">
                         <span class="input-group-text">PLN</span>
                     </div>
-                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.price')}" th:errors="*{car.price}"/>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.priceHistory.price')}" th:errors="*{car.priceHistory.price}"/>
                 </div>
 
 

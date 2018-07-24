@@ -82,11 +82,11 @@
                 <div class="input-group mb-3">
 
                     <a role="button" class="btn btn-secondary btn-block btn-sm  m-1 "
-                       th:href="@{/customers/new(type=person,transaction=${transactionDto.transactionType}
+                       th:href="@{/customers/new(type=person,transactionType=${transactionDto.transactionType}
                        )}">Create
                         Person Customer</a>
                     <a role="button" class="btn btn-secondary btn-block btn-sm m-1 "
-                       th:href="@{/customers/new(type=company, transaction=${transactionDto.transactionType})}">Create
+                       th:href="@{/customers/new(type=company, transactionType=${transactionDto.transactionType})}">Create
                         Company Customer</a>
                 </div>
 
@@ -192,7 +192,7 @@
                 </div>
                 <div class="input-group mb-3" th:unless="${#strings.equals(transactionDto.transactionType,'sale')}">
                     <a role="button" class="btn btn-block btn-secondary btn-sm m-1 "
-                       th:href="@{/cars/new(transaction=${transactionDto.transactionType},customerid=${transactionDto.customer != null ? transactionDto.customer.id : 0})}">Create
+                       th:href="@{/cars/new(transactionType=${transactionDto.transactionType},customerid=${transactionDto.customer != null ? transactionDto.customer.id : 0})}">Create
                         Car</a>
 
                 </div>
@@ -235,7 +235,7 @@
                 <td th:text="*{vin}"/>
                 <td th:text="*{registerNumber}"/>
                 <td th:text="*{ocNumber}"/>
-                <td th:text="*{priceHistory.forSalePrice + ' PLN'} "/>
+                <td th:text="*{priceHistory.price + ' PLN'} "/>
                 <td th:text="*{testDrives} "/>
 
             </tr>
@@ -282,7 +282,7 @@
             </div>
 
 
-            <div class="input-group mb-3">
+            <div th:hidden="${#strings.equals(transactionDto.transactionType,'transfer')}" class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="price">Price</span>
                 </div>
@@ -292,6 +292,7 @@
                        aria-describedby="inputGroup-sizing-sm"
                        id="priceTranction"
                        th:field="*{price}"
+                       th:value="*{price}"
                 />
                 <div class="input-group-append">
                     <span class="input-group-text" id="PLN">PLN</span>

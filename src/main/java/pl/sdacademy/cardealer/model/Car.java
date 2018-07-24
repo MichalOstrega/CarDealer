@@ -81,9 +81,6 @@ public class Car extends BaseModelVersion {
     @JoinColumn(name = "car_type_id")
     private CarType carType;
 
-    @NotNull
-    @Min(value = 5000, message = "Price must be greater than 5000")
-    private Long price;
 
     @Valid
     @OneToOne(cascade = CascadeType.ALL)
@@ -123,13 +120,6 @@ public class Car extends BaseModelVersion {
         this.customer = customer;
     }
 
-    public Long getPrice() {
-        return price;
-    }
-
-    public void setPrice(Long price) {
-        this.price = price;
-    }
 
     public boolean isVisible() {
         return visible;

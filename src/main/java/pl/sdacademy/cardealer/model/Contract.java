@@ -9,56 +9,25 @@ import javax.persistence.OneToOne;
 public class Contract extends BaseModelVersion {
 
     @OneToOne
-    @JoinColumn(name = "transfer_id")
-    private Transaction transfer;
+    @JoinColumn(name = "transaction_id")
+    private Transaction transaction;
 
-    @OneToOne
-    @JoinColumn(name = "sale_id")
-    private Sale sale;
-
-    @OneToOne
-    @JoinColumn(name = "purchase_id")
-    private Purchase purchase;
 
     @Column
     private String content;
 
-    @Column
-    private String transaction;
 
     public Contract() {
     }
 
-    public String getTransaction() {
+
+
+    public Transaction getTransaction() {
         return transaction;
     }
 
-    public void setTransaction(String transaction) {
+    public void setTransaction(Transaction transaction) {
         this.transaction = transaction;
-    }
-
-    public Transaction getTransfer() {
-        return transfer;
-    }
-
-    public void setTransfer(Transaction transfer) {
-        this.transfer = transfer;
-    }
-
-    public Sale getSale() {
-        return sale;
-    }
-
-    public void setSale(Sale sale) {
-        this.sale = sale;
-    }
-
-    public Purchase getPurchase() {
-        return purchase;
-    }
-
-    public void setPurchase(Purchase purchase) {
-        this.purchase = purchase;
     }
 
     public String getContent() {

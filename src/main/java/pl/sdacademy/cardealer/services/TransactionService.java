@@ -6,15 +6,15 @@ import java.util.List;
 
 public interface TransactionService {
 
-    public Purchase savePurchase(Purchase purchase);
 
-    public Transaction saveTransfer(Transaction transfer);
+    public Transaction saveTransaction(Transaction transaction);
 
-    public Sale saveSale(Sale sale);
 
-    List<Transaction> getTransfers();
-    List<Purchase> getPurchases();
-    List<Sale> getSales();
+    List<Transaction> getTransactions();
+
+    List<Transaction> getTransactionsByType(String transactionType);
+
+
 
     Account saveAccount(Account account);
     List<Account> getAccounts();
