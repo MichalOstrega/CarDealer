@@ -18,8 +18,10 @@ public class DefaultCarDataService implements CarDataService {
 
     @Override
     public List<Car> loadAllAvailableCars() {
-        return carRepository.findAllBySoldIsFalse();
+        return carRepository.findAllBySoldIsFalseAndVisibleIsTrue();
     }
+
+
 
     @Override
     public List<Car> loadAllSoldCars() {
@@ -32,8 +34,14 @@ public class DefaultCarDataService implements CarDataService {
     }
 
     @Override
-    public void addCar(Car carToSave) {
-        carRepository.save(carToSave);
+    public Car updateCar(Car car) {
+        return carRepository.save(car);
+    }
+
+    @Override
+    public Car addCar(Car carToSave) {
+        return carRepository.save(carToSave);
+
     }
 
     @Override
@@ -46,5 +54,10 @@ public class DefaultCarDataService implements CarDataService {
     @Override
     public Car loadCarByVIN(String vin) {
         return carRepository.findByVin(vin);
+    }
+
+    @Override
+    public void deleteCar(Long carId){
+        carRepository.delete(carId);
     }
 }

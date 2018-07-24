@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
+</head>
+<body>
+
+<div class="container" th:fragment="header">
+
+        <div class="jumbotron wide">
+
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+<br/>
+        </div>
+
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+            <a class="navbar-brand" th:href="@{/}" img="">Car Dealer</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                    aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+
+                    <a class="nav-item nav-link active" th:href="@{/}">Home</a>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Transaction
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/transactions/new/transfer}">Transfer Car</a>
+                            <a class="dropdown-item" th:href="@{/transactions/new/purchase}">Purchase Car</a>
+                            <a class="dropdown-item" th:href="@{/transactions/new/sale}">Sell Car</a>
+                            <div class="dropdown-divider"></div>
+                            <a class="dropdown-item" th:href="@{/transactions/transfer}">Transfers</a>
+                            <a class="dropdown-item" th:href="@{/transactions/purchase}">Purchases </a>
+                            <a class="dropdown-item" th:href="@{/transactions/sale}">Sales</a>
+                        </div>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Cars
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/cars}">Cars For Sale</a>
+                            <a class="dropdown-item" th:href="@{/cars/sold}">Sold Cars </a>
+                            <a class="dropdown-item" th:href="@{/cars/all}">All Cars</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="navbarDropdown" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Customers
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" th:href="@{/customers/new(type=company)}">Add Company</a>
+                            <a class="dropdown-item" th:href="@{/customers/new(type=person)}">Add Person</a>
+                            <div class="dropdown-divider">Persons</div>
+                            <a class="dropdown-item" th:href="@{/customers/persons}">Show Persons</a>
+                            <a class="dropdown-item" th:href="@{/customers/companies}">Show Companies</a>
+                            <a class="dropdown-item" th:href="@{/customers}">Show All Customers</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle"  id="Reports" role="button"
+                           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Reports
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="Reports">
+                            <a class="dropdown-item" th:href="@{/accounts/transfers}">Transfers Report</a>
+                            <a class="dropdown-item" th:href="@{/accounts/purchases}">Purchases Report</a>
+                            <a class="dropdown-item" th:href="@{/accounts/sales}">Sales Report</a>
+                            <a class="dropdown-item" th:href="@{/accounts/all}">Summary Report</a>
+
+                        </div>
+                    </li>
+
+                </div>
+                <div class="navbar-nav ml-auto">
+                    <a class="nav-link dropdown-toggle" role="button" id="loginMenu" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Log in
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right "  aria-labelledby="loginMenu">
+                        <form class="px-4 py-3">
+                            <div class="form-group">
+                                <label for="exampleDropdownFormEmail1">Login</label>
+                                <input type="email" class="form-control" id="exampleDropdownFormEmail1" placeholder="email@example.com"/>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleDropdownFormPassword1">Password</label>
+                                <input type="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password"/>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary">Sign in</button>
+                        </form>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">New around here? Sign up</a>
+                        <a class="dropdown-item" href="#">Forgot password?</a>
+                    </div>
+                </div>
+            </div>
+
+        </nav>
+
+    <br/>
+
+</div>
+
+</body>
+</html>

@@ -13,6 +13,19 @@ public class CarModel extends BaseDictionary {
     @JoinColumn(name = "brand_id")
     private Brand brand;
 
+    public CarModel(Brand brand, String name) {
+        super(name);
+        this.brand = brand;
+    }
+
+    public CarModel() {
+        super();
+    }
+
+    public CarModel(String name) {
+        super(name);
+    }
+
     public Brand getBrand() {
         return brand;
     }

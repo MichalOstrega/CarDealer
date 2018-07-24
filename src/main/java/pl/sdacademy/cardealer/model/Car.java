@@ -3,10 +3,8 @@ package pl.sdacademy.cardealer.model;
 
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
@@ -15,8 +13,10 @@ import javax.validation.constraints.Size;
 @Entity
 public class Car extends BaseModelVersion {
 
+
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=17, max=17, message = "Input valid VIN - 17 characters")
+    @Column(unique = true)
     private String vin;
 
     @NotNull
@@ -35,13 +35,13 @@ public class Car extends BaseModelVersion {
     private CarModel model;
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input OC Number")
     @Column(name = "OC_number")
     private String ocNumber;
 
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input Register Number")
     @Column(name = "register_number")
     private String registerNumber;
 
@@ -58,11 +58,11 @@ public class Car extends BaseModelVersion {
 
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input Engine Type")
     private String engine;
 
     @NotNull
-    @Size(min=1, max=50)
+    @Size(min=1, max=50, message = "Input Power")
     private String power;
 
     @NotNull
@@ -71,32 +71,62 @@ public class Car extends BaseModelVersion {
     private Transmission transmission;
 
     @NotNull
-    @Size(min=1, max=1000)
+    @Size(min=1, max=1000, message = "Input description")
     private String description;
 
-
-    private int test_drives;
+    @Column(name = "test_drives")
+    private int testDrives;
 
     @ManyToOne
     @JoinColumn(name = "car_type_id")
     private CarType carType;
 
-    @NotNull
-    @Min(5000)
-    private int price;
+
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "price_history_id")
+    private PriceHistory priceHistory;
 
 
     private boolean sold;
 
+
+    private boolean visible;
+
+
+
+    @ManyToOne
+    @JoinColumn(name = "owner_id")
+    private Customer customer;
+
+
+
     public Car() {
     }
 
-    public int getPrice() {
-        return price;
+    public PriceHistory getPriceHistory() {
+        return priceHistory;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
+    public void setPriceHistory(PriceHistory priceHistory) {
+        this.priceHistory = priceHistory;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
+
+
+    public boolean isVisible() {
+        return visible;
+    }
+
+    public void setVisible(boolean visible) {
+        this.visible = visible;
     }
 
     public boolean isSold() {
@@ -203,12 +233,12 @@ public class Car extends BaseModelVersion {
         this.description = description;
     }
 
-    public int getTest_drives() {
-        return test_drives;
+    public int getTestDrives() {
+        return testDrives;
     }
 
-    public void setTest_drives(int test_drives) {
-        this.test_drives = test_drives;
+    public void setTestDrives(int testDrives) {
+        this.testDrives = testDrives;
     }
 
     public CarType getCarType() {

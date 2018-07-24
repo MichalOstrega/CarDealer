@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${headerMsg}"></title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+<script>
+    $(document).ready(function(){
+        $("#myInput").on("keyup", function() {
+            var value = $(this).val().toLowerCase();
+            $("#customersTable tr").filter(function() {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+<div class="container">
+    <input class="form-control" id="myInput" type="text" placeholder="Search.."/>
+
+
+<table class="table table-striped table-sm">
+    <thead>
+    <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Name</th>
+        <th scope="col">Surname</th>
+        <th scope="col">City</th>
+        <th th:unless="${headerMsg == 'Persons'}" scope="col">NIP</th>
+        <th th:unless="${headerMsg == 'Companies'}" scope="col">PESEL</th>
+        <th scope="col">Details</th>
+
+
+
+    </tr>
+    </thead>
+    <tbody id="customersTable">
+    <tr th:each="customer, iterationInfo : ${customers}">
+        <td th:text="${customer.id}"/>
+        <td th:text="${customer.name}"/>
+        <td th:text="${customer.surname}"/>
+        <td th:text="${customer.address.city}"/>
+        <td th:unless="${headerMsg == 'Persons'}" th:text="${customer.nip}"/>
+        <td th:unless="${headerMsg == 'Companies'}" th:text="${customer.pesel}"/>
+        <td><a th:href="@{/customers/{parametr}(parametr=${customer.id})}" th:text="Details"></a></td>
+
+    </tr>
+    </tbody>
+
+
+</table>
+
+</div>
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
+</body>
+</html>

@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${#strings.toUpperCase(transactionDto.transactionType)}"></title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+
+
+<div class="container">
+    <h2>Customer</h2>
+
+    <form th:action="@{/transactions/customer}" th:method="post" th:object="${transactionDto}">
+        <div class="container" th:if="${transactionDto.customerExist == false}">
+
+            <div class="form-control">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.customerExist}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.transactionType}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.carExist}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.car}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="${transactionDto.price}"
+                           hidden="hidden"/>
+                </div>
+                <h3> For Exists Customer</h3>
+                <label for="CustomerIdent">Input Identification Customer Number (NIP/PESEL)
+
+                </label><br/>
+
+
+                <div class="input-group mb-3">
+
+                    <input type="text"
+                           th:class="${#fields.hasErrors('validNumber')} ? 'form-control is-invalid' : 'form-control'"
+                           aria-label="CustomerIdent"
+                           aria-describedby="inputGroup-sizing-sm"
+                           id="CustomerIdent"
+                           th:field="*{validNumber}"
+                           th:errorclass="fieldError"/>
+                    <div class="input-group-append">
+                        <a th:href="@{/customers}" th:target="_blank"><span
+                                class="input-group-text">Customer List</span></a>
+                    </div>
+
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('validNumber')}"
+                          th:errors="*{validNumber}"/>
+
+                </div>
+                <div class="input-group mb-3">
+                    <button type="submit" th:if="${transactionDto.customerExist == false}"
+                            class="btn btn-secondary btn-block btn-sm m-1">Get Customer
+                    </button>
+                </div>
+                <hr class="divider"/>
+                <h3> For New Customer</h3>
+                <div class="input-group mb-3">
+
+                    <a role="button" class="btn btn-secondary btn-block btn-sm  m-1 "
+                       th:href="@{/customers/new(type=person,transactionType=${transactionDto.transactionType}
+                       )}">Create
+                        Person Customer</a>
+                    <a role="button" class="btn btn-secondary btn-block btn-sm m-1 "
+                       th:href="@{/customers/new(type=company, transactionType=${transactionDto.transactionType})}">Create
+                        Company Customer</a>
+                </div>
+
+
+            </div>
+        </div>
+
+
+    </form>
+    <div class="container" th:if="${transactionDto.customerExist == true}">
+
+
+        <table class="table table-sm" th:object="${transactionDto}">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Street</th>
+                <th scope="col">House Number</th>
+                <th scope="col">Flat Number</th>
+                <th scope="col">Zip Code</th>
+                <th scope="col">City</th>
+                <th th:if="${transactionDto.customer.nip != null}" scope="col">NIP</th>
+                <th th:if="${transactionDto.customer.pesel != null}" scope="col">PESEL</th>
+
+
+            </tr>
+            </thead>
+            <tbody id="customersTable">
+            <tr>
+                <td th:text="*{customer.id}"/>
+                <td th:text="*{customer.name}"/>
+                <td th:text="*{customer.surname}"/>
+                <td th:text="*{customer.address.street}"/>
+                <td th:text="*{customer.address.houseNumber}"/>
+                <td th:text="*{customer.address.flatNumber}"/>
+                <td th:text="*{customer.address.zipCode}"/>
+                <td th:text="*{customer.address.city}"/>
+                <td th:if="${transactionDto.customer.nip != null}" th:text="*{customer.nip}"/>
+                <td th:if="${transactionDto.customer.pesel != null}" th:text="*{customer.pesel}"/>
+
+            </tr>
+            </tbody>
+
+
+        </table>
+
+    </div>
+    <hr class="divider"/>
+    <h2> Car </h2>
+    <div th:if="${transactionDto.customerExist==true}">
+
+
+    <form th:action="@{/transactions/car}" th:method="post" th:object="${transactionDto}">
+        <div class="container" th:if="${transactionDto.carExist == false}">
+            <div class="container">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{customerExist}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{carExist}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{customer}"
+                           hidden="hidden"/>
+                    <input type="text" class="form-control" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{transactionType}"
+                           hidden="hidden"/>
+                </div>
+
+            </div>
+            <div class="form-control">
+                <h3 th:text="${#strings.toUpperCase(transactionDto.transactionType)}"></h3>
+                <div th:if="${#strings.equals(transactionDto.transactionType,'sale')}">
+                    <label for="CustomerIdent"> Input VIN Number </label>
+                    <div class="input-group mb-3">
+
+                        <input type="text"
+                               th:class="${#fields.hasErrors('car.vin')} ? 'form-control is-invalid' : 'form-control'"
+                               aria-label="CustomerIdent"
+                               aria-describedby="inputGroup-sizing-sm"
+                               id="vin"
+                               th:field="*{car.vin}"
+                               th:errorclass="fieldError"/>
+                        <div class="input-group-append">
+                            <a th:href="@{/cars}" th:target="_blank"><span class="input-group-text">Cars List</span></a>
+                        </div>
+                        <span class="invalid-feedback" th:if="${#fields.hasErrors('car.vin')}"
+                              th:errors="*{car.vin}"/>
+
+                    </div>
+
+
+                    <div class="input-group mb-3">
+
+                        <button type="submit"
+                                class="btn btn-secondary btn-block btn-sm m-1">Get Car
+                        </button>
+                    </div>
+                    <hr class="divider"/>
+                </div>
+                <div class="input-group mb-3" th:unless="${#strings.equals(transactionDto.transactionType,'sale')}">
+                    <a role="button" class="btn btn-block btn-secondary btn-sm m-1 "
+                       th:href="@{/cars/new(transactionType=${transactionDto.transactionType},customerid=${transactionDto.customer != null ? transactionDto.customer.id : 0})}">Create
+                        Car</a>
+
+                </div>
+            </div>
+        </div>
+    </form>
+    </div>
+    <div class="container" th:if="${transactionDto.carExist}">
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Brand</th>
+                <th scope="col">Model</th>
+                <th scope="col">Fuel</th>
+                <th scope="col">Engine</th>
+                <th scope="col">CarType</th>
+                <th scope="col">Transmission</th>
+                <th scope="col">Production Year</th>
+                <th scope="col">Mileage</th>
+                <th scope="col">Vin</th>
+                <th scope="col">Register Number</th>
+                <th scope="col">OC Number</th>
+                <th scope="col">Price</th>
+                <th scope="col">Test Drives</th>
+
+            </tr>
+            </thead>
+            <tbody id="customersTable" th:object="${transactionDto.car}">
+            <tr>
+                <td th:text="*{id}"/>
+                <td th:text="*{brand}"/>
+                <td th:text="*{model}"/>
+                <td th:text="*{fuel}"/>
+                <td th:text="*{engine + ' ' + power}"/>
+                <td th:text="*{carType}"/>
+                <td th:text="*{transmission}"/>
+                <td th:text="*{productionYear}"/>
+                <td th:text="*{mileage  + ' km'}"/>
+                <td th:text="*{vin}"/>
+                <td th:text="*{registerNumber}"/>
+                <td th:text="*{ocNumber}"/>
+                <td th:text="*{priceHistory.price + ' PLN'} "/>
+                <td th:text="*{testDrives} "/>
+
+            </tr>
+
+            </tbody>
+        </table>
+        <table class="table table-sm">
+            <thead>
+            <tr>
+                <th scope="col">Description</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td th:text="${transactionDto.car.description}"></td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+
+    <h2 th:if="${transactionDto.carExist and transactionDto.customerExist}"
+        th:text="${'Type of Transaction: ' + #strings.toUpperCase(transactionDto.transactionType) }"></h2>
+    <form th:action="@{/transactions}" th:method="post" th:object="${transactionDto}">
+        <div class="container" th:if="${transactionDto.carExist and transactionDto.customerExist}">
+            <div class="input-group mb-3">
+
+                <input type="text" class="form-control" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{transactionType}"
+                       hidden="hidden"/>
+
+                <input type="text" class="form-control" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{customerExist}"
+                       hidden="hidden"/>
+                <input type="text" class="form-control" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{carExist}"
+                       hidden="hidden"/>
+                <input type="text" class="form-control" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{car}"
+                       hidden="hidden"/>
+                <input type="text" class="form-control" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{customer}"
+                       hidden="hidden"/>
+            </div>
+
+
+            <div th:hidden="${#strings.equals(transactionDto.transactionType,'transfer')}" class="input-group mb-3">
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="price">Price</span>
+                </div>
+                <input type="text"
+                       class="form-control text-right"
+                       aria-label="priceTransaction"
+                       aria-describedby="inputGroup-sizing-sm"
+                       id="priceTranction"
+                       th:field="*{price}"
+                       th:value="*{price}"
+                />
+                <div class="input-group-append">
+                    <span class="input-group-text" id="PLN">PLN</span>
+                </div>
+            </div>
+            <div class="input-group mb-3">
+                <button type="submit"
+                        class="btn btn-primary btn-lg btn-block">Submit Transaction
+                </button>
+            </div>
+
+
+        </div>
+
+
+    </form>
+
+</div>
+
+
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
+</body>
+</html>

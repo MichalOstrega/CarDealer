@@ -10,26 +10,26 @@ import javax.validation.constraints.Size;
 public class Address extends BaseModelVersion {
 
     @NotNull
-    @Size(min = 1,max = 50)
+    @Size(min = 1,max = 50, message = "Input City")
     @Column(name = "city")
     private String city;
 
     @NotNull
-    @Size(min = 1,max = 50)
+    @Size(min = 1,max = 50, message = "Input Street")
     @Column(name = "street")
     private String street;
 
     @NotNull
-    @Size(min = 1,max = 50)
+    @Size(min = 1,max = 50, message = "Input House Number")
     @Column(name = "house_number")
     private String houseNumber;
 
-    @NotNull
+    @Size(max = 10)
     @Column(name = "flat_number")
-    private int flatNumber;
+    private String flatNumber;
 
     @NotNull
-    @Pattern(regexp = "[0-9]{2}-[0-9]{3}")
+    @Pattern(regexp = "[0-9]{2}-[0-9]{3}",message = "Must be like 00-000")
     @Column(name = "zip_code")
     private String zipCode;
 
@@ -57,11 +57,11 @@ public class Address extends BaseModelVersion {
         this.houseNumber = houseNumber;
     }
 
-    public int getFlatNumber() {
+    public String getFlatNumber() {
         return flatNumber;
     }
 
-    public void setFlatNumber(int flatNumber) {
+    public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
     }
 

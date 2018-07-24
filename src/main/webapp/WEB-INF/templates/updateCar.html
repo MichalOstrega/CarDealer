@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Modify Car</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#brand").change(function () {
+            var brandCar = $(this).val();
+            console.log(brandCar)
+            $.get("/dict/models/all?brand=" + brandCar, function (data) {
+                $("#model").empty();
+                data.forEach(function (item, i) {
+                    var option = "<option value = " + item.id + ">" + item.name + "</option>";
+                    $("#model").append(option);
+                });
+            });
+        });
+    });
+</script>
+
+<div class="container" align="center">
+
+    <div class="col-md-8">
+        <h2 th:text="${carDto.car.brand + ' ' + carDto.car.model}" class="text-primary"></h2>
+        <br/>
+        <hr class="divider"/>
+        <br/>
+        <form th:action="@{/cars/{id}(id=${carDto.car.id})}" th:method="put" th:object="${carDto}">
+
+            <div class="form-control text-center">
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control text-center" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.customer}"
+                           hidden="hidden"/>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control text-center" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.version}"
+                           hidden="hidden"/>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="text" class="form-control text-center" aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.id}"
+                           hidden="hidden"/>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="vin">VIN</span>
+                    </div>
+
+                    <input th:class="${#fields.hasErrors('car.vin')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" th:field="*{car.vin}" readonly="readonly"
+                           th:errorclass="fieldError"
+                           th:value="*{car.vin}"/>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="brand">Brand</label>
+                    </div>
+                    <select class="custom-select" th:field="*{car.brand}" id="brand" th:errorclass="fieldError">
+                        <option th:each="brand : ${carDto.dropList.brands}" th:value="${brand.id} "
+                                th:text="${brand.name}"></option>
+                    </select>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="model">Model</label>
+                    </div>
+                    <select class="custom-select text-right" th:field="*{car.model}" id="model">
+                        <option th:each="carModel : ${carDto.dropList.carModels}" th:value="${carModel.id} "
+                                th:text="${carModel.name}"></option>
+                    </select>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="productionYear">Production Year</label>
+                    </div>
+                    <select class="custom-select text-right" th:field="*{car.productionYear}" id="productionYear">
+                        <option th:each="productionYear : ${carDto.dropList.productionYears}"
+                                th:value="${productionYear.id}"
+                                th:text="${productionYear.name}"></option>
+                    </select>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="carType">Car Type</label>
+                    </div>
+                    <select class="custom-select text-right" th:field="*{car.carType}" id="carType">
+                        <option th:each="carType : ${carDto.dropList.carTypes}" th:value="${carType.id}"
+                                th:text="${carType.name}"></option>
+                    </select>
+
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="fuel">Fuel</label>
+                    </div>
+                    <select class="custom-select text-right" th:field="*{car.fuel}" id="fuel">
+                        <option th:each="fuel : ${carDto.dropList.fuels}" th:value="${fuel.id}"
+                                th:text="${fuel.name}"></option>
+                    </select>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="mileage">Mileage</span>
+                    </div>
+
+                    <input th:class="${#fields.hasErrors('car.mileage')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.mileage}"
+                           th:errorclass="fieldError"/>
+                    <div class="input-group-append">
+                        <span class="input-group-text">km</span>
+                    </div>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.mileage')}"
+                          th:errors="*{car.mileage}"/>
+                </div>
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="transmission">Transmission</label>
+                    </div>
+                    <select class="custom-select text-right" th:field="*{car.transmission}" id="transmission">
+                        <option th:each="transmission : ${carDto.dropList.transmissions}" th:value="${transmission.id}"
+                                th:text="${transmission.name}"></option>
+                    </select>
+
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="OcNumber">OC Number</span>
+                    </div>
+
+                    <input th:class="${#fields.hasErrors('car.ocNumber')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.ocNumber}"
+                           th:errorclass="fieldError"/>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.ocNumber')}"
+                          th:errors="*{car.ocNumber}"/>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="registerNumber">Register Number</span>
+                    </div>
+
+                    <input th:class="${#fields.hasErrors('car.registerNumber')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.registerNumber}"
+                           th:errorclass="fieldError"/>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.registerNumber')}"
+                          th:errors="*{car.registerNumber}"/>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="engine">Engine</span>
+                    </div>
+
+                    <input th:class="${#fields.hasErrors('car.engine')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.engine}"
+                           th:errorclass="fieldError"/>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.engine')}"
+                          th:errors="*{car.engine}"/>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="power">Power</span>
+                    </div>
+                    <input th:class="${#fields.hasErrors('car.power')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.power}"
+                           th:errorclass="fieldError"/>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.power')}" th:errors="*{car.power}"/>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="price">Price</span>
+                    </div>
+                    <input th:class="${#fields.hasErrors('car.priceHistory.price')} ? 'form-control text-center is-invalid' : 'form-control text-center'"
+                           aria-label="Small"
+                           aria-describedby="inputGroup-sizing-sm" type="text" th:field="*{car.priceHistory.price}"
+                           th:value="*{car.priceHistory.price}"
+                           th:errorclass="fieldError"/>
+                    <div class="input-group-append">
+                        <span class="input-group-text">PLN</span>
+                    </div>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.priceHistory.price')}" th:errors="*{car.priceHistory.price}"/>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Description</span>
+                    </div>
+                    <textarea aria-label="With textarea"
+                              th:class="${#fields.hasErrors('car.description')} ? 'form-control is-invalid' : 'form-control'"
+                              type="text"
+                              th:field="*{car.description}"
+                              th:errorclass="fieldError"/>
+                    <span class="invalid-feedback" th:if="${#fields.hasErrors('car.description')}"
+                          th:errors="*{car.description}"/>
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Visible</span>
+                    </div>
+                    <select class="custom-select " th:field="*{car.visible}" id="visible">
+                        <option th:value="1" th:text="True"></option>
+                        <option th:value="0" th:text="False"></option>
+                    </select>
+                </div>
+
+
+                <div class="input-group mb-3">
+                    <button onclick="return confirm('Are you sure you would like to submit changes?');" type="submit"
+                            class="btn btn-primary btn-lg btn-block">Submit changes
+                    </button>
+                </div>
+
+
+            </div>
+
+
+        </form>
+    </div>
+</div>
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
+</body>
+</html>

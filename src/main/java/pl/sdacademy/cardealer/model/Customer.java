@@ -1,9 +1,7 @@
 package pl.sdacademy.cardealer.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
@@ -16,19 +14,21 @@ public class Customer extends BaseModelVersion {
     private String surname;
 
     @NotNull
+    @Size(min = 1, max = 100)
     @Column(name = "name")
     private String name;
 
-    @OneToOne
+    @Valid
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "address_id")
-    private Address address;
+    private Address address= new Address();
 
     @Pattern(regexp = "^\\d{10}$", message = "Must be 10 digits")
-    @Column(name = "NIP")
+    @Column(name = "NIP", unique = true)
     private String nip;
 
     @Pattern(regexp = "^\\d{11}$", message = "Must be 11 digits")
-    @Column(name = "PESEL")
+    @Column(name = "PESEL", unique = true)
     private String pesel;
 
     public Customer() {

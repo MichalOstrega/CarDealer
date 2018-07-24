@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Cars for Sell</title>
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/css/bootstrap.min.css"
+          integrity="sha384-Smlep5jCw/wG7hdkwQ/Z5nLIefveQRIY9nfy6xoR1uRYBtpZgI6339F5dgvm/e9B" crossorigin="anonymous"/>
+    <link rel="stylesheet" th:href="@{/css/myStyle.css}"/>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+            integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+            crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
+            integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<div th:replace="fragments/header :: header">
+
+</div>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#transactionsTable tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<div class="container">
+    <h1 th:text="${headerMsg}"></h1>
+    <input class="form-control" id="myInput" type="text" placeholder="Search.."/>
+
+
+    <table class="table table-striped table-sm">
+        <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">Customer Name</th>
+            <th scope="col">Customer PESEL</th>
+            <th scope="col">Customer NIP</th>
+            <th scope="col">Car</th>
+            <th scope="col">VIN</th>
+            <th scope="col">Price</th>
+            <th scope="col">Date</th>
+
+
+        </tr>
+        </thead>
+        <tbody id="transactionsTable">
+        <tr th:each="transaction, iterationInfo : ${transactions}">
+            <td th:text="${transaction.id}"/>
+            <td><a th:href="@{/customers/{parametr}(parametr=${transaction.customer.id})}"
+                   th:text="${transaction.customer.name}"></a></td>
+            <td th:text="${transaction.customer.pesel}"/>
+            <td th:text="${transaction.customer.nip}"/>
+
+            <td><a th:href="@{/cars/{parametr}(parametr=${transaction.car.id})}"
+                   th:text="${transaction.car.brand}"></a></td>
+            <td th:text=" ${transaction.car.vin}"/>
+            <td th:text="${transaction.price}  +'PLN'"/>
+            <td th:text="${transaction.date}"/>
+
+        </tr>
+        </tbody>
+
+
+    </table>
+
+</div>
+<footer th:replace="fragments/footer :: footer">
+
+</footer>
+</body>
+</html>

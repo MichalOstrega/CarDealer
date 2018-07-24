@@ -1,0 +1,49 @@
+/* Remove the navbar's default rounded borders and increase the bottom margin */
+.navbar {
+    margin-bottom: 50px;
+    border-radius: 0;
+}
+
+/* Remove the jumbotron's default bottom margin */
+.jumbotron {
+    margin-bottom: 0;
+}
+
+/* Add a gray background color and some padding to the footer */
+.footer {
+    background-color: #f2f2f2;
+    padding: 25px;
+}
+
+.logo {
+    color:#000fff;
+    font-weight:800;
+    font-size:20pt;
+    padding:25px;
+    text-align:center;
+}
+
+.line {
+    padding-top:20px;
+    white-space:no-wrap;
+    overflow:hidden;
+    text-align:center;
+}
+
+.wide {
+    width:100%;
+    height:100%;
+    height:calc(100% - 1px);
+    background-image:url('/img/top.jpg');
+    background-size:cover;
+}
+
+.wide img {
+    width:100%;
+}
+
+select {
+    text-indent: 50%;
+    text-align: center;
+    text-align-last: center;
+}
