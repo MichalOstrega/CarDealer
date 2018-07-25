@@ -22,6 +22,11 @@ public class Account extends BaseModelVersion {
     public Account() {
     }
 
+    public Account(Contract contract, Date date) {
+        this.contract = contract;
+        this.date = date;
+    }
+
     public Date getDate() {
         return date;
     }

@@ -105,24 +105,35 @@
                 <th scope="row">For Sale Price</th>
                 <td th:text="*{priceHistory.price + ' PLN'} "/>
             </tr>
-            <!--<tr>-->
-                <!--<th scope="row">Acquire Contract</th>-->
-                <!--<td><a th:text="${car.priceHistory.acquireCarContract.transaction.transactionType}"-->
-                       <!--th:href="${car.priceHistory.acquireCarContract.id}"></a></td>-->
-            <!--</tr>-->
+            <tr>
+                <th scope="row">Acquire Contract</th>
+                <td><a th:text="${car.priceHistory.acquireCarContract.transaction.transactionType}"
+                       th:href="${car.priceHistory.acquireCarContract.id}"></a></td>
+            </tr>
             <tr>
                 <th scope="row">Acquire Price</th>
                 <td th:text="${car.priceHistory.acquireCarPrice}"></td>
             </tr>
-            <!--<tr th:if="${car.priceHistory.sellCarPrice != 0}">-->
-                <!--<th scope="row">Sell Contract</th>-->
-                <!--<td><a th:text="${car.priceHistory.sellCarContract.transaction.transactionType}"-->
-                       <!--th:href="${car.priceHistory.sellCarContract.id}"></a></td>-->
-            <!--</tr>-->
+            <tr th:if="${car.priceHistory.sellCarPrice != 0}">
+                <th scope="row">Sell Contract</th>
+                <td><a th:text="${car.priceHistory.sellCarContract.transaction.transactionType}"
+                       th:href="${car.priceHistory.sellCarContract.id}"></a></td>
+            </tr>
             <tr>
                 <th scope="row">Sell Price</th>
                 <td th:text="${car.priceHistory.sellCarPrice}"></td>
             </tr>
+            <tr th:if="${car.priceHistory.sellCarPrice != 0}">
+                <th scope="row">Profit</th>
+                <td th:text="${car.priceHistory.sellCarPrice
+                - car.priceHistory.sellCarContract.payment
+                - car.priceHistory.aqcuireCarPrice}"></td>
+            </tr>
+            <tr>
+
+            </tr>
+
+
 
             </tbody>
         </table>

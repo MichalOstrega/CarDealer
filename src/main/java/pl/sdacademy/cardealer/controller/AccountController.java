@@ -3,8 +3,7 @@ package pl.sdacademy.cardealer.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import pl.sdacademy.cardealer.dto.AccountDto;
 import pl.sdacademy.cardealer.model.Account;
 import pl.sdacademy.cardealer.services.AccountService;
@@ -18,36 +17,32 @@ public class AccountController {
 
     AccountService accountService;
 
+
     @Autowired
     public AccountController(AccountService accountService) {
+
         this.accountService = accountService;
+
     }
 
-    @GetMapping("/all")
+    @GetMapping
     public String getAllAccounts(Model model){
         List<Account> accounts = accountService.getAllAccounts();
 
-        AccountDto accountDto = getAccountDtoWithFields(accounts);
+        AccountDto accountDto = getAccountDtoWithFields(accounts, "");
         model.addAttribute("accountDto", accountDto);
 
         return "accounts";
     }
 
-    @GetMapping("/transfers")
-    public String getTransfers(Model model){
-        List<Account> accounts = accountService.getTransfers();
+    @GetMapping("/{transactionType}")
+    public String getTransfers(Model model, @PathVariable("transactionType") String transactionType){
 
-        AccountDto accountDto = getAccountDtoWithFields(accounts);
-        model.addAttribute("accountDto", accountDto);
 
-        return "accounts";
-    }
+        List<Account> accountList = accountService.getTransactionsByType(transactionType);
+        AccountDto accountDto = getAccountDtoWithFields(accountList, transactionType);
 
-    @GetMapping("/sales")
-    public String getSales(Model model){
-        List<Account> accounts = accountService.getSales();
 
-        AccountDto accountDto = getAccountDtoWithFields(accounts);
         model.addAttribute("accountDto", accountDto);
 
         return "accounts";
@@ -55,18 +50,32 @@ public class AccountController {
 
 
 
-    @GetMapping("/purchases")
-    public String getPurchases(Model model){
-        List<Account> accounts = accountService.getPurchases();
 
-        AccountDto accountDto = getAccountDtoWithFields(accounts);
+
+
+
+    @PostMapping
+    public String getAccounts(@ModelAttribute AccountDto accountDto, Model model) {
+        String from = accountDto.getFrom();
+        String to = accountDto.getTo();
+
+
+        List<Account> transactionsBetween = accountService.getTransactionsBetween(accountDto.getTransactionType(), from, to);
+
+        accountDto = getAccountDtoWithFields(transactionsBetween, accountDto.getTransactionType());
+        accountDto.setFrom(from);
+        accountDto.setTo(to);
+
         model.addAttribute("accountDto", accountDto);
 
         return "accounts";
+
+
     }
 
-    private AccountDto getAccountDtoWithFields(List<Account> accounts) {
+    private AccountDto getAccountDtoWithFields(List<Account> accounts, String transactionType) {
         AccountDto accountDto = new AccountDto();
+        accountDto.setTransactionType(transactionType);
         Long sumIncomes = accountService.sumIncomes(accounts);
         Long sumPayment = accountService.sumPayment(accounts);
         accountDto.setAccounts(accounts);

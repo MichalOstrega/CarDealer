@@ -129,7 +129,6 @@ public class CarDataController {
 
         carDto.setDropList(getDropList());
         Car carToSave = carDto.getCar();
-        carToSave.setVisible(true);
 
         if (bindingResult.hasErrors()) {
             model.addAttribute(carDto);
@@ -144,16 +143,21 @@ public class CarDataController {
         }
 
         if (carDto.getTransactionRequest() != null && !carDto.getTransactionRequest().equals("")) {
+            carToSave.setVisible(true);
             carDataService.addCar(carToSave);
+
             TransactionDto transactionDto = new TransactionDto();
             transactionDto.setTransactionType(carDto.getTransactionRequest());
             transactionDto.setCar(carToSave);
+            transactionDto.setCarExist(true);
+
             if (carDto.getCar().getCustomer() != null) {
                 transactionDto.setCustomer(carDto.getCar().getCustomer());
                 transactionDto.setCustomerExist(true);
             }
-            transactionDto.setCarExist(true);
+
             transactionDto.setPrice(carToSave.getPriceHistory().getPrice());
+
             model.addAttribute("transactionDto", transactionDto);
             return "addTransaction";
         }

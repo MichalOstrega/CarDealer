@@ -42,8 +42,6 @@
     width:100%;
 }
 
-select {
-    text-indent: 50%;
-    text-align: center;
-    text-align-last: center;
+.card-img-top{
+    width: 100px;
 }

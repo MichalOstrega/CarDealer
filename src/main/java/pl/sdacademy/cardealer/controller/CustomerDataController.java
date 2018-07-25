@@ -56,7 +56,7 @@ public class CustomerDataController {
     public String addCustomer(Model model,
                               @RequestParam("type") String type,
                               @RequestParam(value = "carid", required = false) Long carId,
-                              @RequestParam(value = "transaction", required = false) String reqTransaction) {
+                              @RequestParam(value = "transactionType", required = false) String reqTransaction) {
 
         CustomerDto customerDto = new CustomerDto();
         customerDto.setCarId(carId);
