@@ -9,6 +9,7 @@ import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.List;
 
 @Entity
 public class Car extends BaseModelVersion {
@@ -99,7 +100,8 @@ public class Car extends BaseModelVersion {
     @JoinColumn(name = "owner_id")
     private Customer customer;
 
-
+    @OneToMany(mappedBy = "car")
+    private List<Photo> photos;
 
     public Car() {
     }

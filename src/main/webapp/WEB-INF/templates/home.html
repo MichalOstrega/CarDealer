@@ -1,4 +1,4 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
@@ -15,11 +15,34 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.2/js/bootstrap.min.js"
             integrity="sha384-o+RDsa0aLu++PJvFqy8fFScvbHFLtbvScb8AjopnFD+iEQ7wo/CG0xlczd+2O/em"
             crossorigin="anonymous"></script>
+
 </head>
 <body>
 
 <div th:replace="fragments/header :: header">
 
+</div>
+
+
+<div class="container">
+    <div class="col-md-12">
+        <form enctype="multipart/form-data" th:action="@{/images/upload}" th:method="post" th:object="${imageDto}">
+
+
+            <div class="form-group">
+                <div class="custom-file">
+                    <input th:name="file" type="file" class="custom-file-input" id="imgInp"/>
+                    <label class="custom-file-label" for="imgInp">Upload Image</label>
+                </div>
+                <div class="row justify-content-md-center">
+
+
+                    <img  id='img-upload'/>
+                </div>
+            </div>
+            <button type="submit" th:text="Submit" class="btn-primary btn-block"></button>
+        </form>
+    </div>
 </div>
 
 
@@ -72,6 +95,47 @@
 <footer th:replace="fragments/footer :: footer">
 
 </footer>
+
+
+<script>
+    $(document).ready(function () {
+        $(document).on('change', function () {
+            var input = $(this),
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
+        });
+
+        // $('.btn-file :file').on('fileselect', function(event, label) {
+        //
+        //     var input = $(this).parents('.input-group').find(':text'),
+        //         log = label;
+        //
+        //     if( input.length ) {
+        //         input.val(log);
+        //     } else {
+        //         if( log ) alert(log);
+        //     }
+        //
+        // });
+        function readURL(input) {
+            /*<![CDATA[*/
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            /*]]>*/
+        }
+
+        $("#imgInp").change(function () {
+            readURL(this);
+        });
+    });
+</script>
 </body>
 
 </html>

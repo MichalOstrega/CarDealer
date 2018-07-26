@@ -38,10 +38,8 @@
     background-size:cover;
 }
 
-.wide img {
-    width:100%;
-}
 
-.card-img-top{
-    width: 100px;
+#img-upload{
+    max-width: 500px;
+    max-height: 500px;
 }

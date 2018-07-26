@@ -9,6 +9,7 @@ public class WelcomeController {
 
         @RequestMapping(value = { "/" })
         public String homePage() {
+
             return "home";
         }
 
