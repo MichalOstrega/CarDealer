@@ -67,7 +67,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="brand">Brand</label>
                     </div>
-                    <select class="custom-select text-right " th:field="*{car.brand}" id="brand"
+                    <select class="custom-select  " th:field="*{car.brand}" id="brand"
                             th:errorclass="fieldError">
                         <option th:each="brand : ${carDto.dropList.brands}" th:value="${brand.id} "
                                 th:text="${brand.name}"></option>
@@ -79,7 +79,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="model">Model</label>
                     </div>
-                    <select class="custom-select text-right" th:field="*{car.model}" id="model">
+                    <select class="custom-select " th:field="*{car.model}" id="model">
                         <option th:each="carModel : ${carDto.dropList.carModels}" th:value="${carModel.id} "
                                 th:text="${carModel.name}"></option>
                     </select>
@@ -91,7 +91,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="productionYear">Production Year</label>
                     </div>
-                    <select class="custom-select text-right" th:field="*{car.productionYear}" id="productionYear">
+                    <select class="custom-select " th:field="*{car.productionYear}" id="productionYear">
                         <option th:each="productionYear : ${carDto.dropList.productionYears}"
                                 th:value="${productionYear.id}"
                                 th:text="${productionYear.name}"></option>
@@ -104,7 +104,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="carType">Car Type</label>
                     </div>
-                    <select class="custom-select text-right" th:field="*{car.carType}" id="carType">
+                    <select class="custom-select " th:field="*{car.carType}" id="carType">
                         <option th:each="carType : ${carDto.dropList.carTypes}" th:value="${carType.id}"
                                 th:text="${carType.name}"></option>
                     </select>
@@ -115,7 +115,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="fuel">Fuel</label>
                     </div>
-                    <select class="custom-select text-right" th:field="*{car.fuel}" id="fuel">
+                    <select class="custom-select " th:field="*{car.fuel}" id="fuel">
                         <option th:each="fuel : ${carDto.dropList.fuels}" th:value="${fuel.id}"
                                 th:text="${fuel.name}"></option>
                     </select>
@@ -143,7 +143,7 @@
                     <div class="input-group-prepend">
                         <label class="input-group-text" for="transmission">Transmission</label>
                     </div>
-                    <select class="custom-select text-right" th:field="*{car.transmission}" id="transmission">
+                    <select class="custom-select " th:field="*{car.transmission}" id="transmission">
                         <option th:each="transmission : ${carDto.dropList.transmissions}" th:value="${transmission.id}"
                                 th:text="${transmission.name}"></option>
                     </select>

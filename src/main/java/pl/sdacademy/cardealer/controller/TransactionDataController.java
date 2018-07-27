@@ -16,6 +16,7 @@ import pl.sdacademy.cardealer.services.TransactionService;
 import javax.validation.Path;
 import javax.validation.Valid;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -144,24 +145,18 @@ public class TransactionDataController {
             String transactionType = transactionDto.getTransactionType();
             switch (transactionType) {
                 case "transfer": {
-                    Transaction transaction = getTransaction(new Transaction(), transactionDto, car, customer);
+                    Transaction transaction = getTransaction(transactionDto, car, customer);
 
-                    Contract contract = new Contract();
-                    contract.setTransaction(transaction);
-                    contract.setContent(transactionType);
+                    Contract contract = getContract(transactionType, transaction);
 
-                    PriceHistory priceHistory = car.getPriceHistory();
-                    priceHistory.setPrice(Double.valueOf(car.getPriceHistory().getPrice() * 1.2).longValue());
-                    priceHistory.setAcquireCarPrice(transactionDto.getPrice());
-                    priceHistory.setAcquireCarContract(contract);
+                    car.getPriceHistory().setAcquireCarPrice(0l);
+                    car.getPriceHistory().setSellCarPrice(0l);
+                    car.getPriceHistory().setAcquireCarContract(contract);
 
-
-                    Account account = new Account();
+                    Account account = new Account(contract,new Date());
                     account.setPayment(0l);
-                    account.setContract(contract);
 
                     carDataService.addCar(car);
-                    transactionService.savePriceHistory(priceHistory);
                     transactionService.saveTransaction(transaction);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
@@ -169,54 +164,55 @@ public class TransactionDataController {
                     break;
                 }
                 case "purchase": {
-                    Transaction transaction = getTransaction(new Transaction(), transactionDto, car, customer);
+                    Transaction transaction = getTransaction(transactionDto, car, customer);
 
+                    /*
+                     * After purchase a car, new owner is Car Dealer
+                     * */
                     car.setCustomer(customerService.findById(5l));
 
-                    Contract contract = new Contract();
-                    contract.setTransaction(transaction);
-                    contract.setContent(transactionType);
+                    Contract contract = getContract(transactionType, transaction);
 
-                    PriceHistory priceHistory = car.getPriceHistory();
-                    priceHistory.setAcquireCarPrice(transactionDto.getPrice());
-                    priceHistory.setPrice(Double.valueOf(priceHistory.getAcquireCarPrice() * 1.2).longValue());
-                    priceHistory.setAcquireCarContract(contract);
+                    car.getPriceHistory().setAcquireCarPrice(transactionDto.getPrice());
+                    car.getPriceHistory().setPrice(Double.valueOf(transactionDto.getPrice()* 1.2).longValue());
+                    car.getPriceHistory().setAcquireCarContract(contract);
 
 
-                    Account account = new Account();
-                    account.setContract(contract);
-                    account.setPayment(priceHistory.getAcquireCarPrice());
+                    Account account = new Account(contract,new Date());
+                    account.setPayment(car.getPriceHistory().getAcquireCarPrice());
 
                     carDataService.addCar(car);
-                    transactionService.savePriceHistory(priceHistory);
                     transactionService.saveTransaction(transaction);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
                     break;
                 }
                 case "sale": {
-                    Transaction transaction = getTransaction(new Transaction(), transactionDto, car, customer);
+
+
+                    Transaction transaction = getTransaction(transactionDto, car, customer);
 
                     car.setSold(true);
                     car.setVisible(false);
                     car.setCustomer(customer);
 
+                    Contract contract = getContract(transactionType, transaction);
 
-                    Contract contract = new Contract();
-                    contract.setTransaction(transaction);
-                    contract.setContent(transactionType);
+                    car.getPriceHistory().setSellCarPrice(transactionDto.getPrice());
+                    car.getPriceHistory().setSellCarContract(contract);
 
-                    PriceHistory priceHistory = car.getPriceHistory();
-                    priceHistory.setSellCarPrice(transactionDto.getPrice());
-                    priceHistory.setSellCarContract(contract);
-
-                    Account account = new Account();
-                    account.setContract(contract);
+                    Account account = new Account(contract,new Date());
                     account.setIncome(transactionDto.getPrice());
+
+                    /*
+                     * If Aqcuire car price is 0, Car Dealer has to pay 80% of price to last owner
+                     */
+                    if (car.getPriceHistory().getAcquireCarPrice() == 0) {
+                        account.setPayment(Double.valueOf(transactionDto.getPrice() * 0.8).longValue());
+                    }
 
                     carDataService.updateCar(car);
                     transactionService.saveTransaction(transaction);
-                    transactionService.savePriceHistory(priceHistory);
                     contractService.saveContract(contract);
                     transactionService.saveAccount(account);
                     break;
@@ -229,11 +225,18 @@ public class TransactionDataController {
         return "redirect:/transactions/" + transactionDto.getTransactionType();
     }
 
+    private Contract getContract(String transactionType, Transaction transaction) {
+        Contract contract = new Contract();
+        contract.setTransaction(transaction);
+        contract.setContent(transactionType);
+        return contract;
+    }
+
 
     private Transaction getTransaction(
-            Transaction transaction,
             @Valid @ModelAttribute("transactionDto") TransactionDto transactionDto,
             Car car, Customer customer) {
+        Transaction transaction = new Transaction();
         transaction.setCustomer(customer);
         transaction.setCar(car);
         transaction.setPrice(transactionDto.getPrice());

@@ -24,60 +24,62 @@
 
 
 <div class="container">
-    <div class="col-md-8">
-        <h2 th:text="${'Customer: ' + customer.surname + ' ' + customer.name}"></h2>
-        <hr class="divider"/>
-        <table  class="table table-striped">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">Property</th>
-                <th scope="col">Value</th>
-            </tr>
-            </thead>
-            <tbody id="customersTable">
-            <tr>
-                <th scope="row">ID</th>
-                <td th:text="${customer.id}"/>
-            </tr>
-            <tr>
-                <th scope="row">Name</th>
-                <td th:text="${customer.name}"/>
-            </tr>
-            <tr>
-                <th scope="row">Surname</th>
-                <td th:text="${customer.surname}"/>
-            </tr>
-            <tr>
-                <th scope="row">Street</th>
-                <td th:text="${customer.address.street}"/>
-            </tr>
-            <tr>
-                <th scope="row">House Number</th>
-                <td th:text="${customer.address.houseNumber}"/>
-            </tr>
-            <tr>
-                <th scope="row">House Number</th>
-                <td th:text="${customer.address.flatNumber}"/>
-            </tr>
-            <tr>
-                <th scope="row">Zip Code</th>
-                <td th:text="${customer.address.zipCode}"/>
-            </tr>
-            <tr>
-                <th scope="row">City</th>
-                <td th:text="${customer.address.city}"/>
-            </tr>
-            <tr>
-                <th th:unless="${headerMsg == 'Persons'}" scope="row">NIP</th>
-                <td th:unless="${headerMsg == 'Persons'}" th:text="${customer.nip}"/>
-            </tr>
-            <tr>
-                <th th:unless="${headerMsg == 'Companies'}" scope="row">PESEL</th>
-                <td th:unless="${headerMsg == 'Companies'}" th:text="${customer.pesel}"/>
-            </tr>
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+            <h2 th:text="${'Customer: ' + customer.surname + ' ' + customer.name}"></h2>
+            <hr class="divider"/>
+            <table class="table table-striped">
+                <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Property</th>
+                    <th scope="col">Value</th>
+                </tr>
+                </thead>
+                <tbody id="customersTable">
+                <tr>
+                    <th scope="row">ID</th>
+                    <td th:text="${customer.id}"/>
+                </tr>
+                <tr>
+                    <th scope="row">Name</th>
+                    <td th:text="${customer.name}"/>
+                </tr>
+                <tr>
+                    <th scope="row">Surname</th>
+                    <td th:text="${customer.surname}"/>
+                </tr>
+                <tr>
+                    <th scope="row">Street</th>
+                    <td th:text="${customer.address.street}"/>
+                </tr>
+                <tr>
+                    <th scope="row">House Number</th>
+                    <td th:text="${customer.address.houseNumber}"/>
+                </tr>
+                <tr>
+                    <th scope="row">House Number</th>
+                    <td th:text="${customer.address.flatNumber}"/>
+                </tr>
+                <tr>
+                    <th scope="row">Zip Code</th>
+                    <td th:text="${customer.address.zipCode}"/>
+                </tr>
+                <tr>
+                    <th scope="row">City</th>
+                    <td th:text="${customer.address.city}"/>
+                </tr>
+                <tr>
+                    <th th:unless="${headerMsg == 'Persons'}" scope="row">NIP</th>
+                    <td th:unless="${headerMsg == 'Persons'}" th:text="${customer.nip}"/>
+                </tr>
+                <tr>
+                    <th th:unless="${headerMsg == 'Companies'}" scope="row">PESEL</th>
+                    <td th:unless="${headerMsg == 'Companies'}" th:text="${customer.pesel}"/>
+                </tr>
 
-            </tbody>
-        </table>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 <footer th:replace="fragments/footer :: footer">

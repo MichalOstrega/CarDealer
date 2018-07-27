@@ -8,12 +8,10 @@ public interface AccountService {
 
     List<Account> getAllAccounts();
 
-    List<Account> getTransfers();
-    List<Account> getSales();
-    List<Account> getPurchases();
-
-
-
     Long sumIncomes(List<Account> accounts);
     Long sumPayment(List<Account> accounts);
+
+    List<Account> getTransactionsBetween(String transactionType, String from, String to);
+
+    List<Account> getTransactionsByType(String transactionType);
 }

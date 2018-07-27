@@ -39,18 +39,23 @@
 
 <div class="container">
     <div class="container">
-        <div class='input-group mb-3'>
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="from">From</span>
-            </div>
-            <input type='text' class="form-control text-right" id="datepicker1"/>
+        <form th:action="@{/accounts}" th:method="post" th:object="${accountDto}">
+            <div class='input-group mb-3'>
+                <input type="text" class="form-control text-center" aria-label="Small"
+                       aria-describedby="inputGroup-sizing-sm" th:field="*{transactionType}"
+                       hidden="hidden"/>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="from">From</span>
+                </div>
+                <input type='text' th:field="*{from}" class="form-control text-right" id="datepicker1"/>
 
-            <div class="input-group-prepend">
-                <span class="input-group-text" id="To">To</span>
+                <div class="input-group-prepend">
+                    <span class="input-group-text" id="To">To</span>
+                </div>
+                <input type='text' th:field="*{to}" class="form-control text-right" id="datepicker2"/>
+                <button type="submit" class="btn btn-secondary btn-sm">Generate Report</button>
             </div>
-            <input type='text' class="form-control text-right" id="datepicker2"/>
-            <button type="submit" class="btn btn-secondary btn-sm">Generate Report</button>
-        </div>
+        </form>
     </div>
 </div>
 
@@ -63,8 +68,8 @@
         <tr align="center">
             <th scope="col">Id</th>
             <th scope="col">Transaction Type</th>
-            <th scope="col">Car</th>
             <th scope="col">Customer</th>
+            <th scope="col">Car</th>
             <th scope="col">Income</th>
             <th scope="col">Payment</th>
             <th scope="col">Date</th>
@@ -77,14 +82,14 @@
             <td th:text="${#strings.toUpperCase(account.contract.transaction.transactionType)}"/>
 
 
-                <td>
-                    <a th:href="@{/customers/{id}(id=${account.contract.transaction.customer.id})}"
-                       th:text="${account.contract.transaction.customer.name}"/>
-                </td>
-                <td>
-                    <a th:href="@{/cars/{id}(id=${account.contract.transaction.car.id})}"
-                       th:text="${account.contract.transaction.car.brand + ' ' + account.contract.transaction.car.model}"/>
-                </td>
+            <td>
+                <a th:href="@{/customers/{id}(id=${account.contract.transaction.customer.id})}"
+                   th:text="${account.contract.transaction.customer.name}"/>
+            </td>
+            <td>
+                <a th:href="@{/cars/{id}(id=${account.contract.transaction.car.id})}"
+                   th:text="${account.contract.transaction.car.brand + ' ' + account.contract.transaction.car.model}"/>
+            </td>
 
             <td th:text="${account.income}"/>
             <td th:text="${account.payment}"/>

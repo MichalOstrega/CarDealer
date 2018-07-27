@@ -38,12 +38,17 @@
     background-size:cover;
 }
 
-.wide img {
-    width:100%;
+
+#img-upload{
+    max-width: 500px;
+    max-height: 500px;
 }
 
-select {
-    text-indent: 50%;
-    text-align: center;
-    text-align-last: center;
+.d-block w-100 {
+    max-width: 500px;
+    max-height: 500px;}
+
+.card-img-top {
+    height:250px;
+    max-height: 250px;
 }

@@ -18,14 +18,14 @@ public class PriceHistory extends BaseModelVersion {
 
 
     @Column(name = "get_car_price")
-    public Long acquireCarPrice;
+    public Long acquireCarPrice=0l;
 
     @ManyToOne
     @JoinColumn(name = "sell_car_contract_id")
     public Contract sellCarContract;
 
     @Column(name = "sell_car_price")
-    public Long sellCarPrice;
+    public Long sellCarPrice=0l;
 
 
     @NotNull

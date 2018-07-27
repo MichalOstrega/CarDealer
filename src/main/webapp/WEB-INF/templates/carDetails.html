@@ -27,7 +27,28 @@
     <h2 th:text="${car.brand + ' ' +  car.model} " class="text-primary text-center"></h2>
     <br/>
     <hr class="divider"/>
+    <div class="row justify-content-md-center">
+        <div class="col-md-6">
+            <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                <div class="carousel-inner">
+                    <div th:each="photo, iterationInfo : ${car.photos}"
+                         th:class="${iterationInfo.index} == 0 ? 'carousel-item active' : 'carousel-item'">
+                        <img class="d-block w-100" th:src="${photo.imagePath}" th:alt="${iterationInfo.index}"/>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+    </div>
     <br/>
+    <hr class="divider"/>
     <div class="col-md-12">
         <table class="table table-sm" id="carTable">
 
@@ -105,27 +126,52 @@
                 <th scope="row">For Sale Price</th>
                 <td th:text="*{priceHistory.price + ' PLN'} "/>
             </tr>
-            <!--<tr>-->
-                <!--<th scope="row">Acquire Contract</th>-->
-                <!--<td><a th:text="${car.priceHistory.acquireCarContract.transaction.transactionType}"-->
-                       <!--th:href="${car.priceHistory.acquireCarContract.id}"></a></td>-->
-            <!--</tr>-->
+            <tr>
+                <th scope="row">Acquire Contract</th>
+                <td th:text="${car.priceHistory.sellCarContract.transaction.transactionType}">
+                </td>
+            </tr>
             <tr>
                 <th scope="row">Acquire Price</th>
                 <td th:text="${car.priceHistory.acquireCarPrice}"></td>
             </tr>
-            <!--<tr th:if="${car.priceHistory.sellCarPrice != 0}">-->
-                <!--<th scope="row">Sell Contract</th>-->
-                <!--<td><a th:text="${car.priceHistory.sellCarContract.transaction.transactionType}"-->
-                       <!--th:href="${car.priceHistory.sellCarContract.id}"></a></td>-->
-            <!--</tr>-->
+            <tr th:unless="${car.priceHistory.sellCarPrice == 0}">
+                <th scope="row">Sell Contract</th>
+                <td th:text="${car.priceHistory.sellCarContract.transaction.transactionType}">
+                </td>
+            </tr>
             <tr>
                 <th scope="row">Sell Price</th>
                 <td th:text="${car.priceHistory.sellCarPrice}"></td>
             </tr>
 
+
             </tbody>
         </table>
+        <div class="container">
+            <div class="col-md-12">
+                <form enctype="multipart/form-data" th:action="@{/images/upload}" th:method="post">
+
+
+                    <div class="form-group">
+                        <div class="custom-file">
+                            <input th:name="file" accept="image/*" type="file" class="custom-file-input" id="imgInp"/>
+                            <input th:name="carId" type="text" class="custom-file-input" id="carId"
+                                   th:value="${car.id}"/>
+                            <label class="custom-file-label" for="imgInp">Upload Image</label>
+                        </div>
+                        <div class="row justify-content-md-center">
+
+
+                            <img id='img-upload'/>
+                        </div>
+                    </div>
+                    <button type="submit" th:text="Submit" class="btn-primary btn-block"></button>
+                </form>
+            </div>
+        </div>
+
+
         <hr class="divider"/>
         <a th:unless="${car.sold}" th:href="@{/transactions/new/sale   (vin=${car.vin})}" type="button"
            class="btn btn-primary btn-lg btn-block">Sell Car
@@ -148,5 +194,46 @@
 <footer th:replace="fragments/footer :: footer">
 
 </footer>
+
+<script>
+    $(document).ready(function () {
+        $(document).on('change', function () {
+            var input = $(this),
+                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+            input.trigger('fileselect', [label]);
+        });
+
+        $('.btn-file :file').on('fileselect', function (event, label) {
+
+            var input = $(this).parents('.input-group').find(':text'),
+                log = label;
+
+            if (input.length) {
+                input.val(log);
+            } else {
+                if (log) alert(log);
+            }
+
+        });
+
+        function readURL(input) {
+            /*<![CDATA[*/
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+
+                reader.onload = function (e) {
+                    $('#img-upload').attr('src', e.target.result);
+                }
+
+                reader.readAsDataURL(input.files[0]);
+            }
+            /*]]>*/
+        }
+
+        $("#imgInp").change(function () {
+            readURL(this);
+        });
+    });
+</script>
 </body>
 </html>
