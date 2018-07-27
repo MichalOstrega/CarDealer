@@ -100,10 +100,18 @@ public class Car extends BaseModelVersion {
     @JoinColumn(name = "owner_id")
     private Customer customer;
 
-    @OneToMany(mappedBy = "car")
+    @OneToMany(mappedBy = "car", fetch = FetchType.EAGER)
     private List<Photo> photos;
 
     public Car() {
+    }
+
+    public List<Photo> getPhotos() {
+        return photos;
+    }
+
+    public void setPhotos(List<Photo> photos) {
+        this.photos = photos;
     }
 
     public PriceHistory getPriceHistory() {

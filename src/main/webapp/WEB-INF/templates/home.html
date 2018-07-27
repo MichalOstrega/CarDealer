@@ -25,68 +25,20 @@
 
 
 <div class="container">
-    <div class="col-md-12">
-        <form enctype="multipart/form-data" th:action="@{/images/upload}" th:method="post" th:object="${imageDto}">
-
-
-            <div class="form-group">
-                <div class="custom-file">
-                    <input th:name="file" type="file" class="custom-file-input" id="imgInp"/>
-                    <label class="custom-file-label" for="imgInp">Upload Image</label>
-                </div>
-                <div class="row justify-content-md-center">
-
-
-                    <img  id='img-upload'/>
-                </div>
-            </div>
-            <button type="submit" th:text="Submit" class="btn-primary btn-block"></button>
-        </form>
-    </div>
-</div>
-
-
-<div class="container">
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4" th:each="car : ${cars}">
             <div class="card">
                 <img class="card-img-top"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Nissan_Almera_front_20080224.jpg/250px-Nissan_Almera_front_20080224.jpg"
+                     th:src="${#lists.isEmpty(car.photos) ? '/img/noimage.jpg' :  (car.photos[0].imagePath)} "
                      alt="Card image cap"/>
                 <div class="card-body">
-                    <h5 class="card-title">Almera</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <h5 class="card-title" th:text="*{car.brand + ' ' + car.model}"></h5>
+                    <p class="card-text" th:text="*{car.description}"></p>
+                    <a th:href="@{/cars/{id}   (id=*{car.id})}" class="btn btn-primary">Car details</a>
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/VW_Golf_IV_front_20071205.jpg/275px-VW_Golf_IV_front_20071205.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <h5 class="card-title">Golf</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-4">
-            <div class="card">
-                <img class="card-img-top"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Renault_Fluence_front_20100918.jpg/240px-Renault_Fluence_front_20100918.jpg"
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <h5 class="card-title">Fluence</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 <br/><br/>
@@ -97,45 +49,6 @@
 </footer>
 
 
-<script>
-    $(document).ready(function () {
-        $(document).on('change', function () {
-            var input = $(this),
-                label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
-            input.trigger('fileselect', [label]);
-        });
-
-        // $('.btn-file :file').on('fileselect', function(event, label) {
-        //
-        //     var input = $(this).parents('.input-group').find(':text'),
-        //         log = label;
-        //
-        //     if( input.length ) {
-        //         input.val(log);
-        //     } else {
-        //         if( log ) alert(log);
-        //     }
-        //
-        // });
-        function readURL(input) {
-            /*<![CDATA[*/
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-
-                reader.onload = function (e) {
-                    $('#img-upload').attr('src', e.target.result);
-                }
-
-                reader.readAsDataURL(input.files[0]);
-            }
-            /*]]>*/
-        }
-
-        $("#imgInp").change(function () {
-            readURL(this);
-        });
-    });
-</script>
 </body>
 
 </html>

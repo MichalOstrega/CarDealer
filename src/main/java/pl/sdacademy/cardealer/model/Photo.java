@@ -6,7 +6,7 @@ import javax.persistence.*;
 import java.lang.annotation.Target;
 
 @Entity
-@Table(name = "photos")
+@Table(name = "car_photos")
 public class Photo extends BaseModel {
 
     @Column(name = "content_type")

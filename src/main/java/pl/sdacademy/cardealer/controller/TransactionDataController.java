@@ -150,6 +150,7 @@ public class TransactionDataController {
                     Contract contract = getContract(transactionType, transaction);
 
                     car.getPriceHistory().setAcquireCarPrice(0l);
+                    car.getPriceHistory().setSellCarPrice(0l);
                     car.getPriceHistory().setAcquireCarContract(contract);
 
                     Account account = new Account(contract,new Date());
