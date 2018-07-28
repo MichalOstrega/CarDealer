@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8"/>
     <title>Car Dealer Home Page</title>
@@ -23,26 +23,21 @@
 
 </div>
 
-
-
-<div class="container">
-    <div class="row">
-        <div class="col-sm-4" th:each="car : ${cars}">
-            <div class="card">
-                <img class="card-img-top"
-                     th:src="${#lists.isEmpty(car.photos) ? '/img/noimage.jpg' :  (car.photos[0].imagePath)} "
-                     alt="Card image cap"/>
-                <div class="card-body">
-                    <h5 class="card-title" th:text="*{car.brand + ' ' + car.model}"></h5>
-                    <p class="card-text" th:text="*{car.description}"></p>
-                    <a th:href="@{/cars/{id}   (id=*{car.id})}" class="btn btn-primary">Car details</a>
-                </div>
-            </div>
-        </div>
-
+<form class="px-4 py-3" action="/authenticateTheUser" method="post">
+    <div class="form-group">
+        <label for="exampleDropdownFormEmail1">Login</label>
+        <input type="text" class="form-control" name="username" id="exampleDropdownFormEmail1" placeholder="email@example.com"/>
     </div>
-</div>
-<br/><br/>
+    <div class="form-group">
+        <label for="exampleDropdownFormPassword1">Password</label>
+        <input type="password" name="password" class="form-control" id="exampleDropdownFormPassword1" placeholder="Password"/>
+    </div>
+
+    <input type="submit" class="btn btn-primary">Sign in</input>
+</form>
+<div class="dropdown-divider"></div>
+<a class="dropdown-item" href="#">New around here? Sign up</a>
+<a class="dropdown-item" href="#">Forgot password?</a>
 
 
 <footer th:replace="fragments/footer :: footer">

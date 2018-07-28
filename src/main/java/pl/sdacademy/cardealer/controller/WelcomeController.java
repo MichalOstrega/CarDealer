@@ -30,5 +30,19 @@ public class WelcomeController {
 
         return "home";
     }
+    @RequestMapping(value = {"/login"})
+    public String loginPage(Model model) {
+
+
+        return "login";
+    }
+
+    @RequestMapping(value = {"/access-denied"})
+    public String accessDenied(Model model) {
+
+
+        return "access-denied";
+    }
+
 
 }
